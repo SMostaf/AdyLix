@@ -8,10 +8,9 @@
 
 #ifndef ItemsController_h
 #define ItemsController_h
-#import "Connector.h"
 #import <UIKit/UIKit.h>
 
-@interface ItemsController<UIHandler> : UIViewController
+@interface ItemsController : UIViewController
 
 
 @end

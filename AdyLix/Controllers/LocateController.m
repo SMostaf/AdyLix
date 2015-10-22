@@ -7,7 +7,7 @@
 //
 #import "LocateController.h"
 #import <CoreLocation/CoreLocation.h>
-
+#import "ActivityIndicator.h"
 
 @interface LocateController ()
 @property (weak, nonatomic) IBOutlet UITableView *itemsTblView;
@@ -19,6 +19,12 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    ActivityIndicator *activityIndicator = [[ActivityIndicator alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [activityIndicator startAnimating];
+    
+    [self.view addSubview:activityIndicator];
+    
 }
 
 - (void)didReceiveMemoryWarning {
