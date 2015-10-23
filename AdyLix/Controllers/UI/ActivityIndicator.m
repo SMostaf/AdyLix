@@ -58,7 +58,7 @@
 - (void)_setPropertiesForStyle:(UIActivityIndicatorViewStyle)style
 {
    // self.backgroundColor = [UIColor clearColor];
-    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"icon@2x.png"]];
+    self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"hat.png"]];
     _direction = ActivityIndicatorDirectionClockwise;
     _roundedCoreners = UIRectCornerAllCorners;
     _cornerRadii = CGSizeMake(1, 1);
@@ -139,6 +139,18 @@
 - (void)setIndicatorRadius:(NSUInteger)indicatorRadius
 {
     indicatorRadius = indicatorRadius;
+    
+    UIImage *statusImage = [UIImage imageNamed:@"hat.png"];
+    UIImageView *activityImageView = [[UIImageView alloc]
+                                      initWithImage:statusImage];
+
+    activityImageView.animationImages = [NSArray arrayWithObjects:
+                                         [UIImage imageNamed:@"Icon@2x rot2.png"],
+                                         [UIImage imageNamed:@"Icon@2x rot3.png"],
+                                         [UIImage imageNamed:@"Icon@2x copy.png"],
+
+                                         nil];
+    
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y,
                             indicatorRadius*2 + _finSize.height*2,
                             indicatorRadius*2 + _finSize.height*2);

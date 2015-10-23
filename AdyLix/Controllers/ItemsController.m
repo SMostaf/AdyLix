@@ -13,18 +13,42 @@
 
 @interface ItemsController ()
 @property (weak, nonatomic) IBOutlet UITextField *txtPrice;
-@property (weak, nonatomic) IBOutlet UITableView *itemsTblView;
+//@property (weak, nonatomic) IBOutlet UITableView *itemsTblView;
 @property (weak, nonatomic) IBOutlet UITextView *txtDesc;
 @property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
-@property (weak, nonatomic) UIImage* itemImage;
+@property UIImage* itemImage;
 @end
 
 @implementation ItemsController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.txtDesc.text = @"Enter Item Description";
+    self.txtDesc.textColor = [UIColor lightGrayColor];
+    self.txtDesc.delegate = self;
+    
 }
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    self.txtDesc.text = @"";
+    self.txtDesc.textColor = [UIColor blackColor];
+    return YES;
+}
+
+-(void) textViewDidChange:(UITextView *)textView
+{
+    
+    if(self.txtDesc.text.length == 0){
+        self.txtDesc.textColor = [UIColor lightGrayColor];
+        self.txtDesc.text = @"Comment";
+        [self.txtDesc resignFirstResponder];
+    }
+}
+
+- (IBAction)btnAddItem:(id)sender {
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -36,32 +60,34 @@
 - (IBAction)btnSave:(id)sender {
     
     if (self.txtName.text.length == 0 || self.txtPrice.text.length == 0
-        || [self itemImage] == nil)
+        || self.itemImage == nil)
     {
          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         
         return;
     }
+
+    
     PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
     [item setObject:self.txtName.text forKey:@"name"];
     [item setObject:self.txtPrice.text forKey:@"price"];
-    
     [item setObject:self.txtDesc.text forKey:@"description"];
     
-    if (self.chkDiscover.selected)
+    if (self.chkDiscover.on)
         [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
     else
         [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
 
-    
+    NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
     [item setObject:[NSDate date] forKey:@"timeStamp"];
-    
+    [item setObject:userName forKey:@"userId"];
     
     // item image
-    NSData *imageData = UIImageJPEGRepresentation(self.itemImage.images[0], 0.8);
-    NSString *filename = [NSString stringWithFormat:@"%@.png", self.txtName.text];
-    PFFile *imageFile = [PFFile fileWithName:filename data:imageData];
+   
+    NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);
+    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
     [item setObject:imageFile forKey:@"imageFile"];
+    
     
     // Show progress
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -75,7 +101,7 @@
         
         if (!error) {
             // Show success message
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved the recipe" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved your item" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
             
             // Notify table view to reload the recipes from Parse cloud
@@ -125,44 +151,19 @@
     return YES;
 }
 
+- (IBAction)btnCancel:(id)sender {
+   [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - pic delegate
+
 - (IBAction)btnUpload:(id)sender {
     
     [self startCameraControllerFromViewController: self
                                     usingDelegate: self];
-
+    
 }
-
-// gallery related
-//- (BOOL) startMediaBrowserFromViewController: (UIViewController*) controller
-//                               usingDelegate: (id <UIImagePickerControllerDelegate,
-//                                               UINavigationControllerDelegate>) delegate {
-//    
-//    if (([UIImagePickerController isSourceTypeAvailable:
-//          UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
-//        || (delegate == nil)
-//        || (controller == nil))
-//        return NO;
-//    
-//    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-//    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-//    
-//    // Displays saved pictures and movies, if both are available, from the
-//    // Camera Roll album.
-//    mediaUI.mediaTypes =
-//    [UIImagePickerController availableMediaTypesForSourceType:
-//     UIImagePickerControllerSourceTypeSavedPhotosAlbum];
-//    
-//    // Hides the controls for moving & scaling pictures, or for
-//    // trimming movies. To instead show the controls, use YES.
-//    mediaUI.allowsEditing = NO;
-//    
-//    mediaUI.delegate = delegate;
-//    
-//    [controller presentModalViewController: mediaUI animated: YES];
-//    return YES;
-//}
-
-#pragma mark - gallery delegate
 
 - (IBAction)btnGallery:(id)sender {
     
@@ -171,60 +172,25 @@
         return;
     }
     
-    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-    mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    UIImagePickerController *picker;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        picker = [[UIImagePickerController alloc] init];
+        picker.delegate = self;
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
     
-    // Displays saved pictures from the Camera Roll album.
-    mediaUI.mediaTypes = @[(NSString*)kUTTypeImage];
+   // [self.navigationController presentModalViewController: mediaUI animated: YES];
     
-    // Hides the controls for moving & scaling pictures
-    mediaUI.allowsEditing = NO;
-    
-    mediaUI.delegate = self;
-    
-    [self.navigationController presentModalViewController: mediaUI animated: YES];
+    [self presentModalViewController: picker animated: YES];
 }
 
-//- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
-//    
-//    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-//    UIImage *originalImage, *editedImage, *imageToUse;
-//    
-//    // Handle a still image picked from a photo album
-//    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0)
-//        == kCFCompareEqualTo) {
-//        
-//        editedImage = (UIImage *) [info objectForKey:
-//                                   UIImagePickerControllerEditedImage];
-//        originalImage = (UIImage *) [info objectForKey:
-//                                     UIImagePickerControllerOriginalImage];
-//        
-//        if (editedImage) {
-//            imageToUse = editedImage;
-//        } else {
-//            imageToUse = originalImage;
-//        }
-//        // Do something with imageToUse
-//    }
-//    
-//    // Handle a movied picked from a photo album
-//    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeMovie, 0)
-//        == kCFCompareEqualTo) {
-//        
-//        NSString *moviePath = [[info objectForKey:
-//                                UIImagePickerControllerMediaURL] path];
-//        
-//        // Do something with the picked movie available at moviePath
-//    }
-//    
-//    [[picker parentViewController] dismissModalViewControllerAnimated: YES];
-//}
 
 # pragma mark - camera delegate
 // For responding to the user tapping Cancel.
 - (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
     
-    [[picker parentViewController] dismissModalViewControllerAnimated: YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 // For responding to the user accepting a newly-captured picture or movie
@@ -232,6 +198,11 @@
     
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
     self.itemImage = originalImage;
+    
+  
+ //   ((ItemsController*)picker.parentViewController).itemImage = originalImage;
+  
+    //[[picker parentViewController] dismissModalViewControllerAnimated: YES];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     

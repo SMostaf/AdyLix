@@ -10,17 +10,36 @@
 
 @interface UserController ()
 @property ASStarRatingView* staticStarRatingView;
+@property (weak, nonatomic) IBOutlet UILabel *lblName;
+
 @end
 
 @implementation UserController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+
+    NSArray* arrNicknames = [NSArray arrayWithObjects: @"blueDragon", @"lookingForRainbow", @"cookieJar", @"I'mABigDeal", @"humsWhileShopping", @"loveToShop", @"theElegantOne", @"rainbowGazer", @"purpleDinasour", @"gigglesNTickles",
+                             @"sunShine", nil];
+    int random = arc4random()%[arrNicknames count];
+    NSString *key = [arrNicknames objectAtIndex:random];
+    _lblName.text = key;
+    
     _staticStarRatingView = [[ASStarRatingView alloc]init];
     _staticStarRatingView.canEdit = NO;
     _staticStarRatingView.maxRating = 5;
     _staticStarRatingView.rating = 5;
 
+    _staticStarRatingView.frame = CGRectMake(
+                                          _lblName.frame.origin.x,
+                                          _lblName.frame.origin.y+30,
+                                          180,
+                                          180);
+
+    
+    [self.view addSubview:_staticStarRatingView];
+
+    
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {

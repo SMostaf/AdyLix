@@ -10,7 +10,7 @@
 #define ItemsController_h
 #import <UIKit/UIKit.h>
 
-@interface ItemsController : UIViewController
+@interface ItemsController : UIViewController<UITextViewDelegate>
 
 
 @end
