@@ -15,25 +15,6 @@
 
 @implementation ItemTableViewController
 
-//-(void)viewDidLoad {
-//    self.parseClassName = @"ItemDetail";
-//    self.pullToRefreshEnabled = YES;
-//    self.paginationEnabled = YES;
-//    self.objectsPerPage = 15;
-//
-//}
-//- (id)initWithStyle:(UITableViewStyle)style {
-//    self = [super initWithStyle:style];
-//    if (self) {
-//        // This table displays items in the Todo class
-//        self.parseClassName = @"ItemDetail";
-//        self.pullToRefreshEnabled = YES;
-//        self.paginationEnabled = NO;
-//        self.objectsPerPage = 25;
-//    }
-//    return self;
-//}
-
 - (id)initWithCoder:(NSCoder *)aCoder
 {
     self = [super initWithCoder:aCoder];
@@ -49,13 +30,18 @@
         
         // Whether the built-in pagination is enabled
         self.paginationEnabled = NO;
+        
     }
     return self;
 }
 
 
 - (PFQuery *)queryForTable {
+
     PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+    [query whereKey:@"userObjectId" equalTo:[[PFUser currentUser]
+                                            valueForKey:@"objectId"]];
+
     
     // If no objects are loaded in memory, we look to the cache
     // first to fill the table and then subsequently do a query
@@ -106,11 +92,19 @@
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
     nameLabel.text = [object objectForKey:@"name"];
     
-    UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
-    descLabel.text = [object objectForKey:@"description"];
-    
     UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
     priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
+
+    //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
+    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+    
+    descLabel.numberOfLines = 2;
+    descLabel.textColor = [UIColor darkGrayColor];
+    descLabel.font = [UIFont systemFontOfSize:12];
+    descLabel.text = [object objectForKey:@"description"];
+    [cell.contentView addSubview:descLabel];
+
     
     PFFile *thumbnail = [object objectForKey:@"imageFile"];
     PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
@@ -121,6 +115,24 @@
 
 
     return cell;
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Editing");
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        PFObject *object = [self.objects objectAtIndex:indexPath.row];
+        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self loadObjects];
+        }];
+    }
 }
 
 @end

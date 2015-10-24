@@ -13,9 +13,10 @@
 @interface LocateController ()
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property  (nonatomic, strong) CLLocationManager* locationManager;
-@property PFGeoPoint* geoPoint;
-@property UIImageView *activityImageView;
+//@property PFGeoPoint* geoPoint;
 @property (nonatomic, copy) NSArray* itemsArray;
+@property UIImageView *activityImageView;
+@property BOOL alertShown;
 @end
 
 @implementation LocateController
@@ -26,7 +27,7 @@
     
     [super viewDidLoad];
     
-
+    self.alertShown = false;
     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
     _activityImageView = [[UIImageView alloc]
                                       initWithImage:firstImage];
@@ -141,33 +142,50 @@
 -(void) getNearbyItems:(CLLocation*) location {
     
     void (^shareBlock)(void) = ^{
+        // add default item to be added 
+        NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
+        ItemInfo *item = [[ItemInfo alloc] init];
+        item.name = @"unknown-default";
+        
+        [items addObject:item];
+
+        self.itemsArray = items;
+        
+        [self.itemsTableView reloadData];
+        
         // no items nearby
         // show share action
         [_activityImageView stopAnimating];
+        _activityImageView.hidden = YES;
+
         [self.locationManager stopUpdatingLocation];
         
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
-        
-        NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
-        NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
-        
-        NSArray *objectsToShare = @[textToShare, website];
-        
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-        
-        NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                       UIActivityTypePrint,
-                                       UIActivityTypeAssignToContact,
-                                       UIActivityTypeSaveToCameraRoll,
-                                       UIActivityTypeAddToReadingList,
-                                       UIActivityTypePostToFlickr,
-                                       UIActivityTypePostToVimeo];
-        
-        activityController.excludedActivityTypes = excludeActivities;
-        
-        
-        [self presentViewController:activityController animated:YES completion:nil];
+        if(!self.alertShown)
+        {
+            self.alertShown = true;
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            
+            
+            NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
+            NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
+            
+            NSArray *objectsToShare = @[textToShare, website];
+            
+            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+            
+            NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                           UIActivityTypePrint,
+                                           UIActivityTypeAssignToContact,
+                                           UIActivityTypeSaveToCameraRoll,
+                                           UIActivityTypeAddToReadingList,
+                                           UIActivityTypePostToFlickr,
+                                           UIActivityTypePostToVimeo];
+            
+            activityController.excludedActivityTypes = excludeActivities;
+            
+            
+            [self presentViewController:activityController animated:YES completion:nil];
+        }
 
     };
     
@@ -221,12 +239,12 @@
         
         [items addObject:item];
     }
-    self.itemsArray = items;
-    dispatch_async(dispatch_get_main_queue(), ^{
-       [self.itemsTableView reloadData];
-    });
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        self.itemsArray = items;
+
+        [self.itemsTableView reloadData];
     
-    
+   // });
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
 
@@ -240,36 +258,60 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
-    ItemInfo *item = self.itemsArray[indexPath.row];
-    
     // Configure the cell
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
-    nameLabel.text = item.name;
-    
-    UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
-    descLabel.text = item.desc;
-    
+    //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
+    //descLabel.numberOfLines = 2;
+  //  descLabel.frame = contentRect;
     UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
-    priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", item.price];
-    
-    PFFile *thumbnail = item.imageData;
     PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
     
-    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+    
+    descLabel.numberOfLines = 2;
+    descLabel.textColor = [UIColor darkGrayColor];
+    descLabel.font = [UIFont systemFontOfSize:12];
+    [cell.contentView addSubview:descLabel];
+    
+    ItemInfo *itemFound = self.itemsArray[indexPath.row];
+    if(itemFound.name == @"unknown-default")
+    {
+        // show hat by default when no items discovered
+        nameLabel.text = @"The Hat";
+        descLabel.text  = @"Items discovered nearby will appear here, spread the word!";
+        priceLabel.text = @"$$";
+        
+        UIImage *img = [UIImage imageNamed:@"Icon-40@2x.png"];
+        NSData *data = UIImagePNGRepresentation(img);
         thumbnailImageView.image = [UIImage imageWithData:data];
-    }];
+    }
+    else {
+        nameLabel.text = itemFound.name;
 
+        descLabel.text = itemFound.desc;
+        
+        priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", itemFound.price];
+
+        PFFile *thumbnail = itemFound.imageData;
+
+        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if(!error)
+                thumbnailImageView.image = [UIImage imageWithData:data];
+        }];
+    }
+    
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.itemsArray count];
+    return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectio
 {
-    return 1;
+    return [self.itemsArray count];
 }
 
 
