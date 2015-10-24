@@ -6,15 +6,15 @@
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 #import "LocateController.h"
-#import <CoreLocation/CoreLocation.h>
-#import "ActivityIndicator.h"
 #import "Parse/Parse.h"
+#import "AdyLocationManager.h"
 
 @interface LocateController ()
 @property (weak, nonatomic) IBOutlet UITableView *itemsTblView;
-@property CLLocationManager* locationManager;
+@property  (nonatomic, strong) CLLocationManager* locationManager;
 @property PFGeoPoint* geoPoint;
 @property UIImageView *activityImageView;
+@property (assign, nonatomic) NSTimeInterval timeout;
 @end
 
 @implementation LocateController
@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.timeout = 10.0;
+   
     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
     _activityImageView = [[UIImageView alloc]
                                       initWithImage:firstImage];
@@ -55,6 +57,8 @@
 
     [_activityImageView startAnimating];
 
+    
+    
     [self startStandardUpdates];
     
     // update current user location
@@ -76,7 +80,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+    [_locationManager stopUpdatingLocation];
 }
+
+
 
 - (void)startStandardUpdates
 {
@@ -89,13 +97,30 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     
     // Set a movement threshold for new events.
-    _locationManager.distanceFilter = 500; // meters
+    _locationManager.distanceFilter = 250; // meters
+    
+    _locationManager.allowsBackgroundLocationUpdates = YES;
     
     [_locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations {
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+  
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
     
     // If it's a relatively recent event, turn off updates to save power.
@@ -121,22 +146,19 @@
     // Interested in locations near user.
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     // Limit what could be a lot of points.
-    usersQuery.limit = 10;
-    
+    usersQuery.limit = 50;
     
     // query nearby users and find their items
     PFQuery *query = [PFQuery queryWithClassName:@"ItemDetail"];
     [query whereKey:@"userId" containedIn:[usersQuery findObjects]];
+    //[query orderByDescending:@"createdAt"];
     
-    // [query findObjects]]
-    // If no objects are loaded in memory, we look to the cache
-    // first to fill the table and then subsequently do a query
-    // against the network.
-    //        if ([self.objects count] == 0) {
-    //            query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    //        }
-    //
-    //        [query orderByDescending:@"createdAt"];
+    NSArray* arrItemsFound = [query findObjects];
+    if(arrItemsFound.count == 0)
+    {
+        
+        return;
+    }
 
 }
 

@@ -110,9 +110,8 @@
     descLabel.text = [object objectForKey:@"description"];
     
     UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
-    priceLabel.text = [object objectForKey:@"price"];
+    priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
     
-//    
     PFFile *thumbnail = [object objectForKey:@"imageFile"];
     PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
     
@@ -120,22 +119,7 @@
                     thumbnailImageView.image = [UIImage imageWithData:data];
     }];
 
-//    
-//    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//                cell.imageView.image = [UIImage imageWithData:data];
-//        }];
-    
-    
-//    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
-//    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//         thumbnailImageView.file = thumbnail;
-//    }];
-    
-//    thumbnailImageView.image = [UIImage imageNamed:@"placeholder.jpg"];
-//    thumbnailImageView.file = thumbnail;
-//    [thumbnailImageView loadInBackground];
-    
-    
+
     return cell;
 }
 

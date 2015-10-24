@@ -10,8 +10,9 @@
 #define LocateController_h
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface LocateController : UIViewController
+@interface LocateController : UIViewController<CLLocationManagerDelegate>
 
 
 @end

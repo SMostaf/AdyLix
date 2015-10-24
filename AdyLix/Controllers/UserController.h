@@ -11,7 +11,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserController : UIViewController
+#import <CoreLocation/CoreLocation.h>
+
+@interface UserController : UIViewController<CLLocationManagerDelegate>
 
 
 @end

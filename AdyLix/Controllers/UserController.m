@@ -11,7 +11,6 @@
 @interface UserController ()
 @property ASStarRatingView* staticStarRatingView;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
-
 @end
 
 @implementation UserController
@@ -38,10 +37,8 @@
     
     [self.view addSubview:_staticStarRatingView];
 
-    
     [super viewDidLoad];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
