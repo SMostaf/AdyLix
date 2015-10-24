@@ -53,7 +53,7 @@
 		0A4F0AF71BD4676D00C8A8D0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4F0AF41BD4676D00C8A8D0 /* FBSDKShareKit.framework */; };
 		0A4FA0131BD94496003ED366 /* background-mod.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4FA0121BD94496003ED366 /* background-mod.png */; };
 		0A4FA0151BD956CF003ED366 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0141BD956CF003ED366 /* SignUpViewController.m */; };
-		0A4FA01B1BD96737003ED366 /* ItemsLocated.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA01A1BD96737003ED366 /* ItemsLocated.m */; };
+		0A4FA01B1BD96737003ED366 /* ItemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA01A1BD96737003ED366 /* ItemInfo.m */; };
 		0A4FA0241BD99C7D003ED366 /* ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA01F1BD99C7D003ED366 /* ActivityIndicator.m */; };
 		0A4FA0251BD99C7D003ED366 /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0211BD99C7D003ED366 /* ASStarRatingView.m */; };
 		0A4FA0261BD99C7D003ED366 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0231BD99C7D003ED366 /* MBProgressHUD.m */; };
@@ -145,8 +145,8 @@
 		0A4FA0121BD94496003ED366 /* background-mod.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background-mod.png"; path = "Res/background-mod.png"; sourceTree = "<group>"; };
 		0A4FA0141BD956CF003ED366 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Controllers/SignUpViewController.m; sourceTree = "<group>"; };
 		0A4FA0161BD956DD003ED366 /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
-		0A4FA01A1BD96737003ED366 /* ItemsLocated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemsLocated.m; path = Models/ItemsLocated.m; sourceTree = "<group>"; };
-		0A4FA01C1BD96743003ED366 /* ItemsLocated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemsLocated.h; sourceTree = "<group>"; };
+		0A4FA01A1BD96737003ED366 /* ItemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemInfo.m; path = Models/ItemInfo.m; sourceTree = "<group>"; };
+		0A4FA01C1BD96743003ED366 /* ItemInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemInfo.h; sourceTree = "<group>"; };
 		0A4FA01E1BD99C7D003ED366 /* ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityIndicator.h; path = Controllers/UI/ActivityIndicator.h; sourceTree = "<group>"; };
 		0A4FA01F1BD99C7D003ED366 /* ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityIndicator.m; path = Controllers/UI/ActivityIndicator.m; sourceTree = "<group>"; };
 		0A4FA0201BD99C7D003ED366 /* ASStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASStarRatingView.h; path = Controllers/UI/ASStarRatingView.h; sourceTree = "<group>"; };
@@ -234,8 +234,8 @@
 		0A4E31341BD47D33004776A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0A4FA01A1BD96737003ED366 /* ItemsLocated.m */,
-				0A4FA01C1BD96743003ED366 /* ItemsLocated.h */,
+				0A4FA01A1BD96737003ED366 /* ItemInfo.m */,
+				0A4FA01C1BD96743003ED366 /* ItemInfo.h */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -566,7 +566,7 @@
 				0A4F0AB11BD4656000C8A8D0 /* main.m in Sources */,
 				0A47BC871BDAB9D000D362B9 /* ItemListViewController.m in Sources */,
 				0A4FA0241BD99C7D003ED366 /* ActivityIndicator.m in Sources */,
-				0A4FA01B1BD96737003ED366 /* ItemsLocated.m in Sources */,
+				0A4FA01B1BD96737003ED366 /* ItemInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

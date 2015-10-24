@@ -12,7 +12,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface LocateController : UIViewController<CLLocationManagerDelegate>
+@interface LocateController : UIViewController<CLLocationManagerDelegate, UITableViewDelegate>
 
 
 @end

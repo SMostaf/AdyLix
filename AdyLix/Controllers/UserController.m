@@ -7,6 +7,8 @@
 //
 #import "UserController.h"
 #import "ASStarRatingView.h"
+#import "Parse/Parse.h"
+#import "MainController.h"
 
 @interface UserController ()
 @property ASStarRatingView* staticStarRatingView;
@@ -14,6 +16,14 @@
 @end
 
 @implementation UserController
+- (IBAction)btnLogout:(id)sender {
+    [PFUser logOut];
+    
+    MainController *mainController = [[MainController alloc] init];
+    
+    [self presentViewController:mainController animated:YES completion:nil];
+    
+}
 
 - (void)viewDidLoad {
 

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ItemsLocated.h"
+#import "ItemInfo.h"
 
-@implementation ItemsLocated
+@implementation ItemInfo
 
 @end
