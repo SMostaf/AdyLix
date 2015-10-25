@@ -12,16 +12,4 @@
 @implementation TabBarController
 
 
--(void) viewDidLoad
-  {
-      self.selectedIndex = 1;
-
-  }
-
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController{
-    //NSUInteger index=[[tabBarController viewControllers] indexOfObject:viewController];
-    
-    return YES;
-}
-
 @end

@@ -16,17 +16,10 @@
 @end
 
 @implementation UserController
-- (IBAction)btnLogout:(id)sender {
-    [PFUser logOut];
-    
-    MainController *mainController = [[MainController alloc] init];
-    
-    [self presentViewController:mainController animated:YES completion:nil];
-    
-}
 
-- (void)viewDidLoad {
 
+- (void) setupView {
+    
     NSArray* arrNicknames = [NSArray arrayWithObjects: @"blueDragon", @"lookingForRainbow", @"cookieJar", @"I'mABigDeal", @"humsWhileShopping", @"loveToShop", @"theElegantOne", @"rainbowGazer", @"purpleDinasour", @"gigglesNTickles",
                              @"sunShine", nil];
     int random = arc4random()%[arrNicknames count];
@@ -37,16 +30,33 @@
     _staticStarRatingView.canEdit = NO;
     _staticStarRatingView.maxRating = 5;
     _staticStarRatingView.rating = 5;
-
+    
     _staticStarRatingView.frame = CGRectMake(
-                                          _lblName.frame.origin.x,
-                                          _lblName.frame.origin.y+30,
-                                          180,
-                                          180);
-
+                                             _lblName.frame.origin.x,
+                                             _lblName.frame.origin.y+30,
+                                             180,
+                                             180);
+    
     
     [self.view addSubview:_staticStarRatingView];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+   [self setupView];
+}
+
+- (IBAction)btnLogout:(id)sender {
+    [PFUser logOut];
+    
+    MainController *mainController = [[MainController alloc] init];
+    
+    [self presentViewController:mainController animated:YES completion:nil];
+    
+}
+
+- (void)viewDidLoad {
+    [self setupView];
     [super viewDidLoad];
 }
 - (void)didReceiveMemoryWarning {

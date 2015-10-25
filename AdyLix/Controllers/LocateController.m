@@ -7,7 +7,6 @@
 //
 #import "LocateController.h"
 #import "Parse/Parse.h"
-#import "AdyLocationManager.h"
 #include "ItemInfo.h"
 
 @interface LocateController ()
@@ -22,23 +21,20 @@
 @implementation LocateController
 
 
-
-- (void)viewDidLoad {
+- (void)viewDidAppear:(BOOL)animated
+{
     
-    [super viewDidLoad];
-    
-    self.alertShown = false;
-    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
-    _activityImageView = [[UIImageView alloc]
-                                      initWithImage:firstImage];
+     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
+     _activityImageView = [[UIImageView alloc]
+                          initWithImage:firstImage];
     
     
-    //Add more images which will be used for the animation
-    _activityImageView.animationImages = [NSArray arrayWithObjects:
-                                         [UIImage imageNamed:@"Icon@2x rot2.png"],
-                                         [UIImage imageNamed:@"Icon@2x rot3.png"],
-                                         [UIImage imageNamed:@"Icon@2x copy.png"],
-                                         nil];
+     //Add more images which will be used for the animation
+     _activityImageView.animationImages = [NSArray arrayWithObjects:
+                                          [UIImage imageNamed:@"Icon@2x rot2.png"],
+                                          [UIImage imageNamed:@"Icon@2x rot3.png"],
+                                          [UIImage imageNamed:@"Icon@2x copy.png"],
+                                          nil];
     
     
     _activityImageView.animationDuration = 0.8;
@@ -47,18 +43,57 @@
     //Position the activity image view somewhere in
     //the middle of your current view
     _activityImageView.frame = CGRectMake(
-                                         self.view.frame.size.width/2
-                                         -firstImage.size.width/2,
-                                         self.view.frame.size.height/2
-                                         -firstImage.size.height/2,
-                                         firstImage.size.width,
-                                         firstImage.size.height);
+                                          self.view.frame.size.width/2
+                                          -firstImage.size.width/2,
+                                          self.view.frame.size.height/2
+                                          -firstImage.size.height/2,
+                                          firstImage.size.width,
+                                          firstImage.size.height);
     
     [self.view addSubview:_activityImageView];
-
+    
     [_activityImageView startAnimating];
-
+    
     [self startStandardUpdates];
+
+}
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+//    self.alertShown = false;
+//    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
+//    _activityImageView = [[UIImageView alloc]
+//                                      initWithImage:firstImage];
+//    
+//    
+//    //Add more images which will be used for the animation
+//    _activityImageView.animationImages = [NSArray arrayWithObjects:
+//                                         [UIImage imageNamed:@"Icon@2x rot2.png"],
+//                                         [UIImage imageNamed:@"Icon@2x rot3.png"],
+//                                         [UIImage imageNamed:@"Icon@2x copy.png"],
+//                                         nil];
+//    
+//    
+//    _activityImageView.animationDuration = 0.8;
+//    
+//    
+//    //Position the activity image view somewhere in
+//    //the middle of your current view
+//    _activityImageView.frame = CGRectMake(
+//                                         self.view.frame.size.width/2
+//                                         -firstImage.size.width/2,
+//                                         self.view.frame.size.height/2
+//                                         -firstImage.size.height/2,
+//                                         firstImage.size.width,
+//                                         firstImage.size.height);
+//    
+//    [self.view addSubview:_activityImageView];
+//
+//    [_activityImageView startAnimating];
+//
+//    [self startStandardUpdates];
    
 //    // update current user location for others to discover my items
 //    // #todo make sure this gets updated when user is on the move
@@ -258,17 +293,23 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
-    // Configure the cell
+     // Configure the cell
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
+    nameLabel.text = @"";
+    
     //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
     //descLabel.numberOfLines = 2;
   //  descLabel.frame = contentRect;
     UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
+    priceLabel.text = @"";
+    
     PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
     
     CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+    [descLabel removeFromSuperview];
     
+    descLabel.text = @"";
     descLabel.numberOfLines = 2;
     descLabel.textColor = [UIColor darkGrayColor];
     descLabel.font = [UIFont systemFontOfSize:12];

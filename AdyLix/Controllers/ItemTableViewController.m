@@ -11,9 +11,17 @@
 #import "ItemTableViewController.h"
 
 @interface ItemTableViewController()
+@property (strong, nonatomic) IBOutlet UITableView *tblView;
+@property BOOL isLoaded;
 @end
 
 @implementation ItemTableViewController
+
+
+- (void) viewDidAppear:(BOOL)animated
+{
+  [self loadObjects];
+}
 
 - (id)initWithCoder:(NSCoder *)aCoder
 {
@@ -47,7 +55,7 @@
     // first to fill the table and then subsequently do a query
     // against the network.
     if ([self.objects count] == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+        query.cachePolicy = kPFCachePolicyNetworkElseCache;//kPFCachePolicyCacheThenNetwork;
     }
     
     [query orderByDescending:@"createdAt"];
