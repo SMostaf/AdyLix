@@ -8,6 +8,7 @@
 #import "LocateController.h"
 #import "Parse/Parse.h"
 #include "ItemInfo.h"
+#define DESC_CUSTOM_TAG 1445
 
 @interface LocateController ()
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -23,7 +24,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
+    self.itemsArray = [[NSArray alloc]init];
+    [self.itemsTableView reloadData];
      UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
      _activityImageView = [[UIImageView alloc]
                           initWithImage:firstImage];
@@ -293,7 +295,9 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
-     // Configure the cell
+    
+    [[cell.contentView viewWithTag:DESC_CUSTOM_TAG]removeFromSuperview] ;
+    // Configure the cell
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
     nameLabel.text = @"";
     
@@ -308,7 +312,7 @@
     CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
     [descLabel removeFromSuperview];
-    
+    descLabel.tag = DESC_CUSTOM_TAG;
     descLabel.text = @"";
     descLabel.numberOfLines = 2;
     descLabel.textColor = [UIColor darkGrayColor];

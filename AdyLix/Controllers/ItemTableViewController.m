@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ItemTableViewController.h"
+#define DESC_CUSTOM_TAG 1444
 
 @interface ItemTableViewController()
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
@@ -95,7 +96,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
     
-
+    [[cell.contentView viewWithTag:DESC_CUSTOM_TAG]removeFromSuperview];
     // Configure the cell
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
     nameLabel.text = [object objectForKey:@"name"];
@@ -106,7 +107,7 @@
     //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
     CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
-    
+    descLabel.tag = DESC_CUSTOM_TAG;
     descLabel.numberOfLines = 2;
     descLabel.textColor = [UIColor darkGrayColor];
     descLabel.font = [UIFont systemFontOfSize:12];
