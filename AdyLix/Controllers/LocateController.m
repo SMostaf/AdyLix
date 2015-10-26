@@ -151,14 +151,6 @@
     [errorAlert show];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    NSLog(@"didUpdateToLocation: %@", newLocation);
-    CLLocation *currentLocation = newLocation;
-    
-  
-}
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
     
@@ -171,7 +163,11 @@
         NSLog(@"latitude %+.6f, longitude %+.6f\n",
               location.coordinate.latitude,
               location.coordinate.longitude);
-     
+        // keep updating current user location
+        PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: location];
+        [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+        [[PFUser currentUser] saveInBackground];
+
         [self getNearbyItems: location];
     }
 }
@@ -234,6 +230,9 @@
     //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
+    CGFloat km = 1.0f;
+    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.latitude] withinKilometers:(double)km];
+
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     //[usersQuery whereKey:@"email" notEqualTo:[[PFUser currentUser] email]];
     [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];

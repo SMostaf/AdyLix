@@ -81,7 +81,7 @@
     NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
     [item setObject:[NSDate date] forKey:@"timeStamp"];
     [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userObjectId"];
-    
+
     // item image
    
     NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);

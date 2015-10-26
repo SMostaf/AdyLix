@@ -202,8 +202,8 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2H-Ub-TPI">
-                                <rect key="frame" x="68" y="533" width="182" height="30"/>
-                                <state key="normal" title="Save"/>
+                                <rect key="frame" x="114" y="526" width="182" height="54"/>
+                                <state key="normal" backgroundImage="submit.jpg"/>
                                 <connections>
                                     <action selector="btnSave:" destination="efd-YN-fm2" eventType="touchUpInside" id="OZ4-32-P2c"/>
                                 </connections>
@@ -257,8 +257,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dR0-d8-tNz">
-                                <rect key="frame" x="275" y="82" width="73" height="30"/>
-                                <state key="normal" title="logout"/>
+                                <rect key="frame" x="15" y="299" width="316" height="58"/>
+                                <state key="normal" backgroundImage="signout.jpg"/>
                                 <connections>
                                     <action selector="btnLogout:" destination="xhh-gC-gby" eventType="touchUpInside" id="XaY-sJ-2fh"/>
                                 </connections>
@@ -345,6 +345,10 @@
             <point key="canvasLocation" x="-740" y="-778"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="signout.jpg" width="358" height="48"/>
+        <image name="submit.jpg" width="260" height="76"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="TBj-iQ-fQQ"/>
         <segue reference="hDC-Ga-2Z2"/>
