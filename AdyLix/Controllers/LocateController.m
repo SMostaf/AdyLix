@@ -7,7 +7,12 @@
 //
 #import "LocateController.h"
 #import "Parse/Parse.h"
+#import "Parse/PFImageView.h"
 #include "ItemInfo.h"
+#import "ItemCell.h"
+#import "PaymentHandler.h"
+
+
 #define DESC_CUSTOM_TAG 1445
 
 @interface LocateController ()
@@ -64,55 +69,7 @@
     
     [super viewDidLoad];
     
-//    self.alertShown = false;
-//    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
-//    _activityImageView = [[UIImageView alloc]
-//                                      initWithImage:firstImage];
-//    
-//    
-//    //Add more images which will be used for the animation
-//    _activityImageView.animationImages = [NSArray arrayWithObjects:
-//                                         [UIImage imageNamed:@"Icon@2x rot2.png"],
-//                                         [UIImage imageNamed:@"Icon@2x rot3.png"],
-//                                         [UIImage imageNamed:@"Icon@2x copy.png"],
-//                                         nil];
-//    
-//    
-//    _activityImageView.animationDuration = 0.8;
-//    
-//    
-//    //Position the activity image view somewhere in
-//    //the middle of your current view
-//    _activityImageView.frame = CGRectMake(
-//                                         self.view.frame.size.width/2
-//                                         -firstImage.size.width/2,
-//                                         self.view.frame.size.height/2
-//                                         -firstImage.size.height/2,
-//                                         firstImage.size.width,
-//                                         firstImage.size.height);
-//    
-//    [self.view addSubview:_activityImageView];
-//
-//    [_activityImageView startAnimating];
-//
-//    [self startStandardUpdates];
-   
-//    // update current user location for others to discover my items
-//    // #todo make sure this gets updated when user is on the move
-//    // if that is the case no
-//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-//        if (!error) {
-//            [_activityImageView stopAnimating];
-//            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
-//            self.geoPoint = geoPoint;
-//            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-//            [[PFUser currentUser] saveInBackground];
-//            
-//            [self startStandardUpdates];
-//            
-//        }
-//    }];
-    
+
 
  }
 
@@ -140,6 +97,8 @@
     
     _locationManager.allowsBackgroundLocationUpdates = YES;
     
+    [_locationManager requestAlwaysAuthorization ];
+    
     [_locationManager startUpdatingLocation];
 }
 
@@ -150,6 +109,7 @@
                                initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
 }
+
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
@@ -360,12 +320,25 @@
 
 
 - (IBAction)btnPurchase:(id)sender {
-    // show random message
-    NSArray *array = [NSArray arrayWithObjects: @"Purchase feature not available", @"The CEO is working on this feature herself!", @"This feature is going to be awesome!", @"Patience, feature coming soon!", @"We are glad you are interested in this feature, coming soon...", nil];
-    int random = arc4random()%[array count];
-    NSString *key = [array objectAtIndex:random];
-    
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Coming Soon", nil) message:NSLocalizedString(key, nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
+    NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        ItemCell *selectedCell = (ItemCell*)[self.itemsTableView cellForRowAtIndexPath:indexPath];
+        NSString *price = selectedCell.detailTextLabel.text;
+        
+        PaymentHandler* payHandler = [[PaymentHandler alloc] init];
+        
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:price];
+        
+        [payHandler pay: amount completion: ^(bool success){
+            if(!success)
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            else
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            
+        }];
+    }
 }
 
 @end

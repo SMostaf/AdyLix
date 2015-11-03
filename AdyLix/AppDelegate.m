@@ -10,6 +10,11 @@
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "Parse/Parse.h"
 
+#import "Stripe.h"
+
+NSString * const StripePublishableKey = @"sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
+
+
 @interface AppDelegate ()
 
 @end
@@ -18,9 +23,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // parse init
     [Parse setApplicationId:@"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" clientKey:@"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5"];
+    // stripe payment init
+    [Stripe setDefaultPublishableKey:StripePublishableKey];
     
-    // Override point for customization after application launch.
     return YES;
 }
 

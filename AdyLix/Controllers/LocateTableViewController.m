@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "LocateTableViewController.h"
 #import "ItemCell.h"
-
+#import "PaymentHandler.h"
 
 @interface LocateTableViewController()
 @end
@@ -109,12 +109,31 @@
 -(void)btnPurchase :(id)sender
 {
    // show random message
-    NSArray *array = [NSArray arrayWithObjects: @"Purchase feature not available", @"The CEO is working on this feature herself!", @"This feature is going to be awesome!", @"Patience, feature coming soon", nil];
+   /* NSArray *array = [NSArray arrayWithObjects: @"Purchase feature not available", @"The CEO is working on this feature herself!", @"This feature is going to be awesome!", @"Patience, feature coming soon", nil];
     int random = arc4random()%[array count];
     NSString *key = [array objectAtIndex:random];
     
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Coming Soon", nil) message:NSLocalizedString(key, nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    */
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        ItemCell *selectedCell = (ItemCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        NSString *price = selectedCell.detailTextLabel.text;
     
+       PaymentHandler* payHandler = [[PaymentHandler alloc] init];
+ 
+       NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:price];
+    
+        [payHandler pay: amount completion: ^(bool success){
+            if(!success)
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            else
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
+        }];
+    }
 }
 
 

@@ -316,9 +316,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <segue destination="efd-YN-fm2" kind="relationship" relationship="viewControllers" id="GV7-1X-RYv"/>
                         <segue destination="3Nw-8Z-tR3" kind="relationship" relationship="viewControllers" id="szV-6Y-VqL"/>
                         <segue destination="SwS-mF-R51" kind="relationship" relationship="viewControllers" id="TBj-iQ-fQQ"/>
-                        <segue destination="efd-YN-fm2" kind="relationship" relationship="viewControllers" id="GV7-1X-RYv"/>
                         <segue destination="xhh-gC-gby" kind="relationship" relationship="viewControllers" id="hDC-Ga-2Z2"/>
                     </connections>
                 </tabBarController>
