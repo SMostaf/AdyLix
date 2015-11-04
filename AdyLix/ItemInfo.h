@@ -12,6 +12,7 @@
 #include "Parse/Parse.h"
 
 @interface ItemInfo : NSObject
+@property NSString* objectId;
 @property NSString* name;
 @property NSString* desc;
 @property NSString* price;

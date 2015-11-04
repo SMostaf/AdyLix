@@ -9,48 +9,48 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "User.h"
-#import "UserInfo.h"
 
 @interface User()
-@property NSManagedObjectContext* managedObjectContext;
+@property NSString* parseClassName;
 @end
 
-@implementation User : NSObject 
+@implementation User : NSObject
 
--(void) saveUser:(NSString*) userId {
-     NSManagedObjectContext *context;
-    if ([self managedObjectContext] != nil)
-         context = [self managedObjectContext];
-    else
-    {
-        
-       _managedObjectContext = context = [[NSManagedObjectContext alloc]init];
-    }
-    
-    UserInfo *user = [NSEntityDescription
-                                      insertNewObjectForEntityForName:@"UserInfo"
-                                      inManagedObjectContext:context];
-    user.userID = userId;
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"couldn't save: %@", [error localizedDescription]);
-    }
+-(id) init {
+    self = [super init];
+    if(self)
+        self.parseClassName = @"ItemDetail";
+    return self;
 }
 
--(NSString*) getUserId {
-    NSError *error;
-    NSString* strId = [[NSString alloc] init];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"User" inManagedObjectContext:[self managedObjectContext]];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [[self managedObjectContext] executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *info in fetchedObjects) {
-        strId = [info valueForKey:@"userId"];
-       // NSManagedObject *details = [info valueForKey:@"details"];
-       // NSLog(@"Zip: %@", [details valueForKey:@"zip"]);
-    }
+-(PFUser*) getUserForItem:(NSString*) itemId {
     
-    return strId;
+    PFQuery* query = [PFQuery queryWithClassName:self.parseClassName];
+    [query whereKey:@"objectId" equalTo:itemId];
+    
+    PFUser* user = [query getFirstObject];
+
+    return user;
 }
+
+-(NSString*) getTokenId {
+    return [[PFUser currentUser] valueForKey:@"tokenId"];
+}
+
+-(NSString*) getBankId {
+    return [[PFUser currentUser] valueForKey:@"bankId"];
+}
+
+-(void) saveTokenId:(NSString*) tokenId {
+    [[PFUser currentUser] setObject:tokenId forKey:@"tokenId"];
+    [[PFUser currentUser] saveInBackground];
+
+}
+
+-(void) saveBankId:(NSString*) bankId {
+    [[PFUser currentUser] setObject:bankId forKey:@"bankId"];
+    [[PFUser currentUser] saveInBackground];
+   
+}
+
 @end

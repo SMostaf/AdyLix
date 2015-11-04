@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 
 #import "PaymentHandler.h"
-#import "Stripe.h"
+#import "Stripe/Stripe.h"
 #import "Parse/Parse.h"
 #import "STPTestPaymentAuthorizationViewController.h"
 #import "PaymentController.h"
+#import "User.h"
 
 #define MERCHANTID @"merchant.com.adylix"
+
 
 @implementation PaymentHandler
 
@@ -23,19 +25,44 @@
     
 }
 
--(void) pay: (NSDecimalNumber*) amount completion:(void (^)(bool))completion {
++(void) submitPayment: (NSString*) amount tokenId:(NSString*) tokenId
+               bankId:(NSString*) bankId completion:(void (^)(bool))completion {
+    Connector* connector = [Connector getConnector];
+    [connector submitPay:bankId token: tokenId amount: amount completion:
+     ^(NSData *data,
+       NSError *error) {
+         if (error) {
+             completion(PKPaymentAuthorizationStatusFailure);
+         } else {
+             completion(PKPaymentAuthorizationStatusSuccess);
+         }
+         
+     }];
+}
+
+-(void) pay: (NSString*) amount bankId:(NSString*) bankId completion:(void (^)(bool))completion {
     
-    if (![PFUser currentUser])
-        return;
+    User* userInfo = [[User alloc] init];
+    NSString* tokenId = [userInfo getTokenId];
+    // does user have a token already
+    // or first time registration
+    if (tokenId != nil)
+    {
+        [PaymentHandler submitPayment:amount tokenId: tokenId bankId: bankId completion: completion];
+    
+    } else {
     
     // show payment Dialogue
     PKPaymentRequest *request = [Stripe
                              paymentRequestWithMerchantIdentifier:MERCHANTID];
     // Configure your request here.
     NSString *label = @"Purchase Request";
+        
+    NSDecimalNumber *price = [NSDecimalNumber decimalNumberWithString:amount];
+        
     request.paymentSummaryItems = @[
                                     [PKPaymentSummaryItem summaryItemWithLabel:label
-                                                                        amount:amount]
+                                                                        amount:price]
                                     ];
     
     if ([Stripe canSubmitPaymentRequest:request]) {
@@ -58,6 +85,7 @@
 //#endif
 //        [self presentViewController:paymentController animated:YES completion:^{
 //            // if success
+        // delete item from Item Detail
 //            completion(true);
 //            return true;
 //
@@ -65,6 +93,7 @@
     
     } else {
         // Show the user your own credit card form (see options 2 or 3)
+    }
     }
 
 }

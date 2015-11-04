@@ -11,6 +11,7 @@
 #include "ItemInfo.h"
 #import "ItemCell.h"
 #import "PaymentHandler.h"
+#import "User.h"
 
 
 #define DESC_CUSTOM_TAG 1445
@@ -227,6 +228,7 @@
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
         ItemInfo *item = [[ItemInfo alloc] init];
+        item.objectId = itemsInfo[@"objectId"];
         item.name = itemsInfo[@"name"];
         item.desc = itemsInfo[@"description"];
         item.price = itemsInfo[@"price"];
@@ -324,14 +326,22 @@
     NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {
-        ItemCell *selectedCell = (ItemCell*)[self.itemsTableView cellForRowAtIndexPath:indexPath];
-        NSString *price = selectedCell.detailTextLabel.text;
+        ItemInfo *itemFound = self.itemsArray[indexPath.row];
+        NSString* itemId = itemFound.objectId;
+        // get price of item
+        NSString *price = itemFound.price;
         
+        User* userQuery = [[User alloc]init];
+        // get the recepient who owns this item
+        PFUser* recepient= [userQuery getUserForItem: itemId];
+        NSString* bankId = [recepient valueForKey:@"bankId"];
+        if(!bankId) {
+             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        }
+       // perform actual payment step
         PaymentHandler* payHandler = [[PaymentHandler alloc] init];
         
-        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:price];
-        
-        [payHandler pay: amount completion: ^(bool success){
+        [payHandler pay: price bankId: bankId completion: ^(bool success){
             if(!success)
                 [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
             else

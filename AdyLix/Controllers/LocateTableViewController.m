@@ -11,6 +11,7 @@
 #import "LocateTableViewController.h"
 #import "ItemCell.h"
 #import "PaymentHandler.h"
+#import "User.h"
 
 @interface LocateTableViewController()
 @end
@@ -120,11 +121,14 @@
     if (indexPath != nil)
     {
         ItemCell *selectedCell = (ItemCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        NSString* itemId =
+        User* userQuery = [[User alloc]init];
+        PFUser* recepient= [userQuery getUserForItem: itemId];
         NSString *price = selectedCell.detailTextLabel.text;
     
-       PaymentHandler* payHandler = [[PaymentHandler alloc] init];
+        PaymentHandler* payHandler = [[PaymentHandler alloc] init];
  
-       NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:price];
+        NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:price];
     
         [payHandler pay: amount completion: ^(bool success){
             if(!success)

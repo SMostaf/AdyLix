@@ -16,6 +16,7 @@
 @interface PaymentController()<STPPaymentCardTextFieldDelegate>
 @property(nonatomic) STPPaymentCardTextField *paymentTextField;
 // holds on to data with price and destination Id
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
 @property NSDictionary* data;
 @end
 
@@ -81,9 +82,9 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
     // don't ask user again
     // suingle use token
     NSString* strToken = token.tokenId;
-    //[[PFUser currentUser] setObject:strToken forKey:@"tokenId"];
-    
+    [[PFUser currentUser] setObject:strToken forKey:@"tokenId"];
 
+    
     Connector* connector = [Connector getConnector];
     //connector.delegate = self;
     [connector submitPay:self.data[@"bankId"] token: strToken amount: self.data[@"amount"] completion:
@@ -96,7 +97,6 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
          }
 
      }];
-    
     
 
     /*
