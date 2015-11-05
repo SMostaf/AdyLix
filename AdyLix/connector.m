@@ -16,7 +16,7 @@
 @interface Connector()
 -(void) doPost:(NSString*) url body: (NSString*) reqBody;
 @property (nonatomic,strong) RespHandler respHandler;
-
+@property NSString* lastServerError;
 @end
 
 static NSString* serverURL = @"https://api.parse.com/1/functions/";
@@ -104,34 +104,15 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     
 }
 
--(void) submitPay:(NSString*)userId token:(NSString*) token amount:(NSString*) amount
+-(void) submitPay:(NSString*)userId customerId:(NSString*) customerId amount:(NSString*) amount
       completion:(RespHandler) handler
 {
     
-    NSLog(@"Sending new User request");
-    
-    
-//    NSURL *url = [NSURL URLWithString:@"https://adylix.com/token"];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
-//    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    [NSURLConnection sendAsynchronousRequest:request
-//                                       queue:[NSOperationQueue mainQueue]
-//                           completionHandler:^(NSURLResponse *response,
-//                                               NSData *data,
-//                                               NSError *error) {
-//                               if (error) {
-//                                   completion(PKPaymentAuthorizationStatusFailure);
-//                               } else {
-//                                   completion(PKPaymentAuthorizationStatusSuccess);
-//                               }
-//                           }];
-    
+    NSLog(@"Sending new transaction request");
+
     NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:
-                              [NSArray arrayWithObjects:userId,token, amount, nil]
-                                                         forKeys:[NSArray arrayWithObjects:@"userId",@"identifier", @"value",nil]];
+                              [NSArray arrayWithObjects:userId,customerId, amount, nil]
+                                                         forKeys:[NSArray arrayWithObjects:@"sourceId",@"destinationId", @"value",nil]];
     NSError *jsonError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonError];
     if (jsonError != nil) {
@@ -168,128 +149,26 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
             }
         }
         else {
-            if(jsonDict[@"code"] != @"0")
+            if(jsonDict[@"code"])
             {
-               // error = [[NSError alloc]init];
-               // error.code = 1;
-                self.respHandler(nil, error);
+               NSNumberFormatter *num = [[NSNumberFormatter alloc] init];
+               NSError* retError = [[NSError alloc]initWithDomain:@"Received error From Server"
+                                                             code:[num numberFromString:jsonDict[@"code"]] userInfo:nil];
+                self.respHandler(nil, retError);
             }
-         /*  switch(state)
+            else
             {
-                // user registration
-                case AWAITING_USER: {
-                    
-                    if ([jsonDict[@"userId"] length] > 0)
-                    {
-                        userId = jsonDict[@"userId"];
-                       // [[[User alloc]init] saveUser:userId];
-                    }
-                    else
-                    {
-                        opState = CONNECTIONFAIL;
-                        NSLog(@"Error in registering user");
-                        self->lastServerError = [jsonDict objectForKey:@"error_msg"];
-                    }
-                }
-                    
-                break;
-                // nearby query
-                case AWAITING_LOC: {
-                   
-                    if ([tokenId length] > 0)
-                    {
-                        if ([jsonDict[@"client_token_b64"] length] > 0)// sw token response
-                        {
-                         //   CNResult* respData = [[CNResult alloc]init];
-                            NSData* tokenData = [jsonDict[@"client_token_b64"] dataUsingEncoding:NSUTF8StringEncoding];
-                          //  respData->data = [[NSString alloc] initWithData:tokenData encoding:NSUTF8StringEncoding];
-                           // respData->state = PROVISIONED;
-                            // delegate to model to save token
-                           // [self->modelDelegate performSelector:@selector(receiveData:) withObject: respData];
-                            return;
+                self.respHandler(jsonDict[@"result"], nil);
+            }
 
-                        }
-                    }
-                    else
-                    {
-                        //self->tokenId = @"";
-                        opState = PROVISIONEDFAIL;
-                        NSLog(@"Error in receiving token from server, error code: %@", jsonDict[@"code"]);
-                        self->lastServerError = [jsonDict objectForKey:@"error_msg"];
-                    }
-
-                }
-                break;
-                // query items for user
-                case AWAITING_ITEMS: {
-                    NSNumber* code = [jsonDict valueForKey:@"success"];
-                    bool successVal = [code boolValue];
-                    if(successVal == true) // no error codes
-                    {
-                        opState = VERIFIEDOTP;
-                    }
-                    else
-                    {
-                        //self->tokenId = @"";
-                        opState = VERIFIEDOTPFAIL;
-                        NSLog(@"Error in verifying otp from server");
-                    }
-                }
-                break;
-                // verifying attestation
-                case AWAITING_VERIFYATTEST: {
-                    bool successVal = [jsonDict objectForKey:@"success"];
-                    if(successVal == true) // no error codes
-                    {
-                        opState = VERIFIEDATTESTATION;
-                    }
-                    else
-                    {
-                        opState = VERIFIEDATTESTATIONFAIL;
-                        NSLog(@"Error in verifying attestation from server, error code: %@", jsonDict[@"code"]);
-                        self->lastServerError = [jsonDict objectForKey:@"error_msg"];
-                    }
-
-                    
-                }
-                break;
-                // Token resync
-                case AWAITING_RESYNC: {
-                    bool successVal = [jsonDict objectForKey:@"success"];
-                    if (successVal) {
-                        opState = RESYNCSUCCESSFUL;
-                        tokenResyncDataB64 = [jsonDict objectForKey:@"resync_data_b64"];
-                    }
-                    else {
-                        opState = RESYNCFAIL;
-                        tokenResyncDataB64 = @"";
-                        self->lastServerError = [jsonDict objectForKey:@"error_msg"];
-                        NSLog(@"Failure to resync: %@ (code %@)", self->lastServerError, jsonDict[@"code"]);
-                    }
-                }
-                break;
-                default:
-                {
-                    opState = CONNECTIONFAIL;
-                    NSLog(@"Error in receiving response from server");
-                }
-
-            }*/
         }
-        
-        self.respHandler(nil, error);
-     //   NSNumber *opStateVal = [NSNumber numberWithInt: opState];
-    //   [self.delegate performSelector:@selector(receiveStatus:) withObject: opStateVal];
-        
     }
     @catch(...)
     {
 //#TODO:
-        //tokenId = @"";
-       // NSNumber *opStateVal = [NSNumber numberWithInt: CONNECTIONFAIL];
-     //  [self.delegate performSelector:@selector(receiveStatus:) withObject: opStateVal];
-        NSError* error;
-        self.respHandler(nil, error);
+        NSError* retError = [[NSError alloc]initWithDomain:@"Received error From Server"
+                                                      code:1 userInfo:nil];
+        self.respHandler(nil, retError);
         NSLog(@"Exception in parsing response");
     }
 }
@@ -323,12 +202,9 @@ willCacheResponse:(NSCachedURLResponse*)cachedResponse {
    //[self.delegate performSelector:@selector(receiveStatus:) withObject:connectError];
 }
 
--(NSString*)getTokenResyncDataB64 {
-    return tokenResyncDataB64;
-}
 
 -(NSString*)getLastServerError {
-    return lastServerError;
+    return self.lastServerError;
 }
 
 @end

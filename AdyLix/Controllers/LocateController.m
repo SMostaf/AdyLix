@@ -323,8 +323,8 @@
         // user have a token already
 //        if (tokenId != nil)
 //        {
-//            [PaymentHandler submitPayment:price tokenId: tokenId bankId: bankId completion:^void(BOOL success) {
-//              handleResponse
+//            [PaymentHandler submitPayment:price tokenId: tokenId bankId: bankId completion:^void(BOOL success)        {
+//              [self handleResponse: success];
 //            }];
 //            
 //        } else
@@ -334,7 +334,7 @@
              payController.price = price;
              payController.bankId = bankId;
              payController.itemId = itemFound.objectId;
-            [self.navigationController pushViewController:payController animated:NO];
+             [self.navigationController pushViewController:payController animated:NO];
         }
     }
 }

@@ -18,63 +18,49 @@
 @interface PaymentController()<STPPaymentCardTextFieldDelegate>
  // holds on to data with price and destination Id
 @property(nonatomic) STPPaymentCardTextField *paymentTextField;
-@property (weak, nonatomic) IBOutlet UIButton *btnSave;
+@property (weak, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property NSDictionary* data;
 @end
 
 @implementation PaymentController
 
--(void) viewDidLoad {
+
+- (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(15, 15, CGRectGetWidth(self.view.frame) - 30, 44)];
-    //self.paymentTextField.set
-    self.paymentTextField.delegate = self;
-    [self.view addSubview:self.paymentTextField];
 
-    
-    UIViewController *paymentController;
-    // first time registration
-    // show payment Dialogue
-    PKPaymentRequest *request = [Stripe
-                                 paymentRequestWithMerchantIdentifier:MERCHANTID];
-    // Configure your request here.
-    NSString *pLabel = @"Purchase Request";
-    
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:self.price];
-    
-    request.paymentSummaryItems = @[
-                                    [PKPaymentSummaryItem summaryItemWithLabel:pLabel
-                                                                        amount:amount]
-                                    ];
-    //request.;
-    if ([Stripe canSubmitPaymentRequest:request]) {
-        
-#ifdef DEBUG
-        
-        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
-                             initWithPaymentRequest:request];
-        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
-        
-        
-        
-#else
-        paymentController = [[PKPaymentAuthorizationViewController alloc]
-                             initWithPaymentRequest:request];
-        paymentController.delegate = self;
-#endif
-        
-        [self presentViewController:paymentController animated:NO completion: nil];//^void(BOOL success) {
-        // if success
-        // delete item from Item Detail
-        // completion(true);
-        // return true;
-        //  }];
-        //}];
-    } else {
-        // Show the user your own credit card form (see options 2 or 3)
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"Purchase";
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
+    [self showPaymentOption];
+   // [self showStripeForm];
+
+    // Setup Activity Indicator
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator = activityIndicator;
+    [self.view addSubview:activityIndicator];
+    
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    CGFloat padding = 25;
+    CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
+    self.paymentTextField.frame = CGRectMake(padding, padding, width, 50);
+    
+    self.activityIndicator.center = self.view.center;
+}
+
+- (void)paymentCardTextFieldDidChange:(nonnull STPPaymentCardTextField *)textField {
+    self.navigationItem.rightBarButtonItem.enabled = textField.isValid;
+}
+
+- (void)cancel:(id)sender {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(id) initWithInfo:(NSString*) price bankId:(NSString*) bankId {
@@ -84,8 +70,6 @@
     {
         self.price = price;
         self.bankId = bankId;
-        NSString* strPrice = self.price;// [NSString stringWithFormat:@"%@%@", @"$", self.price];
-        [self.btnSave setTitle:strPrice forState:UIControlStateNormal];
     }
     return self;
 }
@@ -96,37 +80,81 @@
     self.data = data;
 }
 
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//    self.paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(15, 15, CGRectGetWidth(self.view.frame) - 30, 44)];
-//    //self.paymentTextField.set
-//    self.paymentTextField.delegate = self;
-//    [self.view addSubview:self.paymentTextField];
-//}
+// show stripe card form
+-(void) showStripeForm {
+    
+    // Setup save button
+    NSString *title = [NSString stringWithFormat:@"Pay $%@", self.price];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    saveButton.enabled = NO;
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
+    // Setup payment view
+    STPPaymentCardTextField *paymentTextField = [[STPPaymentCardTextField alloc] init];
+    paymentTextField.delegate = self;
+    // paymentTextField.cursorColor = [UIColor purpleColor];
+    self.paymentTextField = paymentTextField;
+    [self.view addSubview:paymentTextField ];
+    
 
+}
+
+-(void) showPaymentOption {
+    
+    UIViewController *paymentController;
+    // first time registration
+    // show payment Dialogue
+    PKPaymentRequest *request = [Stripe
+                                 paymentRequestWithMerchantIdentifier:MERCHANTID];
+    // Configure your request here.
+    NSString *pLabel = @"Purchase Request";
+
+    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:self.price];
+
+    request.paymentSummaryItems = @[
+                                    [PKPaymentSummaryItem summaryItemWithLabel:pLabel
+                                                                        amount:amount]
+                                    ];
+
+    if ([Stripe canSubmitPaymentRequest:request]) {
+
+#ifdef DEBUG
+
+        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
+                             initWithPaymentRequest:request];
+        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
+
+#else
+        paymentController = [[PKPaymentAuthorizationViewController alloc]
+                             initWithPaymentRequest:request];
+        paymentController.delegate = self;
+#endif
+
+        [self presentViewController:paymentController animated:NO completion: nil];
+     //      [self.navigationController pushViewController:paymentController animated:NO];
+    
+    } else {
+       // show stripe card text
+        [self showStripeForm];
+    }
+
+
+}
 - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
 didAuthorizePayment:(PKPayment *)payment
 completion:(void (^)(PKPaymentAuthorizationStatus))completion {
-    /*
-     We'll implement this method below in 'Creating a single-use token'.
-     Note that we've also been given a block that takes a
-     PKPaymentAuthorizationStatus. We'll call this function with either
-     PKPaymentAuthorizationStatusSuccess or PKPaymentAuthorizationStatusFailure
-     after all of our asynchronous code is finished executing. This is how the
-     PKPaymentAuthorizationViewController knows when and how to update its UI.
-     */
+ 
     [self handlePaymentAuthorizationWithPayment:payment completion:completion];
 }
 
 - (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+    [self dismissViewControllerAnimated:NO completion:nil];
+   
+    [self.navigationController popToRootViewControllerAnimated:YES];
 
-- (void)paymentCardTextFieldDidChange:(STPPaymentCardTextField *)textField {
-        // Toggle navigation, for example
-       // self.saveButton.enabled = textField.isValid;
-    }
+}
 
 
 - (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
@@ -151,12 +179,30 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
     // suingle use token
     NSString* strTtoken = token.tokenId;
     [PaymentHandler registerSender:strTtoken item:self.itemId bankId:self.bankId amount:self.price completion:^(PKPaymentAuthorizationStatus status) {
-               completion(status);
+        if(status == PKPaymentAuthorizationStatusSuccess)
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Thank you for your payment.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
+            else
+            {
+                NSError* error = [[NSError alloc]initWithDomain:@"Received error From Server"
+                                                              code:2 userInfo:nil];
+                
+                [self handleError:error];
+            }
+        
+        completion(status);
     }];
 
 }
 
+-(void) handleError:(NSError*) error
+{
+    if(error)
+      NSLog(@"Error during payment %@, %@", error, [error userInfo]);
 
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, transaction failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
+}
 // #TODO: add scan card feature using camera
 // Ongetting token, charge using sripe
 - (IBAction)save:(id)sender {
@@ -173,7 +219,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
     [[STPAPIClient sharedClient] createTokenWithCard:card
                                           completion:^(STPToken *token, NSError *error) {
                                               if (error) {
-                                                  //[self handleError:error];
+                                                  [self handleError:error];
                                               } else {
                                                   [self createBackendChargeWithToken:token completion:^(PKPaymentAuthorizationStatus status) {
                                              

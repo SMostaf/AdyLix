@@ -20,45 +20,30 @@
 
 @implementation PaymentHandler
 
-// contact our backend
-+(void) submitPayment: (NSString*) amount tokenId:(NSString*) tokenId
-               bankId:(NSString*) bankId completion:(void (^)(bool))completion {
-    Connector* connector = [[Connector alloc]init];
-    [connector submitPay:bankId token: tokenId amount: amount completion:
-     ^(NSData *data,
-       NSError *error) {
-         if (error) {
-             completion(PKPaymentAuthorizationStatusFailure);
-         } else {
-             completion(PKPaymentAuthorizationStatusSuccess);
-         }
-         
-     }];
-}
-
 +(void) registerSender:(NSString*) token item:(NSString*) itemId bankId:(NSString*) bankId amount:(NSString*) price completion:
 (void (^)(PKPaymentAuthorizationStatus))completion {
-    
+@try
+{
     Connector* connector = [[Connector alloc] init];
     [connector registerSender:token name:[[PFUser currentUser] valueForKey:@"username"]  email:[[PFUser currentUser] valueForKey:@"email"] completion:
-     ^(NSData *data,
+     ^(NSDictionary *custData,
        NSError *error) {
-         if (error) {
+         if (error || custData[@"tokenId"] == nil) {
              completion(PKPaymentAuthorizationStatusFailure);
          } else {
+             // update user customerId
+             PFUser* user = [PFUser currentUser];
+             [user setValue: custData[@"tokenId"] forKey:@"tokenId"];
+             [user save];
+             
              // success transmit payment
-             [connector submitPay:bankId token: token amount: price completion:
-              ^(NSData *data,
+             [connector submitPay:bankId customerId: custData[@"tokenId"] amount: price completion:
+              ^(NSDictionary *payData,
                 NSError *error) {
                   if (error) {
                       completion(PKPaymentAuthorizationStatusFailure);
                   } else {
-                      // update user token
-                      PFUser* user = [PFUser currentUser];
-                      [user setValue: token forKey:@"tokenId"];
-                      [user save];
-                      
-                      // delete item
+                     // delete item
                       NSString* itemClassName = @"itemDetail";
                       PFQuery* query = [PFQuery queryWithClassName:itemClassName];
                       [query whereKey:@"objectId" equalTo:itemId];
@@ -70,5 +55,9 @@
               }];
          }
      }];
+}@catch(NSException* exp)
+    {
+         completion(PKPaymentAuthorizationStatusFailure);
+    }
 }
 @end
