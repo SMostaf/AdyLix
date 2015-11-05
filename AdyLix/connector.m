@@ -23,16 +23,6 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
 
 @implementation Connector
 
-//-(void) setDelegate:(id<ConnectionResultHandler>)delegate
-//{
-//    self->modelDelegate = delegate;
-//    self->lastServerError = [[NSString alloc] init];
-//}
-
-//-(void) setUIDelegate:(id<UIHandler>) callback
-//{
-//  self->uiDelegate = callback;
-//}
 -(void) doPost:(NSString*) url body: (NSString*) reqBody {
 
     NSLog(@"jsonRequest is %@", reqBody);
@@ -60,6 +50,59 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     [connection start];
 }
 
+// register token for purchaser
+-(void) registerSender:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler {
+    
+    
+    NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:
+                              [NSArray arrayWithObjects:name, email,tokenId, nil]
+                                                         forKeys:[NSArray arrayWithObjects:@"userName", @"userEmail",@"sourceId", nil]];
+    NSError *jsonError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonError];
+    if (jsonError != nil) {
+        NSLog(@"Error parsing JSON.");
+        return;
+    }
+    NSString* reqBody = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (reqBody == nil)
+    {
+        NSLog(@"Request Error body is nil!");
+        return;
+    }
+    
+    self.respHandler = handler;
+    
+    [self doPost: @"registerSender" body: reqBody];
+
+    
+}
+
+// register bank info of recepient of transaction
+-(void) registerRecepient:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler {
+    
+    
+    NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:
+                              [NSArray arrayWithObjects:name, email, tokenId, nil]
+                                                         forKeys:[NSArray arrayWithObjects:@"userName", @"userEmail",@"sourceId", nil]];
+    NSError *jsonError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonError];
+    if (jsonError != nil) {
+        NSLog(@"Error parsing JSON.");
+        return;
+    }
+    NSString* reqBody = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (reqBody == nil)
+    {
+        NSLog(@"Request Error body is nil!");
+        return;
+    }
+    
+    self.respHandler = handler;
+    
+    [self doPost: @"registerRecepient" body: reqBody];
+    
+    
+}
 
 -(void) submitPay:(NSString*)userId token:(NSString*) token amount:(NSString*) amount
       completion:(RespHandler) handler
@@ -104,7 +147,7 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     
     self.respHandler = handler;
     
-    [self doPost: @"/transfer" body: reqBody];
+    [self doPost: @"transfer" body: reqBody];
 }
 
 
@@ -125,6 +168,12 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
             }
         }
         else {
+            if(jsonDict[@"code"] != @"0")
+            {
+               // error = [[NSError alloc]init];
+               // error.code = 1;
+                self.respHandler(nil, error);
+            }
          /*  switch(state)
             {
                 // user registration

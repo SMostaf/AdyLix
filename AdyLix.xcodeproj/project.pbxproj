@@ -65,6 +65,7 @@
 		0A69A3191BD857F400342750 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3181BD857F400342750 /* CoreLocation.framework */; };
 		0A69A31B1BD8580A00342750 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A31A1BD8580A00342750 /* MobileCoreServices.framework */; };
 		0A6CE0971BE85ECA00A1E6DF /* connector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CE0961BE85ECA00A1E6DF /* connector.m */; };
+		0A83B26F1BEB20B6002DA2DD /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A83B26E1BEB20B6002DA2DD /* Item.m */; };
 		0A86A30E1BE9DBC8001245D7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A86A30D1BE9DBC8001245D7 /* User.m */; };
 		0A86A3101BE9E458001245D7 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A86A30F1BE9E458001245D7 /* PassKit.framework */; };
 		0A86A3121BE9E48C001245D7 /* libStripe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A86A3111BE9E48C001245D7 /* libStripe.a */; };
@@ -176,6 +177,8 @@
 		0A6CE0961BE85ECA00A1E6DF /* connector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = connector.m; sourceTree = "<group>"; };
 		0A6CE0991BE88ADB00A1E6DF /* libParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParse.a; path = "Pods/../build/Debug-iphoneos/libParse.a"; sourceTree = "<group>"; };
 		0A6CE0A51BE88BF300A1E6DF /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Frameworks/Parse.framework; sourceTree = "<group>"; };
+		0A83B26D1BEB20B6002DA2DD /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Models/Item.h; sourceTree = "<group>"; };
+		0A83B26E1BEB20B6002DA2DD /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Models/Item.m; sourceTree = "<group>"; };
 		0A86A30C1BE9DBC8001245D7 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Models/User.h; sourceTree = "<group>"; };
 		0A86A30D1BE9DBC8001245D7 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Models/User.m; sourceTree = "<group>"; };
 		0A86A30F1BE9E458001245D7 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
@@ -266,6 +269,8 @@
 		0A4E31341BD47D33004776A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0A83B26D1BEB20B6002DA2DD /* Item.h */,
+				0A83B26E1BEB20B6002DA2DD /* Item.m */,
 				0A86A30C1BE9DBC8001245D7 /* User.h */,
 				0A86A30D1BE9DBC8001245D7 /* User.m */,
 				0A4FA01A1BD96737003ED366 /* ItemInfo.m */,
@@ -277,6 +282,8 @@
 		0A4E31351BD47D38004776A2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0A4E313A1BD47D48004776A2 /* LocateController.h */,
+				0A4E313B1BD47D48004776A2 /* LocateController.m */,
 				0A6CE0981BE8716B00A1E6DF /* Payment */,
 				0A47BC851BDAB9D000D362B9 /* ItemListViewController.h */,
 				0A47BC861BDAB9D000D362B9 /* ItemListViewController.m */,
@@ -285,8 +292,6 @@
 				0A4FA01D1BD99C6F003ED366 /* UI */,
 				0A4E31381BD47D48004776A2 /* ItemsController.h */,
 				0A4E31391BD47D48004776A2 /* ItemsController.m */,
-				0A4E313A1BD47D48004776A2 /* LocateController.h */,
-				0A4E313B1BD47D48004776A2 /* LocateController.m */,
 				0A4E313C1BD47D48004776A2 /* UserController.h */,
 				0A4E313D1BD47D48004776A2 /* UserController.m */,
 				0A4FA0141BD956CF003ED366 /* SignUpViewController.m */,
@@ -705,6 +710,7 @@
 				0A4F0ABD1BD4656000C8A8D0 /* AdyLix.xcdatamodeld in Sources */,
 				0A8B5C851BE6DDA6002EA0D6 /* PaymentHandler.m in Sources */,
 				0A4E31411BD47D48004776A2 /* UserController.m in Sources */,
+				0A83B26F1BEB20B6002DA2DD /* Item.m in Sources */,
 				0A4FA0261BD99C7D003ED366 /* MBProgressHUD.m in Sources */,
 				0A4FA0281BD99FC8003ED366 /* ItemTableViewController.m in Sources */,
 				0A4FA0151BD956CF003ED366 /* SignUpViewController.m in Sources */,

@@ -26,11 +26,9 @@ typedef void(^RespHandler)(NSData* __nullable, NSError* __nullable);
     NSString* lastServerError;
     
 }
-//@property (assign) id<ConnectionResultHandler> delegate;
 
-+(Connector*) getConnector;
-//-(void) setDelegate:(id<ConnectionResultHandler>)delegate;
-
+-(void) registerSender:(NSString*) tokenId name:(NSString*)name email:(NSString*) email  completion:(RespHandler) handler;
+-(void) registerRecepient:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler;
 -(void) submitPay:(NSString*)userId token:(NSString*) token amount:(NSString*) amount completion:(RespHandler) handler;
 //-(NSString*) getServerTokenId;
 //-(void) setServerTokenId:(NSString*) stoken;

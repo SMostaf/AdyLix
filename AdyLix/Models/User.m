@@ -23,12 +23,10 @@
     return self;
 }
 
--(PFUser*) getUserForItem:(NSString*) itemId {
-    
-    PFQuery* query = [PFQuery queryWithClassName:self.parseClassName];
-    [query whereKey:@"objectId" equalTo:itemId];
-    
-    PFUser* user = [query getFirstObject];
+-(PFUser*) getUserForId:(NSString*) userId {
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"objectId" equalTo:userId];
+    PFUser *user = (PFUser *)[query getFirstObject];
 
     return user;
 }

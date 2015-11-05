@@ -11,8 +11,8 @@
 #import "PaymentHandler.h"
 #import "Stripe/Stripe.h"
 #import "Parse/Parse.h"
-#import "STPTestPaymentAuthorizationViewController.h"
-#import "PaymentController.h"
+
+
 #import "User.h"
 
 #define MERCHANTID @"merchant.com.adylix"
@@ -20,14 +20,10 @@
 
 @implementation PaymentHandler
 
-// connection on receiving status of payment
--(void) receiveData:(bool) status {
-    
-}
-
+// contact our backend
 +(void) submitPayment: (NSString*) amount tokenId:(NSString*) tokenId
                bankId:(NSString*) bankId completion:(void (^)(bool))completion {
-    Connector* connector = [Connector getConnector];
+    Connector* connector = [[Connector alloc]init];
     [connector submitPay:bankId token: tokenId amount: amount completion:
      ^(NSData *data,
        NSError *error) {
@@ -40,62 +36,39 @@
      }];
 }
 
--(void) pay: (NSString*) amount bankId:(NSString*) bankId completion:(void (^)(bool))completion {
++(void) registerSender:(NSString*) token item:(NSString*) itemId bankId:(NSString*) bankId amount:(NSString*) price completion:
+(void (^)(PKPaymentAuthorizationStatus))completion {
     
-    User* userInfo = [[User alloc] init];
-    NSString* tokenId = [userInfo getTokenId];
-    // does user have a token already
-    // or first time registration
-    if (tokenId != nil)
-    {
-        [PaymentHandler submitPayment:amount tokenId: tokenId bankId: bankId completion: completion];
-    
-    } else {
-    
-    // show payment Dialogue
-    PKPaymentRequest *request = [Stripe
-                             paymentRequestWithMerchantIdentifier:MERCHANTID];
-    // Configure your request here.
-    NSString *label = @"Purchase Request";
-        
-    NSDecimalNumber *price = [NSDecimalNumber decimalNumberWithString:amount];
-        
-    request.paymentSummaryItems = @[
-                                    [PKPaymentSummaryItem summaryItemWithLabel:label
-                                                                        amount:price]
-                                    ];
-    
-    if ([Stripe canSubmitPaymentRequest:request]) {
-        PaymentController *paymentController;
-        NSString* bankId = [[PFUser currentUser] valueForKey:@"bankId"];
-        NSDictionary *dictData = [NSDictionary dictionaryWithObjects:
-                                  [NSArray arrayWithObjects:bankId, amount, nil]
-                                                             forKeys:[NSArray arrayWithObjects:@"bankId", @"value",nil]];
-        
-        [paymentController initWithData: dictData];
-        
-//#ifdef DEBUG
-//        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
-//                             initWithPaymentRequest:request];
-//        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
-//#else
-//        paymentController = [[PKPaymentAuthorizationViewController alloc]
-//                             initWithPaymentRequest:request];
-//        paymentController.delegate = self;
-//#endif
-//        [self presentViewController:paymentController animated:YES completion:^{
-//            // if success
-        // delete item from Item Detail
-//            completion(true);
-//            return true;
-//
-//        }];
-    
-    } else {
-        // Show the user your own credit card form (see options 2 or 3)
-    }
-    }
-
+    Connector* connector = [[Connector alloc] init];
+    [connector registerSender:token name:[[PFUser currentUser] valueForKey:@"username"]  email:[[PFUser currentUser] valueForKey:@"email"] completion:
+     ^(NSData *data,
+       NSError *error) {
+         if (error) {
+             completion(PKPaymentAuthorizationStatusFailure);
+         } else {
+             // success transmit payment
+             [connector submitPay:bankId token: token amount: price completion:
+              ^(NSData *data,
+                NSError *error) {
+                  if (error) {
+                      completion(PKPaymentAuthorizationStatusFailure);
+                  } else {
+                      // update user token
+                      PFUser* user = [PFUser currentUser];
+                      [user setValue: token forKey:@"tokenId"];
+                      [user save];
+                      
+                      // delete item
+                      NSString* itemClassName = @"itemDetail";
+                      PFQuery* query = [PFQuery queryWithClassName:itemClassName];
+                      [query whereKey:@"objectId" equalTo:itemId];
+                      PFObject* item = [query getFirstObject];
+                      [item deleteInBackground];
+                      
+                      completion(PKPaymentAuthorizationStatusSuccess);
+                  }
+              }];
+         }
+     }];
 }
-
 @end

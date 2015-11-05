@@ -62,6 +62,7 @@
                                                     </state>
                                                     <connections>
                                                         <action selector="btnPurchase:" destination="SwS-mF-R51" eventType="touchUpInside" id="94U-k9-lP8"/>
+                                                        <segue destination="PK8-1Q-Jjs" kind="show" id="lhO-4Y-2oy"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -133,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EPZ-ps-nFB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2690" y="1015"/>
+            <point key="canvasLocation" x="2417" y="971"/>
         </scene>
         <!--My Items-->
         <scene sceneID="FMw-Fu-R0a">

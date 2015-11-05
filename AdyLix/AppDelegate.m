@@ -12,7 +12,7 @@
 
 #import "Stripe.h"
 
-NSString * const StripePublishableKey = @"sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
+NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
 
 
 @interface AppDelegate ()

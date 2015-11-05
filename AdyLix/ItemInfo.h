@@ -13,6 +13,7 @@
 
 @interface ItemInfo : NSObject
 @property NSString* objectId;
+@property NSString* userObjectId;
 @property NSString* name;
 @property NSString* desc;
 @property NSString* price;

@@ -68,29 +68,6 @@
      return query;
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView
-//         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//                        object:(PFObject *)object {
-//    static NSString *CellIdentifier = @"Cell";
-//    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-//                                      reuseIdentifier:CellIdentifier];
-//    }
-//    
-//    // Configure the cell to show todo item with a priority at the bottom
-//    cell.textLabel.text = [object objectForKey:@"name"];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
-//    PFFile *imageFile = [object objectForKey:@"imageFile"];
-//    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//            cell.imageView.image = [UIImage imageWithData:data];
-//    }];
-//     
-//     return cell;
-//}
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
     static NSString *itemTableIdentifier = @"ItemCell";

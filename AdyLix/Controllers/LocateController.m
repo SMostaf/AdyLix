@@ -5,15 +5,19 @@
 //  Created by Sahar Mostafa on 10/15/15.
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
+#import <Addressbook/ABPerson.h>
 #import "LocateController.h"
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
-#include "ItemInfo.h"
+#import "ItemInfo.h"
 #import "ItemCell.h"
 #import "PaymentHandler.h"
+#import "PaymentController.h"
 #import "User.h"
+#import "Item.h"
+#import "Stripe/Stripe.h"
 
-
+#define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
 
 @interface LocateController ()
@@ -23,6 +27,7 @@
 @property (nonatomic, copy) NSArray* itemsArray;
 @property UIImageView *activityImageView;
 @property BOOL alertShown;
+@property Connector* connector;
 @end
 
 @implementation LocateController
@@ -31,6 +36,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     self.itemsArray = [[NSArray alloc]init];
+  //  self.connector = = [Connector getConnector];
     [self.itemsTableView reloadData];
      UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
      _activityImageView = [[UIImageView alloc]
@@ -133,102 +139,69 @@
     }
 }
 
+-(void) shareBlock {
+      // add default item to be added
+      NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
+      ItemInfo *item = [[ItemInfo alloc] init];
+      item.name = @"unknown-default";
+      
+      [items addObject:item];
+      
+      self.itemsArray = items;
+      
+      [self.itemsTableView reloadData];
+      
+      // no items nearby
+      // show share action
+      [_activityImageView stopAnimating];
+      _activityImageView.hidden = YES;
+      
+      [self.locationManager stopUpdatingLocation];
+      
+      if(!self.alertShown)
+      {
+          self.alertShown = true;
+          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+          
+          
+          NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
+          NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
+          
+          NSArray *objectsToShare = @[textToShare, website];
+          
+          UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+          
+          NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                         UIActivityTypePrint,
+                                         UIActivityTypeAssignToContact,
+                                         UIActivityTypeSaveToCameraRoll,
+                                         UIActivityTypeAddToReadingList,
+                                         UIActivityTypePostToFlickr,
+                                         UIActivityTypePostToVimeo];
+          
+          activityController.excludedActivityTypes = excludeActivities;
+          
+          
+          [self presentViewController:activityController animated:YES completion:nil];
+      }
+}
+
 -(void) getNearbyItems:(CLLocation*) location {
-    
-    void (^shareBlock)(void) = ^{
-        // add default item to be added 
-        NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
-        ItemInfo *item = [[ItemInfo alloc] init];
-        item.name = @"unknown-default";
-        
-        [items addObject:item];
-
-        self.itemsArray = items;
-        
-        [self.itemsTableView reloadData];
-        
-        // no items nearby
-        // show share action
-        [_activityImageView stopAnimating];
-        _activityImageView.hidden = YES;
-
-        [self.locationManager stopUpdatingLocation];
-        
-        if(!self.alertShown)
-        {
-            self.alertShown = true;
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-            
-            
-            NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
-            NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
-            
-            NSArray *objectsToShare = @[textToShare, website];
-            
-            UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-            
-            NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                           UIActivityTypePrint,
-                                           UIActivityTypeAssignToContact,
-                                           UIActivityTypeSaveToCameraRoll,
-                                           UIActivityTypeAddToReadingList,
-                                           UIActivityTypePostToFlickr,
-                                           UIActivityTypePostToVimeo];
-            
-            activityController.excludedActivityTypes = excludeActivities;
-            
-            
-            [self presentViewController:activityController animated:YES completion:nil];
-        }
-
-    };
-    
-    // #TODO: move to a class with completion block
-    
-    // get users nearby
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLocation: location];
-    // Create a query for places
-    //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
-    PFQuery *usersQuery = [PFUser query];
-    // Interested in locations near user
-    CGFloat km = 1.0f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.latitude] withinKilometers:(double)km];
-
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    //[usersQuery whereKey:@"email" notEqualTo:[[PFUser currentUser] email]];
-    [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
-    //[usersQuery orderByAscending:@"orderByAscending"];
-
-    // Limit what could be a lot of points.
-    usersQuery.limit = 100;
-    
-    NSArray* arrUsers = [usersQuery findObjects];
-    // no users nearby
-    if(arrUsers.count == 0)
-    {
-        shareBlock();
-        return;
-    }
-
-    // query nearby users and find their items
-    PFQuery *query = [PFQuery queryWithClassName:@"ItemDetail"];
-    NSMutableArray *arrUsersItems=[[NSMutableArray alloc]init];
-    for (PFObject *object in arrUsers) {
-        [arrUsersItems addObject:[object objectId]];
-    }
-    [query whereKey:@"userObjectId" containedIn:arrUsersItems];
-    //[query orderByDescending:@"createdAt"];
-    NSArray* arrItemsFound = [query findObjects];
+    // query db for nearby items
+    NSArray* arrItemsFound = [Item getItemsNearby:location];
     if(arrItemsFound.count == 0)
     {
-        shareBlock();
+        // no items found, ask user to share adylix link
+        [self shareBlock];
         return;
     }
+    
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
         ItemInfo *item = [[ItemInfo alloc] init];
-        item.objectId = itemsInfo[@"objectId"];
+        item.objectId = [itemsInfo valueForKey:@"objectId"];
+        item.userObjectId = itemsInfo[@"userObjectId"];
         item.name = itemsInfo[@"name"];
         item.desc = itemsInfo[@"description"];
         item.price = itemsInfo[@"price"];
@@ -237,17 +210,15 @@
         
         [items addObject:item];
     }
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        self.itemsArray = items;
 
-        [self.itemsTableView reloadData];
-    
-   // });
+    self.itemsArray = items;
+   [self.itemsTableView reloadData];
+
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
 
 }
-
+// --------------------------------------------- table view handlers -------------------------------------- //
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *itemTableIdentifier = @"ItemCell";
@@ -262,9 +233,6 @@
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
     nameLabel.text = @"";
     
-    //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
-    //descLabel.numberOfLines = 2;
-  //  descLabel.frame = contentRect;
     UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
     priceLabel.text = @"";
     
@@ -320,34 +288,54 @@
     return [self.itemsArray count];
 }
 
+// -------------------------------------- payment flow ----------------------------------------------- //
+-(void) handleResponse:(bool) success {
+    
+    if(!success)
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    else
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
+}
 
 - (IBAction)btnPurchase:(id)sender {
+    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
     NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {
         ItemInfo *itemFound = self.itemsArray[indexPath.row];
-        NSString* itemId = itemFound.objectId;
+        NSString* userId = itemFound.userObjectId;
         // get price of item
         NSString *price = itemFound.price;
-        
-        User* userQuery = [[User alloc]init];
         // get the recepient who owns this item
-        PFUser* recepient= [userQuery getUserForItem: itemId];
+        User* userQuery = [[User alloc]init];
+        PFUser* recepient= [userQuery getUserForId: userId];
+        // get token for recepient
         NSString* bankId = [recepient valueForKey:@"bankId"];
         if(!bankId) {
-             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         }
-       // perform actual payment step
-        PaymentHandler* payHandler = [[PaymentHandler alloc] init];
+
+        // show payment forms
+        User* userInfo = [[User alloc] init];
+        NSString* tokenId = [userInfo getTokenId];
+        // user have a token already
+//        if (tokenId != nil)
+//        {
+//            [PaymentHandler submitPayment:price tokenId: tokenId bankId: bankId completion:^void(BOOL success) {
+//              handleResponse
+//            }];
+//            
+//        } else
+        {
         
-        [payHandler pay: price bankId: bankId completion: ^(bool success){
-            if(!success)
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-            else
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-            
-        }];
+            PaymentController* payController = [[PaymentController alloc] init];
+             payController.price = price;
+             payController.bankId = bankId;
+             payController.itemId = itemFound.objectId;
+            [self.navigationController pushViewController:payController animated:NO];
+        }
     }
 }
 
