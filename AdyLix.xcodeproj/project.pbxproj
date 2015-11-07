@@ -65,6 +65,8 @@
 		0A69A3191BD857F400342750 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3181BD857F400342750 /* CoreLocation.framework */; };
 		0A69A31B1BD8580A00342750 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A31A1BD8580A00342750 /* MobileCoreServices.framework */; };
 		0A6CE0971BE85ECA00A1E6DF /* connector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CE0961BE85ECA00A1E6DF /* connector.m */; };
+		0A6E7AD51BEDAA0E008AA02D /* RecipientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E7AD21BEDAA0E008AA02D /* RecipientController.m */; };
+		0A6E7AD61BEDAA0E008AA02D /* SenderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6E7AD41BEDAA0E008AA02D /* SenderController.m */; };
 		0A83B26F1BEB20B6002DA2DD /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A83B26E1BEB20B6002DA2DD /* Item.m */; };
 		0A86A30E1BE9DBC8001245D7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A86A30D1BE9DBC8001245D7 /* User.m */; };
 		0A86A3101BE9E458001245D7 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A86A30F1BE9E458001245D7 /* PassKit.framework */; };
@@ -72,7 +74,7 @@
 		0A86A31F1BE9EC0D001245D7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6CE0A51BE88BF300A1E6DF /* Parse.framework */; };
 		0A86A3211BE9EC81001245D7 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A86A3201BE9EC81001245D7 /* FacebookSDKStrings.bundle */; };
 		0A8B5C851BE6DDA6002EA0D6 /* PaymentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */; };
-		0A8B5C881BE6EC45002EA0D6 /* PaymentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8B5C871BE6EC45002EA0D6 /* PaymentController.m */; };
+		0A8D57A71BED711500511D17 /* libTTTAttributedLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */; };
 		0AF64EE41BDBE69300B9B9EB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */; };
 		5D602108820033D6984ECD28 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AE1E08B79FC53714547FB1 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -177,6 +179,10 @@
 		0A6CE0961BE85ECA00A1E6DF /* connector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = connector.m; sourceTree = "<group>"; };
 		0A6CE0991BE88ADB00A1E6DF /* libParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParse.a; path = "Pods/../build/Debug-iphoneos/libParse.a"; sourceTree = "<group>"; };
 		0A6CE0A51BE88BF300A1E6DF /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Frameworks/Parse.framework; sourceTree = "<group>"; };
+		0A6E7AD11BEDAA0E008AA02D /* RecipientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecipientController.h; path = Controllers/Payment/RecipientController.h; sourceTree = "<group>"; };
+		0A6E7AD21BEDAA0E008AA02D /* RecipientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecipientController.m; path = Controllers/Payment/RecipientController.m; sourceTree = "<group>"; };
+		0A6E7AD31BEDAA0E008AA02D /* SenderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SenderController.h; path = Controllers/Payment/SenderController.h; sourceTree = "<group>"; };
+		0A6E7AD41BEDAA0E008AA02D /* SenderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SenderController.m; path = Controllers/Payment/SenderController.m; sourceTree = "<group>"; };
 		0A83B26D1BEB20B6002DA2DD /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Models/Item.h; sourceTree = "<group>"; };
 		0A83B26E1BEB20B6002DA2DD /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Models/Item.m; sourceTree = "<group>"; };
 		0A86A30C1BE9DBC8001245D7 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Models/User.h; sourceTree = "<group>"; };
@@ -192,8 +198,7 @@
 		0A86A3201BE9EC81001245D7 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = AdyLix/Frameworks/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
 		0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHandler.m; path = Models/PaymentHandler.m; sourceTree = "<group>"; };
 		0A8B5C861BE6DDD6002EA0D6 /* PaymentHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentHandler.h; path = Models/PaymentHandler.h; sourceTree = "<group>"; };
-		0A8B5C871BE6EC45002EA0D6 /* PaymentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentController.m; path = Controllers/PaymentController.m; sourceTree = "<group>"; };
-		0A8B5C891BE6EC7E002EA0D6 /* PaymentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentController.h; path = Controllers/PaymentController.h; sourceTree = "<group>"; };
+		0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTTTAttributedLabel.a; path = "Pods/../build/Debug-iphoneos/libTTTAttributedLabel.a"; sourceTree = "<group>"; };
 		0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-40@2x.png"; sourceTree = "<group>"; };
 		B658DA636DDDAE8C967B631A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D2AE1E08B79FC53714547FB1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A8D57A71BED711500511D17 /* libTTTAttributedLabel.a in Frameworks */,
 				0A86A31F1BE9EC0D001245D7 /* Parse.framework in Frameworks */,
 				0A86A3121BE9E48C001245D7 /* libStripe.a in Frameworks */,
 				0A86A3101BE9E458001245D7 /* PassKit.framework in Frameworks */,
@@ -422,12 +428,14 @@
 		0A6CE0981BE8716B00A1E6DF /* Payment */ = {
 			isa = PBXGroup;
 			children = (
+				0A6E7AD11BEDAA0E008AA02D /* RecipientController.h */,
+				0A6E7AD21BEDAA0E008AA02D /* RecipientController.m */,
+				0A6E7AD31BEDAA0E008AA02D /* SenderController.h */,
+				0A6E7AD41BEDAA0E008AA02D /* SenderController.m */,
 				0A6CE0951BE85ECA00A1E6DF /* connector.h */,
 				0A6CE0961BE85ECA00A1E6DF /* connector.m */,
 				0A8B5C861BE6DDD6002EA0D6 /* PaymentHandler.h */,
 				0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */,
-				0A8B5C871BE6EC45002EA0D6 /* PaymentController.m */,
-				0A8B5C891BE6EC7E002EA0D6 /* PaymentController.h */,
 			);
 			name = Payment;
 			sourceTree = "<group>";
@@ -444,6 +452,7 @@
 		6722AEDA8929DE094AF64CB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */,
 				0A86A3151BE9EBBE001245D7 /* FBAudienceNetwork.framework */,
 				0A86A3161BE9EBBE001245D7 /* FBSDKCoreKit.framework */,
 				0A86A3171BE9EBBE001245D7 /* FBSDKLoginKit.framework */,
@@ -705,8 +714,8 @@
 				0A4F0AB41BD4656000C8A8D0 /* AppDelegate.m in Sources */,
 				0A6CE0971BE85ECA00A1E6DF /* connector.m in Sources */,
 				0A4E31401BD47D48004776A2 /* LocateController.m in Sources */,
-				0A8B5C881BE6EC45002EA0D6 /* PaymentController.m in Sources */,
 				0A86A30E1BE9DBC8001245D7 /* User.m in Sources */,
+				0A6E7AD61BEDAA0E008AA02D /* SenderController.m in Sources */,
 				0A4F0ABD1BD4656000C8A8D0 /* AdyLix.xcdatamodeld in Sources */,
 				0A8B5C851BE6DDA6002EA0D6 /* PaymentHandler.m in Sources */,
 				0A4E31411BD47D48004776A2 /* UserController.m in Sources */,
@@ -716,6 +725,7 @@
 				0A4FA0151BD956CF003ED366 /* SignUpViewController.m in Sources */,
 				0A4F0AB11BD4656000C8A8D0 /* main.m in Sources */,
 				0A47BC871BDAB9D000D362B9 /* ItemListViewController.m in Sources */,
+				0A6E7AD51BEDAA0E008AA02D /* RecipientController.m in Sources */,
 				0A23B3BD1BDC3024008DEC1E /* TabBarController.m in Sources */,
 				0A4FA0241BD99C7D003ED366 /* ActivityIndicator.m in Sources */,
 				0A4FA01B1BD96737003ED366 /* ItemInfo.m in Sources */,

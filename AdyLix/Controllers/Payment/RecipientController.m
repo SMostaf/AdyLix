@@ -7,22 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PaymentController.h"
+#import "RecipientController.h"
+#import "ItemListViewController.h"
 #include "PaymentHandler.h"
 #import "Stripe.h"
 #import "Parse/Parse.h"
+#import "User.h"
 #import "connector.h"
-#define MERCHANTID @"merchant.com.adylix"
+
 
 // based on Stripe: https://stripe.com/docs/mobile/ios#collecting-card-information
-@interface PaymentController()<STPPaymentCardTextFieldDelegate>
+@interface RecipientController()<STPPaymentCardTextFieldDelegate>
  // holds on to data with price and destination Id
 @property(nonatomic) STPPaymentCardTextField *paymentTextField;
+@property(nonatomic) UITextField* nameTextField;
 @property (weak, nonatomic) UIActivityIndicatorView *activityIndicator;
-@property NSDictionary* data;
+@property (nonatomic) TTTAttributedLabel *attributedLabel;
 @end
 
-@implementation PaymentController
+
+@implementation RecipientController
 
 
 - (void)viewDidLoad {
@@ -30,13 +34,12 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"Purchase";
+    self.title = @"Adress Info";
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-
-    [self showPaymentOption];
-   // [self showStripeForm];
+    
+    [self showStripeForm];
 
     // Setup Activity Indicator
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -50,98 +53,82 @@
     [super viewDidLayoutSubviews];
     CGFloat padding = 25;
     CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
-    self.paymentTextField.frame = CGRectMake(padding, padding, width, 50);
+    self.nameTextField.frame = CGRectMake(padding, padding, width, 50);
+    
+    self.paymentTextField.frame = CGRectMake(padding, padding + 80, width, 50);
     
     self.activityIndicator.center = self.view.center;
 }
 
+
+- (void)attributedLabel:(__unused TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url
+{
+    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+}
+
+
 - (void)paymentCardTextFieldDidChange:(nonnull STPPaymentCardTextField *)textField {
-    self.navigationItem.rightBarButtonItem.enabled = textField.isValid;
+    self.navigationItem.rightBarButtonItem.enabled = (textField.isValid && [self.nameTextField.text length] > 0);
 }
 
 - (void)cancel:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(id) initWithInfo:(NSString*) price bankId:(NSString*) bankId {
-    
-    self = [super init];
-    if(self)
-    {
-        self.price = price;
-        self.bankId = bankId;
-    }
-    return self;
-}
-         
-- (void) initWithData:(NSDictionary*) data
-{
-    // holds on to price and destination Id
-    self.data = data;
-}
-
 // show stripe card form
 -(void) showStripeForm {
     
     // Setup save button
-    NSString *title = [NSString stringWithFormat:@"Pay $%@", self.price];
+    NSString *title = @"Save";
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
     saveButton.enabled = NO;
     self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = saveButton;
     
+    // add legal name
+    UITextField *nameTextField = [[UITextField alloc] init];
+    nameTextField.placeholder = @"Enter your full name";
+    self.nameTextField = nameTextField;
+    
+    [self.view addSubview:nameTextField];
+
     // Setup payment view
     STPPaymentCardTextField *paymentTextField = [[STPPaymentCardTextField alloc] init];
     paymentTextField.delegate = self;
-    // paymentTextField.cursorColor = [UIColor purpleColor];
     self.paymentTextField = paymentTextField;
-    [self.view addSubview:paymentTextField ];
     
-
-}
-
--(void) showPaymentOption {
     
-    UIViewController *paymentController;
-    // first time registration
-    // show payment Dialogue
-    PKPaymentRequest *request = [Stripe
-                                 paymentRequestWithMerchantIdentifier:MERCHANTID];
-    // Configure your request here.
-    NSString *pLabel = @"Purchase Request";
-
-    NSDecimalNumber *amount = [NSDecimalNumber decimalNumberWithString:self.price];
-
-    request.paymentSummaryItems = @[
-                                    [PKPaymentSummaryItem summaryItemWithLabel:pLabel
-                                                                        amount:amount]
-                                    ];
-
-    if ([Stripe canSubmitPaymentRequest:request]) {
-
-#ifdef DEBUG
-
-        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
-                             initWithPaymentRequest:request];
-        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
-
-#else
-        paymentController = [[PKPaymentAuthorizationViewController alloc]
-                             initWithPaymentRequest:request];
-        paymentController.delegate = self;
-#endif
-
-        [self presentViewController:paymentController animated:NO completion: nil];
-     //      [self.navigationController pushViewController:paymentController animated:NO];
+    [self.view addSubview:self.paymentTextField];
     
-    } else {
-       // show stripe card text
-        [self showStripeForm];
-    }
+    // privacy link
+    NSString* policyUrl = @"https://stripe.com/connect/account-terms";
+    NSURL *url = [NSURL URLWithString:policyUrl];
+    self.attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(25, 200, 100, 0)];
+    
+    self.attributedLabel.font = [UIFont systemFontOfSize:15];
+    self.attributedLabel.text = @"Tap here!";
+    self.attributedLabel.linkAttributes = @{NSFontAttributeName : [UIFont boldSystemFontOfSize:15]};
+    
+    //self.attributedLabel.backgroundColor = [UIColor lightGrayColor];
+   // self.attributedLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentCenter;
+    [self.attributedLabel addLinkToURL:[NSURL URLWithString:policyUrl] withRange:[self.attributedLabel.text rangeOfString:policyUrl]];
+                                                                                    
+//    self.attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectInset(self.view.bounds, 25, 180)];
+  //  self.attributedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//
+//    NSRange range = [policyUrl rangeOfString:policyUrl];
+//    [self.attributedLabel addLinkToURL:url withRange:range];
+//    
+    
+    self.attributedLabel.delegate = self;
+    [self.view addSubview:self.attributedLabel];
+   
+ }
 
+#pragma mark - payment events
 
-}
 - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
 didAuthorizePayment:(PKPayment *)payment
 completion:(void (^)(PKPaymentAuthorizationStatus))completion {
@@ -173,34 +160,49 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
 
 - (void)createBackendChargeWithToken:(STPToken *)token
                           completion:(void (^)(PKPaymentAuthorizationStatus))completion {
-    
-    // save tokenized credit card info on server
-    // don't ask user again
-    // suingle use token
-    NSString* strTtoken = token.tokenId;
-    [PaymentHandler registerSender:strTtoken item:self.itemId bankId:self.bankId amount:self.price completion:^(PKPaymentAuthorizationStatus status) {
+    @try
+    {
+        // save tokenized debit card info on server
+        // don't ask user again
+        // suingle use token
+        NSString* strTtoken = token.tokenId;
+        [PaymentHandler registerRecepient:strTtoken  name:self.nameTextField.text completion:^(PKPaymentAuthorizationStatus status) {
         if(status == PKPaymentAuthorizationStatusSuccess)
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Thank you for your payment.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            [self handleSuccess];
 
-            else
-            {
-                NSError* error = [[NSError alloc]initWithDomain:@"Received error From Server"
-                                                              code:2 userInfo:nil];
-                
-                [self handleError:error];
-            }
-        
+        else
+        {
+            NSError* error = [[NSError alloc]initWithDomain:@"Received error From Server"
+                                                       code:2 userInfo:nil];
+            
+            [self handleError:error];
+        }
+
         completion(status);
-    }];
-
+        }];
+    }@catch(...)
+    {
+        NSLog(@"Caught an excweption on saving to backend");
+        completion(PKPaymentAuthorizationStatusFailure);
+    }
 }
 
+-(void) handleSuccess
+{
+     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Information saved successfully", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    
+    
+    ItemListViewController* itemsController = [[ItemListViewController alloc] init];
+    [self.navigationController pushViewController:itemsController animated:NO];
+    
+}
 -(void) handleError:(NSError*) error
 {
     if(error)
-      NSLog(@"Error during payment %@, %@", error, [error userInfo]);
-
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, transaction failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+      NSLog(@"Error during saving %@, %@", error, [error userInfo]);
+    NSString* message = @"Sorry, failed to save your info";
+    
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(message, nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
 
 }
 // #TODO: add scan card feature using camera
@@ -224,12 +226,10 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
                                                   [self createBackendChargeWithToken:token completion:^(PKPaymentAuthorizationStatus status) {
                                              
                                                           if(status == PKPaymentAuthorizationStatusSuccess)
-                                                        
-                                                              [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+                                                              [self handleSuccess];
                                                           
-                                                    else
-                                                          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-
+                                                          else
+                                                              [self handleError:nil];
                                                   }];
                                               }
                                           }];

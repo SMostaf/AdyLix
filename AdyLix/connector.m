@@ -1,3 +1,4 @@
+
 //
 //  connector.m
 //  Layer to handle all requests to Parse cloud
@@ -79,8 +80,7 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
 
 // register bank info of recepient of transaction
 -(void) registerRecepient:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler {
-    
-    
+
     NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:
                               [NSArray arrayWithObjects:name, email, tokenId, nil]
                                                          forKeys:[NSArray arrayWithObjects:@"userName", @"userEmail",@"sourceId", nil]];

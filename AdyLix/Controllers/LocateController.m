@@ -12,7 +12,7 @@
 #import "ItemInfo.h"
 #import "ItemCell.h"
 #import "PaymentHandler.h"
-#import "PaymentController.h"
+#import "SenderController.h"
 #import "User.h"
 #import "Item.h"
 #import "Stripe/Stripe.h"
@@ -312,8 +312,8 @@
         User* userQuery = [[User alloc]init];
         PFUser* recepient= [userQuery getUserForId: userId];
         // get token for recepient
-        NSString* bankId = [recepient valueForKey:@"bankId"];
-        if(!bankId) {
+        NSString* recepientId = [recepient valueForKey:@"tokenId"];
+        if(!recepientId) {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         }
 
@@ -321,18 +321,18 @@
         User* userInfo = [[User alloc] init];
         NSString* tokenId = [userInfo getTokenId];
         // user have a token already
-//        if (tokenId != nil)
-//        {
-//            [PaymentHandler submitPayment:price tokenId: tokenId bankId: bankId completion:^void(BOOL success)        {
-//              [self handleResponse: success];
-//            }];
-//            
-//        } else
+        if (tokenId != nil)
+        {
+            [PaymentHandler submitPayment:price tokenId: tokenId bankId: recepientId completion:^void(BOOL success)        {
+              [self handleResponse: success];
+            }];
+            
+        } else
         {
         
-            PaymentController* payController = [[PaymentController alloc] init];
+             SenderController* payController = [[SenderController alloc] init];
              payController.price = price;
-             payController.bankId = bankId;
+             payController.recepientId = recepientId;
              payController.itemId = itemFound.objectId;
              [self.navigationController pushViewController:payController animated:NO];
         }
