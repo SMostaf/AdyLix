@@ -75,9 +75,12 @@ static inline NSRegularExpression * NameRegularExpression() {
     [super viewDidLayoutSubviews];
     CGFloat padding = 25;
     CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
-    self.paymentTextField.frame = CGRectMake(padding, padding, width, 50);
+    self.nameTextField.frame = CGRectMake(padding, padding, width, 50);
+    
+    self.paymentTextField.frame = CGRectMake(padding, padding + 80, width, 50);
     
     self.activityIndicator.center = self.view.center;
+
 }
 
 
@@ -115,12 +118,13 @@ static inline NSRegularExpression * NameRegularExpression() {
     self.paymentTextField = paymentTextField;
     [self.view addSubview:paymentTextField ];
     
+    
     // add legal name
-//    UITextField *nameTextField = [[UITextField alloc] init];
-//    nameTextField.placeholder = @"Enter your full name";
-//    nameTextField.delegate = self;
-//    self.nameTextField = nameTextField;
-//    [self.view addSubview:nameTextField ];
+    UITextField *nameTextField = [[UITextField alloc] init];
+    nameTextField.placeholder = @"Enter your full name";
+    self.nameTextField = nameTextField;
+    
+    [self.view addSubview:nameTextField];
 
 }
 
@@ -148,11 +152,11 @@ static inline NSRegularExpression * NameRegularExpression() {
         
         [self showStripeForm];
 
-//        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
-//                             initWithPaymentRequest:request];
-//        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
-//        
-//        [paymentController.view addSubview:self.nameTextField];
+        paymentController = [[STPTestPaymentAuthorizationViewController alloc]
+                             initWithPaymentRequest:request];
+        ((STPTestPaymentAuthorizationViewController*)paymentController).delegate = self;
+        
+        [paymentController.view addSubview:self.nameTextField];
 
 #else
      paymentController = [[PKPaymentAuthorizationViewController alloc]
@@ -161,7 +165,7 @@ static inline NSRegularExpression * NameRegularExpression() {
 #endif
 
         [self presentViewController:paymentController animated:NO completion: nil];
-}
+     }
  
      else {
        // show stripe card text

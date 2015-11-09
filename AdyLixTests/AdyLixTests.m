@@ -7,8 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "Parse/Parse.h"
+
+#import <CoreLocation/CoreLocation.h>
 
 @interface AdyLixTests : XCTestCase
+@property PFUser* userSelling;
+@property PFUser* userBuying;
+@property (nonatomic,retain) CLLocationManager *locationManager;
 
 @end
 
@@ -16,7 +22,34 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
+    [self.locationManager startUpdatingLocation];
+    
+    self.userSelling = [[PFUser alloc]init];
+    self.userBuying = [[PFUser alloc]init];
+    
+    [self.userSelling setObject:@"name" forKey:@"sellername"];
+    [self.userSelling setObject:@"email" forKey:@"sellername@gmail.com"];
+    [self.userSelling save];
+
+    [self.userBuying setObject:@"name" forKey:@"buyername"];
+    [self.userBuying setObject:@"email" forKey:@"buyername@gmail.com"];
+    [self.userBuying save];
+
+    // add items to user selling
+    PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
+    [item setObject:@"testItem" forKey:@"name"];
+    [item setObject:@"10" forKey:@"price"];
+    [item setObject:@"Item for testing" forKey:@"description"];
+
+    [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+    
+    [item setObject:[NSDate date] forKey:@"timeStamp"];
+    [item setObject:[self.userSelling valueForKey:@"objectId"] forKey:@"userObjectId"];
+    // hard code loc
+    // 45.54120033517996, -122.8795679380399
 }
 
 - (void)tearDown {
@@ -24,11 +57,30 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // card 4012888888881881
+- (void) testNearbyRange {
     
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+  //  self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+    // get a user in current location
+    PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: self.locationManager.location];
+    [self.userSelling setValue:geoPoint forKey:@"currentLocation"];
+    [self.userSelling save];
+   
+    [self.userBuying setValue:geoPoint forKey:@"currentLocation"];
+    [self.userBuying save];
+ 
+    PFQuery *usersQuery = [PFUser query];
+    CGFloat km = 1.0f;
+    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:self.locationManager.location.coordinate.latitude longitude:self.locationManager.location.coordinate.longitude] withinKilometers:(double)km];
+    [usersQuery whereKey: @"objectId" notEqualTo: [self.userSelling valueForKey:@"objectId"]];
+    
+    
+    NSArray* arrUsers = [usersQuery findObjects];
+    
+    XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+}
+
+- (void)testExample {
+    // XCTAssertEqual(matchCount, 0, @"No matches, right?");
 }
 
 - (void)testPerformanceExample {

@@ -75,6 +75,13 @@
 		0A86A3211BE9EC81001245D7 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A86A3201BE9EC81001245D7 /* FacebookSDKStrings.bundle */; };
 		0A8B5C851BE6DDA6002EA0D6 /* PaymentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */; };
 		0A8D57A71BED711500511D17 /* libTTTAttributedLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */; };
+		0A9AA7D51BF1279E00DEE2BF /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A86A30F1BE9E458001245D7 /* PassKit.framework */; };
+		0A9AA7D61BF127A500DEE2BF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3181BD857F400342750 /* CoreLocation.framework */; };
+		0A9AA7D81BF127BC00DEE2BF /* libParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9AA7D71BF127BC00DEE2BF /* libParse.a */; };
+		0A9AA7D91BF1280E00DEE2BF /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6CE0A51BE88BF300A1E6DF /* Parse.framework */; };
+		0A9AA7E21BF14A9500DEE2BF /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AA7E11BF14A9500DEE2BF /* ShareViewController.m */; };
+		0A9AA7E51BF14A9500DEE2BF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A9AA7E31BF14A9500DEE2BF /* MainInterface.storyboard */; };
+		0A9AA7E91BF14A9500DEE2BF /* AdyLix-Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0A9AA7DE1BF14A9500DEE2BF /* AdyLix-Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0AF64EE41BDBE69300B9B9EB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */; };
 		5D602108820033D6984ECD28 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AE1E08B79FC53714547FB1 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -94,7 +101,28 @@
 			remoteGlobalIDString = 0A4F0AAB1BD4656000C8A8D0;
 			remoteInfo = AdyLix;
 		};
+		0A9AA7E71BF14A9500DEE2BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A4F0AA41BD4655F00C8A8D0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A9AA7DD1BF14A9500DEE2BF;
+			remoteInfo = "AdyLix-Extension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0A9AA7ED1BF14A9500DEE2BF /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0A9AA7E91BF14A9500DEE2BF /* AdyLix-Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0A23B3BC1BDC3024008DEC1E /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = Controllers/TabBarController.m; sourceTree = "<group>"; };
@@ -199,6 +227,12 @@
 		0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaymentHandler.m; path = Models/PaymentHandler.m; sourceTree = "<group>"; };
 		0A8B5C861BE6DDD6002EA0D6 /* PaymentHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaymentHandler.h; path = Models/PaymentHandler.h; sourceTree = "<group>"; };
 		0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTTTAttributedLabel.a; path = "Pods/../build/Debug-iphoneos/libTTTAttributedLabel.a"; sourceTree = "<group>"; };
+		0A9AA7D71BF127BC00DEE2BF /* libParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParse.a; path = "Pods/../build/Debug-iphoneos/libParse.a"; sourceTree = "<group>"; };
+		0A9AA7DE1BF14A9500DEE2BF /* AdyLix-Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AdyLix-Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A9AA7E01BF14A9500DEE2BF /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		0A9AA7E11BF14A9500DEE2BF /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		0A9AA7E41BF14A9500DEE2BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		0A9AA7E61BF14A9500DEE2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-40@2x.png"; sourceTree = "<group>"; };
 		B658DA636DDDAE8C967B631A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D2AE1E08B79FC53714547FB1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,10 +261,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A9AA7D91BF1280E00DEE2BF /* Parse.framework in Frameworks */,
+				0A9AA7D81BF127BC00DEE2BF /* libParse.a in Frameworks */,
+				0A9AA7D61BF127A500DEE2BF /* CoreLocation.framework in Frameworks */,
+				0A9AA7D51BF1279E00DEE2BF /* PassKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0A4F0AD01BD4656000C8A8D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A9AA7DB1BF14A9500DEE2BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -294,6 +339,7 @@
 				0A47BC851BDAB9D000D362B9 /* ItemListViewController.h */,
 				0A47BC861BDAB9D000D362B9 /* ItemListViewController.m */,
 				0A4FA0301BD9A4A2003ED366 /* ItemCell.h */,
+				0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */,
 				0A4FA02A1BD9A397003ED366 /* ItemTableViewController.h */,
 				0A4FA01D1BD99C6F003ED366 /* UI */,
 				0A4E31381BD47D48004776A2 /* ItemsController.h */,
@@ -302,7 +348,6 @@
 				0A4E313D1BD47D48004776A2 /* UserController.m */,
 				0A4FA0141BD956CF003ED366 /* SignUpViewController.m */,
 				0A4FA0161BD956DD003ED366 /* SignUpViewController.h */,
-				0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */,
 				0A4FA02E1BD9A478003ED366 /* ItemCell.m */,
 			);
 			name = Controllers;
@@ -338,6 +383,7 @@
 				0A4F0AAE1BD4656000C8A8D0 /* AdyLix */,
 				0A4F0ACB1BD4656000C8A8D0 /* AdyLixTests */,
 				0A4F0AD61BD4656000C8A8D0 /* AdyLixUITests */,
+				0A9AA7DF1BF14A9500DEE2BF /* AdyLix-Extension */,
 				0A4F0AAD1BD4656000C8A8D0 /* Products */,
 				42D4DA298F443AB4A5D03DDF /* Pods */,
 				6722AEDA8929DE094AF64CB5 /* Frameworks */,
@@ -350,6 +396,7 @@
 				0A4F0AAC1BD4656000C8A8D0 /* AdyLix.app */,
 				0A4F0AC81BD4656000C8A8D0 /* AdyLixTests.xctest */,
 				0A4F0AD31BD4656000C8A8D0 /* AdyLixUITests.xctest */,
+				0A9AA7DE1BF14A9500DEE2BF /* AdyLix-Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -440,6 +487,17 @@
 			name = Payment;
 			sourceTree = "<group>";
 		};
+		0A9AA7DF1BF14A9500DEE2BF /* AdyLix-Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0A9AA7E01BF14A9500DEE2BF /* ShareViewController.h */,
+				0A9AA7E11BF14A9500DEE2BF /* ShareViewController.m */,
+				0A9AA7E31BF14A9500DEE2BF /* MainInterface.storyboard */,
+				0A9AA7E61BF14A9500DEE2BF /* Info.plist */,
+			);
+			path = "AdyLix-Extension";
+			sourceTree = "<group>";
+		};
 		42D4DA298F443AB4A5D03DDF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +510,7 @@
 		6722AEDA8929DE094AF64CB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A9AA7D71BF127BC00DEE2BF /* libParse.a */,
 				0A8D57A61BED711500511D17 /* libTTTAttributedLabel.a */,
 				0A86A3151BE9EBBE001245D7 /* FBAudienceNetwork.framework */,
 				0A86A3161BE9EBBE001245D7 /* FBSDKCoreKit.framework */,
@@ -485,10 +544,12 @@
 				0A4F0AAA1BD4656000C8A8D0 /* Resources */,
 				0471DBE45E8F207FA4DB0314 /* Embed Pods Frameworks */,
 				8046D69AFFC4EA4492636D79 /* Copy Pods Resources */,
+				0A9AA7ED1BF14A9500DEE2BF /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0A9AA7E81BF14A9500DEE2BF /* PBXTargetDependency */,
 			);
 			name = AdyLix;
 			productName = AdyLix;
@@ -531,6 +592,23 @@
 			productReference = 0A4F0AD31BD4656000C8A8D0 /* AdyLixUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		0A9AA7DD1BF14A9500DEE2BF /* AdyLix-Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A9AA7EA1BF14A9500DEE2BF /* Build configuration list for PBXNativeTarget "AdyLix-Extension" */;
+			buildPhases = (
+				0A9AA7DA1BF14A9500DEE2BF /* Sources */,
+				0A9AA7DB1BF14A9500DEE2BF /* Frameworks */,
+				0A9AA7DC1BF14A9500DEE2BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AdyLix-Extension";
+			productName = "AdyLix-Extension";
+			productReference = 0A9AA7DE1BF14A9500DEE2BF /* AdyLix-Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -572,6 +650,15 @@
 						CreatedOnToolsVersion = 7.0;
 						TestTargetID = 0A4F0AAB1BD4656000C8A8D0;
 					};
+					0A9AA7DD1BF14A9500DEE2BF = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 7V462K6Y74;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 0A4F0AA71BD4655F00C8A8D0 /* Build configuration list for PBXProject "AdyLix" */;
@@ -590,6 +677,7 @@
 				0A4F0AAB1BD4656000C8A8D0 /* AdyLix */,
 				0A4F0AC71BD4656000C8A8D0 /* AdyLixTests */,
 				0A4F0AD21BD4656000C8A8D0 /* AdyLixUITests */,
+				0A9AA7DD1BF14A9500DEE2BF /* AdyLix-Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -649,6 +737,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0A9AA7DC1BF14A9500DEE2BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A9AA7E51BF14A9500DEE2BF /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,6 +844,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0A9AA7DA1BF14A9500DEE2BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A9AA7E21BF14A9500DEE2BF /* ShareViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -760,6 +864,11 @@
 			isa = PBXTargetDependency;
 			target = 0A4F0AAB1BD4656000C8A8D0 /* AdyLix */;
 			targetProxy = 0A4F0AD41BD4656000C8A8D0 /* PBXContainerItemProxy */;
+		};
+		0A9AA7E81BF14A9500DEE2BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A9AA7DD1BF14A9500DEE2BF /* AdyLix-Extension */;
+			targetProxy = 0A9AA7E71BF14A9500DEE2BF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -778,6 +887,14 @@
 				0A4F0AC11BD4656000C8A8D0 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		0A9AA7E31BF14A9500DEE2BF /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0A9AA7E41BF14A9500DEE2BF /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -951,8 +1068,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AdyLix/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public/Parse\"";
 				INFOPLIST_FILE = AdyLixTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mine.AdyLixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdyLix.app/AdyLix";
@@ -963,8 +1089,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AdyLix/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "\"${PODS_ROOT}/Headers/Public/Parse\"";
 				INFOPLIST_FILE = AdyLixTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mine.AdyLixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdyLix.app/AdyLix";
@@ -992,6 +1127,36 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = AdyLix;
 				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+		0A9AA7EB1BF14A9500DEE2BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "AdyLix-Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Ady.AdyLix.AdyLix-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		0A9AA7EC1BF14A9500DEE2BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "AdyLix-Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Ady.AdyLix.AdyLix-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1033,6 +1198,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0A9AA7EA1BF14A9500DEE2BF /* Build configuration list for PBXNativeTarget "AdyLix-Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A9AA7EB1BF14A9500DEE2BF /* Debug */,
+				0A9AA7EC1BF14A9500DEE2BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

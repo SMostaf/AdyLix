@@ -73,7 +73,9 @@
 }
 
 - (void)cancel:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
 }
 
 // show stripe card form
@@ -102,18 +104,18 @@
     
     [self.view addSubview:self.paymentTextField];
     
-    // privacy link
-    NSString* policyUrl = @"https://stripe.com/connect/account-terms";
-    NSURL *url = [NSURL URLWithString:policyUrl];
-    self.attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(25, 200, 100, 0)];
-    
-    self.attributedLabel.font = [UIFont systemFontOfSize:15];
-    self.attributedLabel.text = @"Tap here!";
-    self.attributedLabel.linkAttributes = @{NSFontAttributeName : [UIFont boldSystemFontOfSize:15]};
-    
+//    // privacy link
+//    NSString* policyUrl = @"https://stripe.com/connect/account-terms";
+//    NSURL *url = [NSURL URLWithString:policyUrl];
+//    self.attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(25, 200, 100, 0)];
+//    
+//    //self.attributedLabel.font = [UIFont systemFontOfSize:15];
+//   // self.attributedLabel.text = @"Tap here!";
+//    //self.attributedLabel.linkAttributes = @{NSFontAttributeName : [UIFont boldSystemFontOfSize:15]};
+//    [self.attributedLabel setText:@"test"];
     //self.attributedLabel.backgroundColor = [UIColor lightGrayColor];
    // self.attributedLabel.verticalAlignment = TTTAttributedLabelVerticalAlignmentCenter;
-    [self.attributedLabel addLinkToURL:[NSURL URLWithString:policyUrl] withRange:[self.attributedLabel.text rangeOfString:policyUrl]];
+    //[self.attributedLabel addLinkToURL:[NSURL URLWithString:policyUrl] withRange:[self.attributedLabel.text rangeOfString:policyUrl]];
                                                                                     
 //    self.attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectInset(self.view.bounds, 25, 180)];
   //  self.attributedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -122,7 +124,20 @@
 //    [self.attributedLabel addLinkToURL:url withRange:range];
 //    
     
-    self.attributedLabel.delegate = self;
+    TTTAttributedLabel* attributedLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectZero];
+    
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:@"Tom Bombadil"
+                                                                    attributes:@{
+                                                                                 (id)kCTForegroundColorAttributeName : (id)[UIColor redColor].CGColor,
+                                                                                 NSFontAttributeName : [UIFont boldSystemFontOfSize:16],
+                                                                                 NSKernAttributeName : [NSNull null],
+                                                                                 (id)kTTTBackgroundFillColorAttributeName : (id)[UIColor greenColor].CGColor
+                                                                                 }];
+
+    attributedLabel.text = attString;
+    attributedLabel.delegate = self;
+    
+    self.attributedLabel = attributedLabel;
     [self.view addSubview:self.attributedLabel];
    
  }
@@ -165,8 +180,14 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
         // save tokenized debit card info on server
         // don't ask user again
         // suingle use token
-        NSString* strTtoken = token.tokenId;
-        [PaymentHandler registerRecepient:strTtoken  name:self.nameTextField.text completion:^(PKPaymentAuthorizationStatus status) {
+        NSString* strToken = token.tokenId;
+        NSString* strName = self.nameTextField.text;
+        if([strName length] > 0 || [strToken length] > 0)
+        {
+            [self handleError:nil];
+            return;
+        }
+        [PaymentHandler registerRecepient:strToken  name:strName completion:^(PKPaymentAuthorizationStatus status) {
         if(status == PKPaymentAuthorizationStatusSuccess)
             [self handleSuccess];
 
@@ -196,7 +217,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
     [self.navigationController pushViewController:itemsController animated:NO];
     
 }
--(void) handleError:(NSError*) error
+-(void) handleError:(NSError* __nullable) error
 {
     if(error)
       NSLog(@"Error during saving %@, %@", error, [error userInfo]);

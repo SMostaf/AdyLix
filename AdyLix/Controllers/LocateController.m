@@ -308,6 +308,12 @@
         NSString* userId = itemFound.userObjectId;
         // get price of item
         NSString *price = itemFound.price;
+        if (!userId || !price)
+        {
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
+            return;
+        }
         // get the recepient who owns this item
         User* userQuery = [[User alloc]init];
         PFUser* recepient= [userQuery getUserForId: userId];
@@ -315,6 +321,8 @@
         NSString* recepientId = [recepient valueForKey:@"tokenId"];
         if(!recepientId) {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+            
+            return;
         }
 
         // show payment forms
@@ -323,7 +331,7 @@
         // user have a token already
         if (tokenId != nil)
         {
-            [PaymentHandler submitPayment:price tokenId: tokenId bankId: recepientId completion:^void(BOOL success)        {
+            [PaymentHandler submitPayment:price tokenId: tokenId bankId: recepientId completion:^void(bool success)        {
               [self handleResponse: success];
             }];
             

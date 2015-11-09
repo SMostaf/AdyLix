@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AdyLix-Extension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>AdyLix.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>0A4F0AD21BD4656000C8A8D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0A9AA7DD1BF14A9500DEE2BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
