@@ -20,7 +20,7 @@
 @property NSString* lastServerError;
 @end
 
-static NSString* serverURL = @"https://api.parse.com/1/functions/";
+static NSString* serverURL = @"https://api.parse.com/1/";
 
 @implementation Connector
 
@@ -51,6 +51,43 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     [connection start];
 }
 
+// push to server
+-(void) pushLike:(NSString*) userId completion:(RespHandler) handler {
+    
+//    {
+//        "where": {
+//            "deviceType": "ios"
+//        },
+//        "data": {
+//            "alert": "Hello World!"
+//        }
+//    }' \
+//    https://api.parse.com/1/push
+//    
+//    
+    NSDictionary *jsonDict = [NSDictionary dictionaryWithObjects:
+                              [NSArray arrayWithObjects:@"where", @"data", nil]
+                                                         forKeys:[NSArray arrayWithObjects:@"deviceType:ios&user:userId", @"like", nil]];
+    NSError *jsonError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&jsonError];
+    if (jsonError != nil) {
+        NSLog(@"Error parsing JSON.");
+        return;
+    }
+    NSString* reqBody = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (reqBody == nil)
+    {
+        NSLog(@"Request Error body is nil!");
+        return;
+    }
+    
+    self.respHandler = handler;
+    
+    [self doPost: @"push" body: reqBody];
+
+    
+}
+
 // register token for purchaser
 -(void) registerSender:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler {
     
@@ -73,7 +110,7 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     
     self.respHandler = handler;
     
-    [self doPost: @"registerSender" body: reqBody];
+    [self doPost: @"functions/registerSender" body: reqBody];
 
     
 }
@@ -99,7 +136,7 @@ static NSString* serverURL = @"https://api.parse.com/1/functions/";
     
     self.respHandler = handler;
     
-    [self doPost: @"registerRecepient" body: reqBody];
+    [self doPost: @"functions/registerRecepient" body: reqBody];
     
     
 }

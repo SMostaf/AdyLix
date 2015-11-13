@@ -13,6 +13,7 @@ typedef void(^RespHandler)(NSDictionary* __nullable, NSError* __nullable);
 
 @interface Connector : NSObject<NSURLConnectionDelegate>
 
+-(void) pushLikecompletion:(NSString*) userId completion:(RespHandler) handler;
 
 -(void) registerSender:(NSString*) tokenId name:(NSString*)name email:(NSString*) email  completion:(RespHandler) handler;
 -(void) registerRecepient:(NSString*) tokenId name:(NSString*)name email:(NSString*) email completion:(RespHandler) handler;

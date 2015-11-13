@@ -283,12 +283,28 @@
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectio
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.itemsArray count];
 }
 
+// -------------------------------------- push notify flow -------------------------------------------- //
+- (IBAction)btnLike:(id)sender {
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
+    NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        ItemInfo *itemFound = self.itemsArray[indexPath.row];
+        NSString* userId = itemFound.userObjectId;
+        NSString* itemId = itemFound.objectId;
+        
+        Item* item = [[Item alloc] init];
+        [item like:itemId ownerId:userId];
+    }
+   
+}
 // -------------------------------------- payment flow ----------------------------------------------- //
+#ifdef PAY
 -(void) handleResponse:(bool) success {
     
     if(!success)
@@ -346,5 +362,6 @@
         }
     }
 }
+#endif
 
 @end

@@ -12,7 +12,17 @@
 
 #import "Stripe.h"
 
+//#TODO: move to constant file
+NSString *const AppDelegateApplicationDidReceiveRemoteNotification  = @"com.parse.Anypic.appDelegate.applicationDidReceiveRemoteNotification";
+
 NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
+NSString* kPushPayloadFromUserObjectIdKey = @"itm";
+typedef enum {
+    UAPHomeTabBarItemIndex = 0,
+    UAPEmptyTabBarItemIndex = 1,
+    UAPActivityTabBarItemIndex = 2
+} APTabBarControllerViewControllerIndex;
+
 
 
 @interface AppDelegate ()
@@ -33,6 +43,9 @@ NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
+    [self handlePush:launchOptions];
+
+    
     return YES;
 }
 
@@ -42,6 +55,42 @@ NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
 }
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
+    if ([PFUser currentUser]) {
+//        if ([self.tabBarController viewControllers].count > UAPActivityTabBarItemIndex) {
+//            UITabBarItem *tabBarItem = [[self.tabBarController.viewControllers objectAtIndex:UAPActivityTabBarItemIndex] tabBarItem];
+//            
+//            NSString *currentBadgeValue = tabBarItem.badgeValue;
+//            
+//            if (currentBadgeValue && currentBadgeValue.length > 0) {
+//                NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+//                NSNumber *badgeValue = [numberFormatter numberFromString:currentBadgeValue];
+//                NSNumber *newBadgeValue = [NSNumber numberWithInt:[badgeValue intValue] + 1];
+//                tabBarItem.badgeValue = [numberFormatter stringFromNumber:newBadgeValue];
+//            } else {
+//                tabBarItem.badgeValue = @"1";
+//            }
+//        }
+    }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+    // Clear badge and update installation, required for auto-incrementing badges.
+    if (application.applicationIconBadgeNumber != 0) {
+        application.applicationIconBadgeNumber = 0;
+        [[PFInstallation currentInstallation] saveInBackground];
+    }
+    
+    // Clears out all notifications from Notification Center.
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    application.applicationIconBadgeNumber = 1;
+    application.applicationIconBadgeNumber = 0;
+    
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -58,15 +107,51 @@ NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
+//- (void)applicationDidBecomeActive:(UIApplication *)application {
+//    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+//}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+#pragma mark - notification
+
+- (void)handlePush:(NSDictionary *)launchOptions {
+    
+    // If the app was launched in response to a push notification, we'll handle the payload here
+    NSDictionary *remoteNotificationPayload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (remoteNotificationPayload) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AppDelegateApplicationDidReceiveRemoteNotification object:nil userInfo:remoteNotificationPayload];
+        
+        if (![PFUser currentUser]) {
+            return;
+        }
+        
+        
+        // If the push notification payload references a user, we will attempt to push their profile into view
+        NSString *fromObjectId = [remoteNotificationPayload objectForKey:kPushPayloadFromUserObjectIdKey];
+        if (fromObjectId && fromObjectId.length > 0) {
+            PFQuery *query = [PFUser query];
+            query.cachePolicy = kPFCachePolicyCacheElseNetwork;
+            [query getObjectInBackgroundWithId:fromObjectId block:^(PFObject *user, NSError *error) {
+                if (!error) {
+                    // navigate to notification center
+//                    UINavigationController *homeNavigationController = self.tabBarController.viewControllers[UAPHomeTabBarItemIndex];
+//                    self.tabBarController.selectedViewController = homeNavigationController;
+//                    
+//                    PAPAccountViewController *accountViewController = [[PAPAccountViewController alloc] initWithStyle:UITableViewStylePlain];
+//                    NSLog(@"Presenting account view controller with user: %@", user);
+//                    accountViewController.user = (PFUser *)user;
+//                    [homeNavigationController pushViewController:accountViewController animated:YES];
+                }
+            }];
+        }
+    }
+}
+
 
 #pragma mark - Core Data stack
 

@@ -31,6 +31,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background.png" width="500" height="574"/>
+        <image name="background.png" width="260" height="76"/>
     </resources>
 </document>

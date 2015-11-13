@@ -54,14 +54,22 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGf-em-UJE">
-                                                    <rect key="frame" x="218" y="26" width="73" height="30"/>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGf-em-UJE">
+                                                    <rect key="frame" x="170" y="25" width="73" height="30"/>
                                                     <animations/>
                                                     <state key="normal" title="purchase">
                                                         <color key="titleColor" red="1" green="0.65156431479999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="btnPurchase:" destination="SwS-mF-R51" eventType="touchUpInside" id="94U-k9-lP8"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Uq-x2-vhI">
+                                                    <rect key="frame" x="192" y="26" width="46" height="30"/>
+                                                    <animations/>
+                                                    <state key="normal" title="Like"/>
+                                                    <connections>
+                                                        <action selector="btnLike:" destination="SwS-mF-R51" eventType="touchUpInside" id="lAq-VJ-Lqi"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
