@@ -219,39 +219,9 @@
     
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
     self.itemImage = originalImage;
-    
-  
- //   ((ItemsController*)picker.parentViewController).itemImage = originalImage;
-  
-    //[[picker parentViewController] dismissModalViewControllerAnimated: YES];
-    
+   
     [picker dismissViewControllerAnimated:YES completion:nil];
-    
-//    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-//    UIImage *originalImage, *editedImage, *imageToSave;
-//    
-//    // Handle a still image capture
-//    if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0)
-//        == kCFCompareEqualTo) {
-//        
-//        editedImage = (UIImage *) [info objectForKey:
-//                                   UIImagePickerControllerEditedImage];
-//        originalImage = (UIImage *) [info objectForKey:
-//                                     UIImagePickerControllerOriginalImage];
-//        
-//        if (editedImage) {
-//            imageToSave = editedImage;
-//        } else {
-//            imageToSave = originalImage;
-//        }
-//        
-//        // Save the new image (original or edited) to the Camera Roll
-//        UIImageWriteToSavedPhotosAlbum (imageToSave, nil, nil , nil);
-//    }
-//    
-//   
-//    
-//    [[picker parentViewController] dismissModalViewControllerAnimated: YES];
+
 }
 
 

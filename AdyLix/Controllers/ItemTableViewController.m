@@ -9,12 +9,23 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ItemTableViewController.h"
-#define DESC_CUSTOM_TAG 1444
+#import "Item.h"
+
+//#define DESC_CUSTOM_TAG 1444
 
 @interface ItemTableViewController()
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
 @property BOOL isLoaded;
 @end
+
+typedef enum {
+    NameLabelTag = 100,
+    PriceLabelTag = 101,
+    ThumbnailTag = 103,
+    LikeCountTag = 104,
+    CustomeTag = 1444
+} ItemTagID;
+
 
 @implementation ItemTableViewController
 
@@ -77,18 +88,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
     
-    [[cell.contentView viewWithTag:DESC_CUSTOM_TAG]removeFromSuperview];
+    [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
     // Configure the cell
-    UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
+    UILabel *nameLabel = (UILabel*) [cell viewWithTag:NameLabelTag];
     nameLabel.text = [object objectForKey:@"name"];
     
-    UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
+    UILabel *priceLabel = (UILabel*) [cell viewWithTag:PriceLabelTag];
     priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
 
     //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
     CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
-    descLabel.tag = DESC_CUSTOM_TAG;
+    descLabel.tag = CustomeTag;
     descLabel.numberOfLines = 2;
     descLabel.textColor = [UIColor darkGrayColor];
     descLabel.font = [UIFont systemFontOfSize:12];
@@ -97,11 +108,16 @@
 
     
     PFFile *thumbnail = [object objectForKey:@"imageFile"];
-    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
+    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:ThumbnailTag];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                     thumbnailImageView.image = [UIImage imageWithData:data];
     }];
+
+    Item* item = [[Item alloc] init];
+    unsigned long countLikes = [item getLikesForItem: [object objectForKey:@"objectId"]];
+    UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
+    likeLabel.text = [NSString stringWithFormat:@"%@%@", @"Likes",  countLikes];
 
 
     return cell;
