@@ -115,7 +115,7 @@ typedef enum {
     }];
 
     Item* item = [[Item alloc] init];
-    unsigned long countLikes = [item getLikesForItem: [object objectForKey:@"objectId"]];
+    unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];
     UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
     likeLabel.text = [NSString stringWithFormat:@"%@%@", @"Likes",  countLikes];
 

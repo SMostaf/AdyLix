@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "Parse/Parse.h"
-
+#import "item.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AdyLixTests : XCTestCase
@@ -77,6 +77,16 @@
     NSArray* arrUsers = [usersQuery findObjects];
     
     XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+}
+
+-(void) testItemLike {
+    
+    Item* item = [[Item alloc] init];
+    [item like:@"ZXkQlCQcIU"
+       ownerId:@"c0Y1ueO3xU"];
+    
+    //  XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+    
 }
 
 - (void)testExample {
