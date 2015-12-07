@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RecipientController.h"
-#import "ItemListViewController.h"
+//#import "ItemListViewController.h"
 #include "PaymentHandler.h"
 #import "Stripe.h"
 #import "Parse/Parse.h"
@@ -80,7 +80,7 @@
 
 // show stripe card form
 -(void) showStripeForm {
-    
+#ifdef PAY
     // Setup save button
     NSString *title = @"Save";
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
@@ -139,7 +139,7 @@
     
     self.attributedLabel = attributedLabel;
     [self.view addSubview:self.attributedLabel];
-   
+#endif
  }
 
 #pragma mark - payment events
@@ -161,6 +161,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
 
 - (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
                                    completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+#ifdef PAY
     [[STPAPIClient sharedClient] createTokenWithPayment:payment
                                              completion:^(STPToken *token, NSError *error) {
                                                  if (error) {
@@ -171,6 +172,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
                                                  
                                                  [self createBackendChargeWithToken:token completion:completion];
                                              }];
+#endif
 }
 
 - (void)createBackendChargeWithToken:(STPToken *)token
@@ -213,8 +215,8 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Information saved successfully", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
     
     
-    ItemListViewController* itemsController = [[ItemListViewController alloc] init];
-    [self.navigationController pushViewController:itemsController animated:NO];
+  //  ItemListViewController* itemsController = [[ItemListViewController alloc] init];
+   // [self.navigationController pushViewController:itemsController animated:NO];
     
 }
 -(void) handleError:(NSError* __nullable) error
@@ -234,6 +236,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Missing Information", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         return;
     }
+#ifdef PAY
     STPCardParams *card = [[STPCardParams alloc] init];
     card.number = self.paymentTextField.card.number;
     card.expMonth = self.paymentTextField.card.expMonth;
@@ -254,5 +257,6 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
                                                   }];
                                               }
                                           }];
+#endif
 }
 @end

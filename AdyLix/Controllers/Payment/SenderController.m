@@ -103,6 +103,7 @@ static inline NSRegularExpression * NameRegularExpression() {
 // show stripe card form
 -(void) showStripeForm {
     
+#ifdef PAY
     // Setup save button
     NSString *title = [NSString stringWithFormat:@"Pay $%@", self.price];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(save:)];
@@ -125,11 +126,12 @@ static inline NSRegularExpression * NameRegularExpression() {
     self.nameTextField = nameTextField;
     
     [self.view addSubview:nameTextField];
+#endif
 
 }
 
 -(void) showPaymentOption {
-    
+#ifdef PAY
     UIViewController *paymentController;
     // first time registration
     // show payment Dialogue
@@ -171,7 +173,7 @@ static inline NSRegularExpression * NameRegularExpression() {
        // show stripe card text
         [self showStripeForm];
     }
-
+#endif
 
 }
 - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller
@@ -191,6 +193,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
 
 - (void)handlePaymentAuthorizationWithPayment:(PKPayment *)payment
                                    completion:(void (^)(PKPaymentAuthorizationStatus))completion {
+#ifdef PAY
     [[STPAPIClient sharedClient] createTokenWithPayment:payment
                                              completion:^(STPToken *token, NSError *error) {
                                                  if (error) {
@@ -201,6 +204,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
                                                  
                                                  [self createBackendChargeWithToken:token completion:completion];
                                              }];
+#endif
 }
 
 - (void)createBackendChargeWithToken:(STPToken *)token
@@ -255,6 +259,7 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Missing Information", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         return;
     }
+#ifdef PAY
     STPCardParams *card = [[STPCardParams alloc] init];
     card.number = self.paymentTextField.card.number;
     card.expMonth = self.paymentTextField.card.expMonth;
@@ -276,5 +281,6 @@ completion:(void (^)(PKPaymentAuthorizationStatus))completion {
                                                   }];
                                               }
                                           }];
+#endif
 }
 @end

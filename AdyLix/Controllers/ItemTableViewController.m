@@ -97,7 +97,7 @@ typedef enum {
     priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
 
     //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
-    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
+    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
     descLabel.tag = CustomeTag;
     descLabel.numberOfLines = 2;
@@ -116,9 +116,11 @@ typedef enum {
 
     Item* item = [[Item alloc] init];
     unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];
-    UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
-    likeLabel.text = [NSString stringWithFormat:@"%@%@", @"Likes",  countLikes];
-
+    if (countLikes > 0)
+    {
+        UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
+        likeLabel.text = [NSString stringWithFormat:@"%d%@", countLikes, @" Likes"];
+    }
 
     return cell;
 }

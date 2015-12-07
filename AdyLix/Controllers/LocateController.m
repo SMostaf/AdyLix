@@ -23,11 +23,9 @@
 @interface LocateController ()
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property  (nonatomic, strong) CLLocationManager* locationManager;
-//@property PFGeoPoint* geoPoint;
 @property (nonatomic, copy) NSArray* itemsArray;
 @property UIImageView *activityImageView;
 @property BOOL alertShown;
-@property Connector* connector;
 @end
 
 @implementation LocateController
@@ -36,7 +34,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     self.itemsArray = [[NSArray alloc]init];
-  //  self.connector = = [Connector getConnector];
     [self.itemsTableView reloadData];
      UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
      _activityImageView = [[UIImageView alloc]
@@ -238,7 +235,7 @@
     
     PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
     
-    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 25, 240, 40);
+    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
     UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
     [descLabel removeFromSuperview];
     descLabel.tag = DESC_CUSTOM_TAG;

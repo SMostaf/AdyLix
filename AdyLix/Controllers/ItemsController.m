@@ -9,17 +9,16 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "MBProgressHUD.h"
 #import "ItemsController.h"
-#import "RecipientController.h"
+#import "RegisterItemController.h"
 #import "Parse/Parse.h"
 #import "User.h"
 
 @interface ItemsController ()
-@property (weak, nonatomic) IBOutlet UITextField *txtPrice;
-//@property (weak, nonatomic) IBOutlet UITableView *itemsTblView;
 @property (weak, nonatomic) IBOutlet UITextView *txtDesc;
 @property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
-@property UIImage* itemImage;
+//@property UIImage* itemImage;
+@property RegisterItemController* regController;
 @end
 
 @implementation ItemsController
@@ -63,9 +62,10 @@
 - (IBAction)btnSave:(id)sender {
     @try
     {
+    UIImage* itemImage = [self.regController getImage];
         
-    if (self.txtName.text.length == 0 || self.txtPrice.text.length == 0
-        || self.itemImage == nil)
+    if (self.txtName.text.length == 0
+        || itemImage == nil)
     {
          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         
@@ -76,7 +76,6 @@
     
     PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
     [item setObject:self.txtName.text forKey:@"name"];
-    [item setObject:self.txtPrice.text forKey:@"price"];
     [item setObject:self.txtDesc.text forKey:@"description"];
     
     if (self.chkDiscover.on)
@@ -90,7 +89,7 @@
 
     // item image
    
-    NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);
+    NSData* data = UIImageJPEGRepresentation(itemImage, 0.5f);
     PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
     [item setObject:imageFile forKey:@"imageFile"];
     
@@ -110,19 +109,6 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved your item" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         
-            // check if we already have a card registered
-            User* userInfo = [[User alloc] init];
-            NSString* bankId = [userInfo getBankId];
-            //not registered
-            if (bankId == nil)
-            {
-                // #TODO show form with Stripe consent agreement
-                // By registering your account, you agree to our Terms of Service and the Stripe Connected Account Agreement. https://stripe.com/connect/account-terms
-                
-                RecipientController* payController = [[RecipientController alloc] init];
-                [self.navigationController pushViewController:payController animated:NO];
-            }
-
             
             // Notify table view to reload the recipes from Parse cloud
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
@@ -155,23 +141,26 @@
         || (controller == nil))
         return NO;
     
+    self.regController = [[RegisterItemController alloc]init];
     
-    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    // Displays a control that allows the user to choose picture or
-    // movie capture, if both are available:
-    cameraUI.mediaTypes =
-    [UIImagePickerController availableMediaTypesForSourceType:
-     UIImagePickerControllerSourceTypeCamera];
-    
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
-    cameraUI.allowsEditing = NO;
-    
-    cameraUI.delegate = delegate;
-    
-    [controller presentModalViewController: cameraUI animated: YES];
+    [controller presentModalViewController: self.regController animated: YES];
+//    
+//    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+//    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    
+//    // Displays a control that allows the user to choose picture or
+//    // movie capture, if both are available:
+//    cameraUI.mediaTypes =
+//    [UIImagePickerController availableMediaTypesForSourceType:
+//     UIImagePickerControllerSourceTypeCamera];
+//    
+//    // Hides the controls for moving & scaling pictures, or for
+//    // trimming movies. To instead show the controls, use YES.
+//    cameraUI.allowsEditing = NO;
+//    
+//    cameraUI.delegate = delegate;
+//    
+//    [controller presentModalViewController: cameraUI animated: YES];
     return YES;
 }
 
@@ -207,22 +196,22 @@
 
 
 # pragma mark - camera delegate
-// For responding to the user tapping Cancel.
-- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
-    
-    [picker dismissViewControllerAnimated:YES completion:nil];
-
-}
-
-// For responding to the user accepting a newly-captured picture or movie
-- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
-    
-    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    self.itemImage = originalImage;
-   
-    [picker dismissViewControllerAnimated:YES completion:nil];
-
-}
+//// For responding to the user tapping Cancel.
+//- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
+//    
+//    [picker dismissViewControllerAnimated:YES completion:nil];
+//
+//}
+//
+//// For responding to the user accepting a newly-captured picture or movie
+//- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
+//    
+//    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+//    self.itemImage = originalImage;
+//   
+//    [picker dismissViewControllerAnimated:YES completion:nil];
+//
+//}
 
 
 @end

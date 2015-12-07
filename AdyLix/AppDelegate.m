@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 //#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "Parse/Parse.h"
-
-#import "Stripe.h"
+#import "MainController.h"
+//#import "Stripe.h"
 
 //#TODO: move to constant file
 NSString *const AppDelegateApplicationDidReceiveRemoteNotification  = @"com.parse.Anypic.appDelegate.applicationDidReceiveRemoteNotification";
@@ -36,7 +36,9 @@ typedef enum {
     // parse init
     [Parse setApplicationId:@"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" clientKey:@"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5"];
     // stripe payment init
-    [Stripe setDefaultPublishableKey:StripePublishableKey];
+    //[Stripe setDefaultPublishableKey:StripePublishableKey];
+    
+   
     // enable push notification
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
@@ -45,7 +47,14 @@ typedef enum {
     
     [self handlePush:launchOptions];
 
-    
+//    if (![PFUser currentUser])
+//    {
+//        MainController *mainController = [[MainController alloc] init];
+//        
+//        UINavigationController* navController = (UINavigationController *)self.window.rootViewController;
+//        [navController pushViewController:mainController animated:YES];
+//
+//    }
     return YES;
 }
 
