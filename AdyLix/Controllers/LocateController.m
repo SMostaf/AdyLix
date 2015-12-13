@@ -10,7 +10,6 @@
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
 #import "ItemInfo.h"
-#import "ItemCell.h"
 #import "PaymentHandler.h"
 #import "SenderController.h"
 #import "User.h"

@@ -57,7 +57,6 @@
 		0A4FA0251BD99C7D003ED366 /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0211BD99C7D003ED366 /* ASStarRatingView.m */; };
 		0A4FA0261BD99C7D003ED366 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0231BD99C7D003ED366 /* MBProgressHUD.m */; };
 		0A4FA0281BD99FC8003ED366 /* ItemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */; };
-		0A4FA02F1BD9A478003ED366 /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA02E1BD9A478003ED366 /* ItemCell.m */; };
 		0A69A3151BD857BD00342750 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3141BD857BD00342750 /* Security.framework */; };
 		0A69A3171BD857D300342750 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3161BD857D300342750 /* SystemConfiguration.framework */; };
 		0A69A3191BD857F400342750 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A69A3181BD857F400342750 /* CoreLocation.framework */; };
@@ -195,8 +194,6 @@
 		0A4FA0231BD99C7D003ED366 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Controllers/UI/MBProgressHUD.m; sourceTree = "<group>"; };
 		0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemTableViewController.m; path = Controllers/ItemTableViewController.m; sourceTree = "<group>"; };
 		0A4FA02A1BD9A397003ED366 /* ItemTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemTableViewController.h; path = Controllers/ItemTableViewController.h; sourceTree = "<group>"; };
-		0A4FA02E1BD9A478003ED366 /* ItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemCell.m; path = Controllers/ItemCell.m; sourceTree = "<group>"; };
-		0A4FA0301BD9A4A2003ED366 /* ItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemCell.h; path = Controllers/ItemCell.h; sourceTree = "<group>"; };
 		0A69A3141BD857BD00342750 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0A69A3161BD857D300342750 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0A69A3181BD857F400342750 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -334,20 +331,13 @@
 		0A4E31351BD47D38004776A2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0A4E313A1BD47D48004776A2 /* LocateController.h */,
-				0A4E313B1BD47D48004776A2 /* LocateController.m */,
+				0A8443621C1D25A2009AB523 /* Profile */,
+				0A8443611C1D2528009AB523 /* Wardrobe */,
+				0A8443601C1D2516009AB523 /* Discovery */,
 				0A6CE0981BE8716B00A1E6DF /* Payment */,
-				0A4FA0301BD9A4A2003ED366 /* ItemCell.h */,
-				0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */,
-				0A4FA02A1BD9A397003ED366 /* ItemTableViewController.h */,
 				0A4FA01D1BD99C6F003ED366 /* UI */,
-				0A4E31381BD47D48004776A2 /* ItemsController.h */,
-				0A4E31391BD47D48004776A2 /* ItemsController.m */,
-				0A4E313C1BD47D48004776A2 /* UserController.h */,
-				0A4E313D1BD47D48004776A2 /* UserController.m */,
 				0A4FA0141BD956CF003ED366 /* SignUpViewController.m */,
 				0A4FA0161BD956DD003ED366 /* SignUpViewController.h */,
-				0A4FA02E1BD9A478003ED366 /* ItemCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -412,10 +402,6 @@
 				0A4E314D1BD47D72004776A2 /* Res */,
 				0A4E314A1BD47D65004776A2 /* MainController.h */,
 				0A4E314B1BD47D65004776A2 /* MainController.m */,
-				0A70DC5C1C13ECB20000E328 /* CaptureSessionManager.h */,
-				0A70DC5D1C13ECB20000E328 /* CaptureSessionManager.m */,
-				0A70DC591C13E2C10000E328 /* RegisterItemController.h */,
-				0A70DC5A1C13E2C10000E328 /* RegisterItemController.m */,
 				0A4F0AB21BD4656000C8A8D0 /* AppDelegate.h */,
 				0A4F0AB31BD4656000C8A8D0 /* AppDelegate.m */,
 				0A4E31351BD47D38004776A2 /* Controllers */,
@@ -491,6 +477,39 @@
 				0A8B5C841BE6DDA6002EA0D6 /* PaymentHandler.m */,
 			);
 			name = Payment;
+			sourceTree = "<group>";
+		};
+		0A8443601C1D2516009AB523 /* Discovery */ = {
+			isa = PBXGroup;
+			children = (
+				0A4E313A1BD47D48004776A2 /* LocateController.h */,
+				0A4E313B1BD47D48004776A2 /* LocateController.m */,
+			);
+			name = Discovery;
+			sourceTree = "<group>";
+		};
+		0A8443611C1D2528009AB523 /* Wardrobe */ = {
+			isa = PBXGroup;
+			children = (
+				0A70DC591C13E2C10000E328 /* RegisterItemController.h */,
+				0A70DC5A1C13E2C10000E328 /* RegisterItemController.m */,
+				0A70DC5C1C13ECB20000E328 /* CaptureSessionManager.h */,
+				0A70DC5D1C13ECB20000E328 /* CaptureSessionManager.m */,
+				0A4E31381BD47D48004776A2 /* ItemsController.h */,
+				0A4E31391BD47D48004776A2 /* ItemsController.m */,
+				0A4FA0271BD99FC8003ED366 /* ItemTableViewController.m */,
+				0A4FA02A1BD9A397003ED366 /* ItemTableViewController.h */,
+			);
+			name = Wardrobe;
+			sourceTree = "<group>";
+		};
+		0A8443621C1D25A2009AB523 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				0A4E313C1BD47D48004776A2 /* UserController.h */,
+				0A4E313D1BD47D48004776A2 /* UserController.m */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		0A9AA7DF1BF14A9500DEE2BF /* AdyLix-Extension */ = {
@@ -821,7 +840,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A4FA02F1BD9A478003ED366 /* ItemCell.m in Sources */,
 				0A4E314C1BD47D65004776A2 /* MainController.m in Sources */,
 				0A4E313F1BD47D48004776A2 /* ItemsController.m in Sources */,
 				0A4FA0251BD99C7D003ED366 /* ASStarRatingView.m in Sources */,

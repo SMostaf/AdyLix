@@ -1,7 +1,7 @@
 //
 //  RegsiterItemController.m
 //  Ady
-//
+//  Controller to show template items to mask images accordingly
 //  Created by Sahar Mostafa on 10/15/15.
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
