@@ -23,7 +23,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="137" id="yPN-Xj-Duv">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="137"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="137"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yPN-Xj-Duv" id="7fi-UN-jYI">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="136.5"/>
@@ -322,34 +322,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome, your nickname for the day: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fwy-vB-fLI">
-                                <rect key="frame" x="15" y="111" width="297" height="21"/>
+                                <rect key="frame" x="28" y="207" width="297" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="rainbows" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjW-U8-X0l">
-                                <rect key="frame" x="136" y="140" width="326" height="21"/>
+                                <rect key="frame" x="149" y="236" width="326" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.6515643147704917" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="highlightedColor" red="1" green="0.84319176034417342" blue="0.71755668204738132" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How the world rate you:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54m-vW-cB7">
-                                <rect key="frame" x="15" y="194" width="220" height="21"/>
+                                <rect key="frame" x="28" y="290" width="220" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dR0-d8-tNz">
-                                <rect key="frame" x="15" y="299" width="316" height="58"/>
+                                <rect key="frame" x="28" y="395" width="316" height="58"/>
                                 <animations/>
                                 <state key="normal" backgroundImage="signout.jpg"/>
                                 <connections>
                                     <action selector="btnLogout:" destination="xhh-gC-gby" eventType="touchUpInside" id="XaY-sJ-2fh"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-Ya-0ya">
+                                <rect key="frame" x="118" y="28" width="240" height="128"/>
+                                <animations/>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -357,6 +361,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" id="fI0-Tm-SqZ" userLabel="Profile"/>
                     <navigationItem key="navigationItem" id="Hol-gk-tvI"/>
                     <connections>
+                        <outlet property="imgProfile" destination="yaZ-Ya-0ya" id="Yf7-8m-GM1"/>
                         <outlet property="lblName" destination="tjW-U8-X0l" id="oyZ-ZM-6lT"/>
                     </connections>
                 </viewController>
@@ -394,35 +399,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fXA-jO-vpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2599" y="-2152"/>
-        </scene>
-        <!--Regsiter Item Controller-->
-        <scene sceneID="Sd8-Wg-EPD">
-            <objects>
-                <viewController id="tA8-3H-ea8" customClass="RegsiterItemController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qfr-iG-ZmW"/>
-                        <viewControllerLayoutGuide type="bottom" id="d9s-GN-XGR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="emm-Rf-tR9">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-Me-x7S">
-                                <rect key="frame" x="343" y="423" width="46" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="btnSave" destination="ZBO-Me-x7S" id="bc1-oS-8Iu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L7j-NO-nh0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="106" y="-1565"/>
         </scene>
         <!--Main Controller-->
         <scene sceneID="rIm-Vr-kaa">
@@ -486,7 +462,7 @@
         <image name="submit.jpg" width="260" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TBj-iQ-fQQ"/>
         <segue reference="hDC-Ga-2Z2"/>
+        <segue reference="lfA-85-jtG"/>
     </inferredMetricsTieBreakers>
 </document>

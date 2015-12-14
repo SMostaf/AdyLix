@@ -51,7 +51,7 @@
     
     
     //Position the activity image view somewhere in
-    //the middle of your current view
+    //the middle of the current view
     _activityImageView.frame = CGRectMake(
                                           self.view.frame.size.width/2
                                           -firstImage.size.width/2,
