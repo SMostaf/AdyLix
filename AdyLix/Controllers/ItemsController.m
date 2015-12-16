@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *txtDesc;
 @property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
-//@property UIImage* itemImage;
+@property UIImage* itemImage;
 @property RegisterItemController* regController;
 @end
 
@@ -74,7 +74,7 @@
 
 
     
-    PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
+    PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
     [item setObject:self.txtName.text forKey:@"name"];
     [item setObject:self.txtDesc.text forKey:@"description"];
     
@@ -83,9 +83,12 @@
     else
         [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
 
-    NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
-    [item setObject:[NSDate date] forKey:@"timeStamp"];
-    [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userObjectId"];
+    [item setObject:[PFUser currentUser] forKey:@"userId"];
+
+        
+    //NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
+    //[item setObject:[NSDate date] forKey:@"timeStamp"];
+    //[item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userObjectId"];
 
     // item image
    
@@ -196,22 +199,22 @@
 
 
 # pragma mark - camera delegate
-//// For responding to the user tapping Cancel.
-//- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
-//    
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//
-//}
-//
-//// For responding to the user accepting a newly-captured picture or movie
-//- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
-//    
-//    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-//    self.itemImage = originalImage;
-//   
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//
-//}
+// For responding to the user tapping Cancel.
+- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    
+    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.itemImage = originalImage;
+   
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
+}
 
 
 @end

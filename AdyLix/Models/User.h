@@ -11,6 +11,8 @@
 
 #import "Parse/Parse.h"
 
+#define USER_IMAGE @"profileImage"
+
 @interface User:NSObject
 
 -(void) saveTokenId:(NSString*) tokenId;

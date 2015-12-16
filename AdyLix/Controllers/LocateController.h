@@ -12,6 +12,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+@interface StyleDetail : NSObject
+@property NSArray* items;
+@property NSInteger currentItemIndex;
+@end
+    
 @interface LocateController : UIViewController<CLLocationManagerDelegate, UITableViewDelegate>
 
 

@@ -6,44 +6,40 @@
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 #import "UserController.h"
-#import "ASStarRatingView.h"
 #import "Parse/Parse.h"
 #import "MainController.h"
+#import "User.h"
 
 @interface UserController ()
-@property ASStarRatingView* staticStarRatingView;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
+@property (weak, nonatomic) IBOutlet UIImageView *imgProfile;
+
 @end
 
 @implementation UserController
 
 
-- (void) setupView {
+- (void) setupImage {
     
-    NSArray* arrNicknames = [NSArray arrayWithObjects: @"blueDragon", @"lookingForRainbow", @"cookieJar", @"I'mABigDeal", @"humsWhileShopping", @"loveToShop", @"theElegantOne", @"rainbowGazer", @"purpleDinasour", @"gigglesNTickles",
-                             @"sunShine", nil];
-    int random = arc4random()%[arrNicknames count];
-    NSString *key = [arrNicknames objectAtIndex:random];
-    _lblName.text = key;
+    // adding rounded corners to profile image
+    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.width / 2;
+    self.imgProfile.clipsToBounds = YES;
+    self.imgProfile.layer.borderWidth = 3.0f;
+    self.imgProfile.layer.borderColor = [UIColor whiteColor].CGColor;
     
-    _staticStarRatingView = [[ASStarRatingView alloc]init];
-    _staticStarRatingView.canEdit = NO;
-    _staticStarRatingView.maxRating = 5;
-    _staticStarRatingView.rating = 5;
+    // show profile image
+    // in case user logged using parse
+    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
     
-    _staticStarRatingView.frame = CGRectMake(
-                                             _lblName.frame.origin.x,
-                                             _lblName.frame.origin.y+30,
-                                             180,
-                                             180);
+    [profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if(!error)
+            self.imgProfile.image = [UIImage imageWithData:data];
+    }];
     
-    
-    [self.view addSubview:_staticStarRatingView];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-   [self setupView];
+   [self setupImage];
 }
 
 - (IBAction)btnLogout:(id)sender {
@@ -56,7 +52,7 @@
 }
 
 - (void)viewDidLoad {
-    [self setupView];
+    [self setupImage];
     [super viewDidLoad];
 }
 - (void)didReceiveMemoryWarning {
@@ -65,7 +61,6 @@
 
 - (void)viewDidUnload
 {
-    [self setStaticStarRatingView:nil];
     [super viewDidUnload];
 }
 

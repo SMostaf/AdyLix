@@ -284,6 +284,8 @@
 }
 */
 
+
+
 // camera  related
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
                                    usingDelegate: (id <UIImagePickerControllerDelegate,
@@ -342,7 +344,7 @@
         picker.delegate = self;
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
-    //[self presentModalViewController: picker animated: YES];
+    [self presentModalViewController: picker animated: YES];
 }
 
 

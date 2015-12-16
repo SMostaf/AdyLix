@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
 //#import "Stripe.h"
@@ -15,7 +15,6 @@
 //#TODO: move to constant file
 NSString *const AppDelegateApplicationDidReceiveRemoteNotification  = @"com.parse.Anypic.appDelegate.applicationDidReceiveRemoteNotification";
 
-NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
 NSString* kPushPayloadFromUserObjectIdKey = @"itm";
 typedef enum {
     UAPHomeTabBarItemIndex = 0,
@@ -35,10 +34,9 @@ typedef enum {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // parse init
     [Parse setApplicationId:@"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" clientKey:@"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5"];
-    // stripe payment init
-    //[Stripe setDefaultPublishableKey:StripePublishableKey];
-    
-   
+    // FB login
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     // enable push notification
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
@@ -47,14 +45,7 @@ typedef enum {
     
     [self handlePush:launchOptions];
 
-//    if (![PFUser currentUser])
-//    {
-//        MainController *mainController = [[MainController alloc] init];
-//        
-//        UINavigationController* navController = (UINavigationController *)self.window.rootViewController;
-//        [navController pushViewController:mainController animated:YES];
-//
-//    }
+
     return YES;
 }
 
@@ -98,6 +89,9 @@ typedef enum {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     application.applicationIconBadgeNumber = 1;
     application.applicationIconBadgeNumber = 0;
+    
+    [FBSDKAppEvents activateApp];
+    
     
 }
 
@@ -228,7 +222,6 @@ typedef enum {
     return _managedObjectContext;
 }
 
-/*
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -238,7 +231,7 @@ typedef enum {
                                                           openURL:url
                                                 sourceApplication:sourceApplication
                                                        annotation:annotation];
-}*/
+}
 
 #pragma mark - Core Data Saving support
 
