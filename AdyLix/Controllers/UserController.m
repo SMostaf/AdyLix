@@ -6,7 +6,6 @@
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 #import "UserController.h"
-#import "ASStarRatingView.h"
 #import "Parse/Parse.h"
 #import "MainController.h"
 #import "User.h"
@@ -14,12 +13,13 @@
 @interface UserController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
 @property (weak, nonatomic) IBOutlet UIImageView *imgProfile;
+
 @end
 
 @implementation UserController
 
 
-- (void) setupView {
+- (void) setupImage {
     
     // adding rounded corners to profile image
     self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.width / 2;
@@ -35,11 +35,11 @@
         if(!error)
             self.imgProfile.image = [UIImage imageWithData:data];
     }];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-   [self setupView];
+    [self setupImage];
 }
 
 - (IBAction)btnLogout:(id)sender {
@@ -52,7 +52,7 @@
 }
 
 - (void)viewDidLoad {
-    [self setupView];
+    [self setupImage];
     [super viewDidLoad];
 }
 - (void)didReceiveMemoryWarning {
@@ -61,7 +61,7 @@
 
 - (void)viewDidUnload
 {
-  [super viewDidUnload];
+    [super viewDidUnload];
 }
 
 @end

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FormatVersion</key>
+	<string>1.2</string>
+	<key>RunDestination</key>
+	<dict>
+		<key>LocalComputer</key>
+		<dict>
+			<key>BusSpeedInMHz</key>
+			<integer>100</integer>
+			<key>CPUCount</key>
+			<integer>1</integer>
+			<key>CPUKind</key>
+			<string>Intel Core i7</string>
+			<key>CPUSpeedInMHz</key>
+			<integer>2300</integer>
+			<key>Identifier</key>
+			<string>F7B1C5B1-DF05-522B-BAEA-B87488FE3F1C</string>
+			<key>IsConcreteDevice</key>
+			<true/>
+			<key>LogicalCPUCoresPerPackage</key>
+			<integer>8</integer>
+			<key>ModelCode</key>
+			<string>MacBookPro10,1</string>
+			<key>ModelName</key>
+			<string>MacBook Pro</string>
+			<key>ModelUTI</key>
+			<string>com.apple.macbookpro-15-retina-display</string>
+			<key>Name</key>
+			<string>My Mac</string>
+			<key>NativeArchitecture</key>
+			<string>x86_64</string>
+			<key>OperatingSystemVersion</key>
+			<string>10.11.1</string>
+			<key>OperatingSystemVersionWithBuildNumber</key>
+			<string>10.11.1 (15B42)</string>
+			<key>PhysicalCPUCoresPerPackage</key>
+			<integer>4</integer>
+			<key>Platform</key>
+			<dict>
+				<key>Identifier</key>
+				<string>com.apple.platform.macosx</string>
+				<key>Name</key>
+				<string>OS X</string>
+			</dict>
+			<key>RAMSizeInMegabytes</key>
+			<integer>8192</integer>
+		</dict>
+		<key>Name</key>
+		<string>iPhone 6s</string>
+		<key>TargetArchitecture</key>
+		<string>x86_64</string>
+		<key>TargetDevice</key>
+		<dict>
+			<key>Identifier</key>
+			<string>E3E3149B-AF4E-4C64-B293-638DF383207C</string>
+			<key>IsConcreteDevice</key>
+			<true/>
+			<key>ModelCode</key>
+			<string>iPhone8,1</string>
+			<key>ModelName</key>
+			<string>iPhone 6s</string>
+			<key>ModelUTI</key>
+			<string>com.apple.iphone-6s-b9b7ba</string>
+			<key>Name</key>
+			<string>iPhone 6s</string>
+			<key>NativeArchitecture</key>
+			<string>x86_64</string>
+			<key>OperatingSystemVersion</key>
+			<string>9.1</string>
+			<key>OperatingSystemVersionWithBuildNumber</key>
+			<string>9.1 (13B137)</string>
+			<key>Platform</key>
+			<dict>
+				<key>Identifier</key>
+				<string>com.apple.platform.iphonesimulator</string>
+				<key>Name</key>
+				<string>iOS Simulator</string>
+			</dict>
+		</dict>
+		<key>TargetSDK</key>
+		<dict>
+			<key>Identifier</key>
+			<string>iphonesimulator9.1</string>
+			<key>IsInternal</key>
+			<false/>
+			<key>Name</key>
+			<string>Simulator - iOS 9.1</string>
+			<key>OperatingSystemVersion</key>
+			<string>9.1</string>
+		</dict>
+	</dict>
+	<key>TestableSummaries</key>
+	<array>
+		<dict>
+			<key>ProjectPath</key>
+			<string>AdyLix.xcodeproj</string>
+			<key>TargetName</key>
+			<string>AdyLixTests</string>
+			<key>TestName</key>
+			<string>AdyLixTests</string>
+			<key>TestObjectClass</key>
+			<string>IDESchemeActionTestableSummary</string>
+			<key>Tests</key>
+			<array>
+				<dict>
+					<key>Subtests</key>
+					<array>
+						<dict>
+							<key>Subtests</key>
+							<array>
+								<dict>
+									<key>FailureSummaries</key>
+									<array>
+										<dict>
+											<key>FileName</key>
+											<string>&lt;unknown&gt;</string>
+											<key>LineNumber</key>
+											<integer>0</integer>
+											<key>Message</key>
+											<string>failed: caught "NSInternalInconsistencyException", "User cannot be saved unless they are already signed up. Call signUp first."
+(
+	0   CoreFoundation                      0x0000000105b14f45 __exceptionPreprocess + 165
+	1   libobjc.A.dylib                     0x000000010498edeb objc_exception_throw + 48
+	2   CoreFoundation                      0x0000000105b14e7d +[NSException raise:format:] + 205
+	3   AdyLix                              0x0000000103b95fb3 -[PFUser(Private) checkSaveParams] + 121
+	4   AdyLix                              0x0000000103b86464 __31-[PFObject(Private) saveAsync:]_block_invoke407 + 33
+	5   AdyLix                              0x0000000103bdc002 __23-[PFTask continueWith:]_block_invoke_2 + 30
+	6   libdispatch.dylib                   0x0000000108148d59 _dispatch_call_block_and_release + 12
+	7   libdispatch.dylib                   0x00000001081644a7 _dispatch_client_callout + 8
+	8   libdispatch.dylib                   0x000000010814f4fd _dispatch_root_queue_drain + 890
+	9   libdispatch.dylib                   0x000000010814f17c _dispatch_worker_thread3 + 98
+	10  libsystem_pthread.dylib             0x00000001084904f2 _pthread_wqthread + 1129
+	11  libsystem_pthread.dylib             0x000000010848e375 start_wqthread + 13
+)</string>
+											<key>PerformanceFailure</key>
+											<false/>
+										</dict>
+									</array>
+									<key>TestIdentifier</key>
+									<string>AdyLixTests/testNearbyRange</string>
+									<key>TestName</key>
+									<string>testNearbyRange</string>
+									<key>TestObjectClass</key>
+									<string>IDESchemeActionTestSummary</string>
+									<key>TestStatus</key>
+									<string>Failure</string>
+									<key>TestSummaryGUID</key>
+									<string>408EDB9F-BEE2-4BBD-94C9-66C3C220A42A</string>
+								</dict>
+							</array>
+							<key>TestIdentifier</key>
+							<string>AdyLixTests</string>
+							<key>TestName</key>
+							<string>AdyLixTests</string>
+							<key>TestObjectClass</key>
+							<string>IDESchemeActionTestSummaryGroup</string>
+						</dict>
+					</array>
+					<key>TestIdentifier</key>
+					<string>Selected tests</string>
+					<key>TestName</key>
+					<string>Selected tests</string>
+					<key>TestObjectClass</key>
+					<string>IDESchemeActionTestSummaryGroup</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

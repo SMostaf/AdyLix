@@ -1,0 +1,30 @@
+dependencies: \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Insights/FBAppEvents.m \
+  /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Facebook-iOS-SDK/Facebook-iOS-SDK-prefix.pch \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBAppEvents.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBSDKMacros.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBSession.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Insights/FBAppEvents+Internal.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBError.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Core/FBLogger.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Insights/FBPaymentObserver.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Network/FBRequest+Internal.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBRequest.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBGraphObject.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBOpenGraphAction.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBOpenGraphObject.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBRequestConnection.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Login/FBSession+Internal.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Login/FBSessionAppEventsState.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Login/FBSystemAccountStoreAdapter.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBTask/FBTask.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBTask/FBTaskCompletionSource.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Legacy/FBSessionManualTokenCachingStrategy.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBSessionTokenCachingStrategy.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBAccessTokenData.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Core/FBSettings+Internal.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Core/FBInternalSettings.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/FBSettings.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Insights/FBTimeSpentData.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Core/FBUtility.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Facebook-iOS-SDK/src/Core/FBFetchedAppSettings.h

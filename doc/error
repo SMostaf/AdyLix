@@ -1,0 +1,16 @@
+{"uuid":"922dbc47-b6d5-c6d5-e2dc-296a44956891","status":401,"headers":{"Access-Control-Allow-Credentials":"true","Access-Control-Allow-Methods":"GET, POST, HEAD, OPTIONS, DELETE","Access-Control-Allow-Origin":"*","Access-Control-Max-Age":"300","Cache-Control":"no-cache, no-store","Connection":"close","Content-Length":"342","Content-Type":"application/json","Date":"Fri, 06 Nov 2015 04:17:27 GMT","Request-Id":"req_7Icvd5tjOqpWAA","Server":"nginx","Stripe-Version":"2015-10-16","Www-Authenticate":"Basic realm=\"Stripe\""},"text":"{\n  \"error\":
+
+
+
+
+
+ {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication for details, or we can help at https://support.stripe.com/.\"\n  }\n}\n","data":{"error":{"type":"invalid_request_error","message":"You did not provide an API key. You need to provide your API key in the Authorization header, using Bearer auth (e.g. 'Authorization: Bearer YOUR_SECRET_KEY'). See https://stripe.com/docs/api#authentication
+
+
+ I2015-11-06T03:05:36.514Z]{"Charges":{},"Customers":{},"Subscriptions":{},"Plans":{},"Invoices":{},"InvoiceItems":{},"Coupons":{},"Tokens":{},"Events":{}}
+
+
+{"uuid":"cc393984-1134-a786-87f7-a2772a567147","status":400,"headers":{"Access-Control-Allow-Credentials":"true","Access-Control-Allow-Methods":"GET, POST, HEAD, OPTIONS, DELETE","Access-Control-Allow-Origin":"*","Access-Control-Max-Age":"300","Cache-Control":"no-cache, no-store","Connection":"close","Content-Length":"103","Content-Type":"application/json","Date":"Fri, 06 Nov 2015 06:13:23 GMT","Request-Id":"req_7Iencx7MuwEhOP","Server":"nginx","Stripe-Version":"2015-10-16"},"text":"{\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"Invalid token id: undefined\"\n  }\n}\n","data":{"error":{"type":"invalid_request_error","message":"Invalid token id: undefined"}},"buffer":[123,10,32,32,34,101,114,114,111,114,34,58,32,123,10,32,32,32,32,34,116,121,112,101,34,58,32,34,105,110,118,97,108,105,100,95,114,101,113,117,101,115,116,95,101,114,114,111,114,34,44,10,32,32,32,32,34,109,101,115,115,97,103,101,34,58,32,34,73,110,118,97,108,105,100,32,116,111,107,101,110,32,105,100,58,32,117,110,100,101,102,105,110,101,100,34,10,32,32,125,10,125,10],"cookies":{}}
+
+
+-force_load $(TARGET_BUILD_DIR)/libStripe.a

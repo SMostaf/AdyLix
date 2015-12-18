@@ -13,6 +13,8 @@
 #import "SignUpViewController.h"
 #import "TabBarController.h"
 #import "ItemsController.h"
+#include "ParseUI/PFLogInViewController.h"
+
 
 #ifndef ADY_ENABLE_LOGGING
 #   ifdef DEBUG
@@ -105,9 +107,9 @@
         //
         
         // adjust forecolor of text on fields
-        [logInViewController.logInView.usernameField setTextColor:[UIColor darkGrayColor]];
-        [logInViewController.logInView.passwordField setTextColor:[UIColor darkGrayColor]];
-        //
+//        [logInViewController.logInView.usernameField setTextColor:[UIColor darkGrayColor]];
+//        [logInViewController.logInView.passwordField setTextColor:[UIColor darkGrayColor]];
+//        //
         
         logInViewController.logInView.logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
         

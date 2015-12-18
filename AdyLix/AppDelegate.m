@@ -7,23 +7,11 @@
 //
 
 #import "AppDelegate.h"
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
-//#import "Stripe.h"
-
-//#TODO: move to constant file
-NSString *const AppDelegateApplicationDidReceiveRemoteNotification  = @"com.parse.Anypic.appDelegate.applicationDidReceiveRemoteNotification";
-
-NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
-NSString* kPushPayloadFromUserObjectIdKey = @"itm";
-typedef enum {
-    UAPHomeTabBarItemIndex = 0,
-    UAPEmptyTabBarItemIndex = 1,
-    UAPActivityTabBarItemIndex = 2
-} APTabBarControllerViewControllerIndex;
-
-
+#import "AppRelated.h"
 
 @interface AppDelegate ()
 
@@ -45,18 +33,20 @@ typedef enum {
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
     [self handlePush:launchOptions];
-
-//    if (![PFUser currentUser])
-//    {
-//        MainController *mainController = [[MainController alloc] init];
-//        
-//        UINavigationController* navController = (UINavigationController *)self.window.rootViewController;
-//        [navController pushViewController:mainController animated:YES];
-//
-//    }
+    [self setupParseWithOptions:launchOptions];
+    
     return YES;
 }
+
+- (void)setupParseWithOptions:(NSDictionary *)launchOptions
+{
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+}
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Store the deviceToken in the current Installation and save it to Parse
@@ -85,6 +75,7 @@ typedef enum {
 //        }
     }
 }
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
@@ -228,17 +219,14 @@ typedef enum {
     return _managedObjectContext;
 }
 
-/*
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication
-                                                       annotation:annotation];
-}*/
+                                                       annotation:annotation
+            ];
+}
 
 #pragma mark - Core Data Saving support
 

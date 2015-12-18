@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SignUpViewController.h"
-
+#import "ParseUI/PFTextField.h"
 
 @implementation SignUpViewController
 

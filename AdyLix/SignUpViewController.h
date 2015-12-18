@@ -9,7 +9,7 @@
 #ifndef SignUpViewController_h
 #define SignUpViewController_h
 
-#include "Parse/PFSignUpViewController.h"
+#include "ParseUI/PFSignUpViewController.h"
 
 @interface SignUpViewController : PFSignUpViewController
 

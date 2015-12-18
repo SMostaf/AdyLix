@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "Parse/Parse.h"
 #import "item.h"
+#import "style.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AdyLixTests : XCTestCase
@@ -77,6 +78,21 @@
     NSArray* arrUsers = [usersQuery findObjects];
     
     XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+}
+
+-(void) testStyleSave {
+    
+    ItemInfo* info = [[ItemInfo alloc]init];
+    // fill stub
+    
+    PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
+    [item setObject:[PFUser currentUser] forKey:@"userId"];
+    [item setObject:info.desc forKey:@"description"];
+    [item setObject:info.name forKey:@"name"];
+    [item setObject:info.imageData forKey:@"imageFile"];
+    
+    [item saveInBackground];
+    
 }
 
 -(void) testItemLike {

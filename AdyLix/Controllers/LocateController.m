@@ -2,45 +2,61 @@
 //  LocateController.m
 //  Ady
 //
+//  LocateController controller for the discover scene
+//  shows styles and individual items on image list view
+//  swipe action left/right to view different styles
+//  swipe action up/down to view indiviual items per selected style
+//  like whole style will automatically like all associated items
+//
 //  Created by Sahar Mostafa on 10/15/15.
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 #import <Addressbook/ABPerson.h>
 #import "LocateController.h"
 #import "Parse/Parse.h"
-#import "Parse/PFImageView.h"
+#import "ParseUI/PFImageView.h"
 #import "ItemInfo.h"
-#import "PaymentHandler.h"
-#import "SenderController.h"
 #import "User.h"
-#import "Item.h"
-#import "Stripe/Stripe.h"
+#import "Style.h"
+#include "StyleInfo.h"
+
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
 
+
+@implementation StyleDetail
+@end
+
 @interface LocateController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property  (nonatomic, strong) CLLocationManager* locationManager;
-@property (nonatomic, copy) NSArray* itemsArray;
+//@property (nonatomic, copy) NSArray* itemsArr;
 @property UIImageView *activityImageView;
 @property BOOL alertShown;
+
+@property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
+@property (strong, nonatomic) NSArray *stylesArr;
+@property NSInteger currentStyleIndex;
+@property StyleDetail* currStyleDetail;
 @end
 
 @implementation LocateController
 
-
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.itemsArray = [[NSArray alloc]init];
+    self.stylesArr = [[NSArray alloc]init];
     [self.itemsTableView reloadData];
-     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
-     _activityImageView = [[UIImageView alloc]
+    
+    // show progress indicator
+    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
+    _activityImageView = [[UIImageView alloc]
                           initWithImage:firstImage];
     
     
-     //Add more images which will be used for the animation
-     _activityImageView.animationImages = [NSArray arrayWithObjects:
+    //Add more images which will be used for the animation
+    _activityImageView.animationImages = [NSArray arrayWithObjects:
                                           [UIImage imageNamed:@"Icon@2x rot2.png"],
                                           [UIImage imageNamed:@"Icon@2x rot3.png"],
                                           [UIImage imageNamed:@"Icon@2x copy.png"],
@@ -51,7 +67,7 @@
     
     
     //Position the activity image view somewhere in
-    //the middle of the current view
+    //the middle of your current view
     _activityImageView.frame = CGRectMake(
                                           self.view.frame.size.width/2
                                           -firstImage.size.width/2,
@@ -64,17 +80,43 @@
     
     [_activityImageView startAnimating];
     
+    [_styleImageView setUserInteractionEnabled:YES];
+    // swipe manipulate style
+    // left/right
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeStyleImage:)];
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeStyleImage:)];
+    // swipe manipulate items of style
+    // up/down
+    // swipe manipulate
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeItemImage:)];
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeItemImage:)];
+    
+    // Setting the swipe direction.
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    
+    
+    // Adding the swipe gesture on image view
+    [_styleImageView addGestureRecognizer:swipeLeft];
+    [_styleImageView addGestureRecognizer:swipeRight];
+    
+    [_styleImageView addGestureRecognizer:swipeUp];
+    [_styleImageView addGestureRecognizer:swipeDown];
+    
+    
+    
+    // location manager receive updates
     [self startStandardUpdates];
-
+    
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-
-
- }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -83,8 +125,84 @@
     [_locationManager stopUpdatingLocation];
 }
 
+// ---------------------------- swipe style gesture left/right ----------------------------------------------------- //
+-(void)showStyleAtIndex:(NSInteger)index
+{
+    StyleInfo* info = [_stylesArr objectAtIndex:index];
+    PFFile *thumbnail = info.imageData;
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        _styleImageView.image = [UIImage imageWithData:data];
+    }];
+}
 
+-(void)swipeStyleImage:(UISwipeGestureRecognizer*)recognizer
+{
+    NSInteger index = _currentStyleIndex;
+    _currStyleDetail.currentItemIndex = 0;
+    
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
+    {
+        index++;
+    }
+    else if (recognizer.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        index--;
+    }
+    
+    if (index >= 0 || index < ([_stylesArr count] - 1))
+    {
+        _currentStyleIndex = index;
+        [self showStyleAtIndex:_currentStyleIndex];
+    }
+    else
+    {
+        NSLog(@"Reached the end, swipe in opposite direction");
+    }
+    
+}
 
+-(void)showItemAtIndex:(NSInteger)index
+{
+    // get array of currentStyle showing
+    ItemInfo* info = [[_currStyleDetail items] objectAtIndex:index];
+    PFFile *thumbnail = info.imageData;
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        _styleImageView.image = [UIImage imageWithData:data];
+    }];
+}
+
+// swipe up down items
+-(void) swipeItemImage:(UISwipeGestureRecognizer*)recognizer
+{
+    NSInteger index = [_currStyleDetail currentItemIndex];
+    
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionUp)
+    {
+        // first item to grab
+        if (index == 0) {
+            // query style and grab its items
+            StyleInfo* currStyle = _stylesArr[_currentStyleIndex];
+            [self getItemsForStyle:[currStyle objectId]];
+        }
+        index++;
+    }
+    else if (recognizer.direction == UISwipeGestureRecognizerDirectionDown)
+    {
+        index--;
+    }
+    
+    if (index >= 0 || index < ([[_currStyleDetail items] count] - 1))
+    {
+        _currStyleDetail.currentItemIndex = index;
+        [self showItemAtIndex:_currStyleDetail.currentItemIndex];
+    }
+    else
+    {
+        NSLog(@"Reached the end, swipe in opposite direction");
+    }
+}
+
+// ------------------------------------------- location manager update ---------------------------------------- //
 - (void)startStandardUpdates
 {
     // Create the location manager if this object does not
@@ -115,8 +233,6 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    
-    
     // If it's a relatively recent event, turn off updates to save power.
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
@@ -130,61 +246,55 @@
         PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: location];
         [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
         [[PFUser currentUser] saveInBackground];
-
-        [self getNearbyItems: location];
+        
+        [self getNearbyStyles: location];
     }
 }
 
--(void) shareBlock {
-      // add default item to be added
-      NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
-      ItemInfo *item = [[ItemInfo alloc] init];
-      item.name = @"unknown-default";
-      
-      [items addObject:item];
-      
-      self.itemsArray = items;
-      
-      [self.itemsTableView reloadData];
-      
-      // no items nearby
-      // show share action
-      [_activityImageView stopAnimating];
-      _activityImageView.hidden = YES;
-      
-      [self.locationManager stopUpdatingLocation];
-      
-      if(!self.alertShown)
-      {
-          self.alertShown = true;
-          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-          
-          
-          NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
-          NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
-          
-          NSArray *objectsToShare = @[textToShare, website];
-          
-          UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-          
-          NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                         UIActivityTypePrint,
-                                         UIActivityTypeAssignToContact,
-                                         UIActivityTypeSaveToCameraRoll,
-                                         UIActivityTypeAddToReadingList,
-                                         UIActivityTypePostToFlickr,
-                                         UIActivityTypePostToVimeo];
-          
-          activityController.excludedActivityTypes = excludeActivities;
-          
-          
-          [self presentViewController:activityController animated:YES completion:nil];
-      }
+-(void) getNearbyStyles:(CLLocation*) location {
+    // query db for nearby items
+    NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
+    if(arrStylesFound.count == 0)
+    {
+        // no items found, ask user to share adylix link
+        [self shareBlock];
+        return;
+    }
+    
+    NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
+    for(NSDictionary *styleInfo in arrStylesFound) {
+        
+        StyleInfo *style = [[StyleInfo alloc] init];
+        style.objectId = [styleInfo valueForKey:@"objectId"];
+        style.userObjectId = styleInfo[@"userId"];
+        style.name = styleInfo[@"name"];
+        style.desc = styleInfo[@"description"];
+        style.imageData = styleInfo[@"imageFile"];
+        
+        [styles addObject:style];
+    }
+    
+    self.stylesArr = styles;
+    
+    // show first image
+    PFFile *thumbnail = [[self.stylesArr objectAtIndex:0] imageData];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        _styleImageView.image = [UIImage imageWithData:data];
+    }];
+    
+    _currStyleDetail = [[StyleDetail alloc] init];
+    _currStyleDetail.currentItemIndex = 0;
+    
+    [_activityImageView stopAnimating];
+    _activityImageView.hidden = YES;
+    
 }
 
--(void) getNearbyItems:(CLLocation*) location {
+
+-(void) getItemsForStyle:(NSString*) styleId {
     // query db for nearby items
-    NSArray* arrItemsFound = [Item getItemsNearby:location];
+    NSArray* arrItemsFound = [StyleItems getItemsForStyle:styleId];
     if(arrItemsFound.count == 0)
     {
         // no items found, ask user to share adylix link
@@ -206,15 +316,19 @@
         
         [items addObject:item];
     }
-
-    self.itemsArray = items;
-   [self.itemsTableView reloadData];
-
+    
+    _currStyleDetail.items = items;
+    _currStyleDetail.currentItemIndex = 0;
+    
+    //self.stylesArr = items;
+    
+    //[self.itemsTableView reloadData];
+    
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
-
+    
 }
-// --------------------------------------------- table view handlers -------------------------------------- //
+// --------------------------------------------- table view handlers ----------------------------------------------- //
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *itemTableIdentifier = @"ItemCell";
@@ -244,7 +358,16 @@
     descLabel.font = [UIFont systemFontOfSize:12];
     [cell.contentView addSubview:descLabel];
     
-    ItemInfo *itemFound = self.itemsArray[indexPath.row];
+    for(UIView *view in cell.contentView.subviews) {
+        if(view.tag == 1) {
+            UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+            [tap setNumberOfTapsRequired:1];
+            [view addGestureRecognizer:tap];
+        }
+    }
+    
+    
+    ItemInfo *itemFound = self.stylesArr[indexPath.row];
     if(itemFound.name == @"unknown-default")
     {
         // show hat by default when no items discovered
@@ -255,16 +378,14 @@
         UIImage *img = [UIImage imageNamed:@"Icon-40@2x.png"];
         NSData *data = UIImagePNGRepresentation(img);
         thumbnailImageView.image = [UIImage imageWithData:data];
+        
     }
     else {
         nameLabel.text = itemFound.name;
-
         descLabel.text = itemFound.desc;
         
-        priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", itemFound.price];
-
         PFFile *thumbnail = itemFound.imageData;
-
+        
         [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if(!error)
                 thumbnailImageView.image = [UIImage imageWithData:data];
@@ -278,10 +399,9 @@
     return 1;
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.itemsArray count];
+    return [self.stylesArr count];
 }
 
 // -------------------------------------- push notify flow -------------------------------------------- //
@@ -290,24 +410,74 @@
     NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {
-        ItemInfo *itemFound = self.itemsArray[indexPath.row];
+        ItemInfo *itemFound = self.stylesArr[indexPath.row];
         NSString* userId = itemFound.userObjectId;
         NSString* itemId = itemFound.objectId;
         
-        Item* item = [[Item alloc] init];
-        [item like:itemId ownerId:userId];
+        //  Item* item = [[Item alloc] init];
+        //  [item like:itemId ownerId:userId];
     }
-   
+    
 }
+
+// share action
+-(void) shareBlock {
+    // add default item to be added
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
+    ItemInfo *item = [[ItemInfo alloc] init];
+    item.name = @"unknown-default";
+    
+    [items addObject:item];
+    
+    self.stylesArr = items;
+    
+    [self.itemsTableView reloadData];
+    
+    // no items nearby
+    // show share action
+    [_activityImageView stopAnimating];
+    _activityImageView.hidden = YES;
+    
+    [self.locationManager stopUpdatingLocation];
+    
+    if(!self.alertShown)
+    {
+        self.alertShown = true;
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        
+        
+        NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
+        NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
+        
+        NSArray *objectsToShare = @[textToShare, website];
+        
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+        
+        NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                       UIActivityTypePrint,
+                                       UIActivityTypeAssignToContact,
+                                       UIActivityTypeSaveToCameraRoll,
+                                       UIActivityTypeAddToReadingList,
+                                       UIActivityTypePostToFlickr,
+                                       UIActivityTypePostToVimeo];
+        
+        activityController.excludedActivityTypes = excludeActivities;
+        
+        
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
+}
+
 // -------------------------------------- payment flow ----------------------------------------------- //
+// DISABLED FOR NOW
 #ifdef PAY
 -(void) handleResponse:(bool) success {
     
     if(!success)
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Sorry, Payment failed...try again later", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
     else
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Thank you for your payment", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    
 }
 
 - (IBAction)btnPurchase:(id)sender {
@@ -323,7 +493,7 @@
         if (!userId || !price)
         {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Item not available for Purchase", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-
+            
             return;
         }
         // get the recepient who owns this item
@@ -336,7 +506,7 @@
             
             return;
         }
-
+        
         // show payment forms
         User* userInfo = [[User alloc] init];
         NSString* tokenId = [userInfo getTokenId];
@@ -344,17 +514,17 @@
         if (tokenId != nil)
         {
             [PaymentHandler submitPayment:price tokenId: tokenId bankId: recepientId completion:^void(bool success)        {
-              [self handleResponse: success];
+                [self handleResponse: success];
             }];
             
         } else
         {
-        
-             SenderController* payController = [[SenderController alloc] init];
-             payController.price = price;
-             payController.recepientId = recepientId;
-             payController.itemId = itemFound.objectId;
-             [self.navigationController pushViewController:payController animated:NO];
+            
+            SenderController* payController = [[SenderController alloc] init];
+            payController.price = price;
+            payController.recepientId = recepientId;
+            payController.itemId = itemFound.objectId;
+            [self.navigationController pushViewController:payController animated:NO];
         }
     }
 }

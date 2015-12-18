@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "AdyLix": {
+      "applicationId": "AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT"
+    },
+    "_default": {
+      "link": "AdyLix"
+    }
+  }
+}

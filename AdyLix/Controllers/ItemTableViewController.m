@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <ParseUI/PFImageView.h>
 #import "ItemTableViewController.h"
 #import "Item.h"
 
