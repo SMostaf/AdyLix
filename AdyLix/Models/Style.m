@@ -17,6 +17,9 @@
 @property NSString* parseClassName;
 @end
 
+@implementation StyleDetail
+@end
+
 @implementation StyleItems : NSObject
 
 -(id) init {
@@ -116,7 +119,7 @@
 
 
 // saving
--(void) saveStyle:(ItemInfo*) info {
+-(void) saveStyle:(DataInfo*) info {
   
     PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
     [item setObject:[PFUser currentUser] forKey:@"userId"];

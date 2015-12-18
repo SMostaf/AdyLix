@@ -10,7 +10,13 @@
 #define Style_h
 
 #import "Parse/Parse.h"
-#import "itemInfo.h"
+#import "DataInfo.h"
+
+@interface StyleDetail : NSObject
+@property NSArray* items;
+@property NSInteger currentItemIndex;
+@end
+
 
 @interface StyleItems : NSObject
 
@@ -20,7 +26,7 @@
 -(void) purchase:(NSString*) styleId;
 +(NSArray*) getStylesNearby:(CLLocation*) location;
 
--(void) saveStyle:(ItemInfo*) info;
+-(void) saveStyle:(DataInfo*) info;
 
 @end
 

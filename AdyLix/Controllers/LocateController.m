@@ -15,28 +15,23 @@
 #import "LocateController.h"
 #import "Parse/Parse.h"
 #import "ParseUI/PFImageView.h"
-#import "ItemInfo.h"
 #import "User.h"
 #import "Style.h"
-#include "StyleInfo.h"
-
+#include "DataInfo.h"
+#import "ShareHelper.h"
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
 
 
-@implementation StyleDetail
-@end
-
 @interface LocateController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
+@property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property  (nonatomic, strong) CLLocationManager* locationManager;
 //@property (nonatomic, copy) NSArray* itemsArr;
 @property UIImageView *activityImageView;
 @property BOOL alertShown;
-
-@property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
 @property (strong, nonatomic) NSArray *stylesArr;
 @property NSInteger currentStyleIndex;
 @property StyleDetail* currStyleDetail;
@@ -47,7 +42,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     self.stylesArr = [[NSArray alloc]init];
-    [self.itemsTableView reloadData];
     
     // show progress indicator
     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
@@ -106,11 +100,9 @@
     [_styleImageView addGestureRecognizer:swipeUp];
     [_styleImageView addGestureRecognizer:swipeDown];
     
-    
-    
+
     // location manager receive updates
     [self startStandardUpdates];
-    
 }
 
 - (void)viewDidLoad {
@@ -128,7 +120,7 @@
 // ---------------------------- swipe style gesture left/right ----------------------------------------------------- //
 -(void)showStyleAtIndex:(NSInteger)index
 {
-    StyleInfo* info = [_stylesArr objectAtIndex:index];
+    DataInfo* info = [_stylesArr objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
@@ -164,7 +156,7 @@
 -(void)showItemAtIndex:(NSInteger)index
 {
     // get array of currentStyle showing
-    ItemInfo* info = [[_currStyleDetail items] objectAtIndex:index];
+    DataInfo* info = [[_currStyleDetail items] objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
@@ -181,7 +173,7 @@
         // first item to grab
         if (index == 0) {
             // query style and grab its items
-            StyleInfo* currStyle = _stylesArr[_currentStyleIndex];
+            DataInfo* currStyle = _stylesArr[_currentStyleIndex];
             [self getItemsForStyle:[currStyle objectId]];
         }
         index++;
@@ -256,15 +248,34 @@
     NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
     if(arrStylesFound.count == 0)
     {
+        // add default item to be added
+        NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
+        DataInfo *item = [[DataInfo alloc] init];
+        item.name = @"unknown-default";
+        
+        [items addObject:item];
+        
+        self.stylesArr = items;
+
+        
         // no items found, ask user to share adylix link
-        [self shareBlock];
+        if(!self.alertShown)
+        {
+            self.alertShown = true;
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+        
+
+            UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty];
+            [self presentViewController:activityController animated:YES completion:nil];
+        }
         return;
     }
     
     NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
     for(NSDictionary *styleInfo in arrStylesFound) {
         
-        StyleInfo *style = [[StyleInfo alloc] init];
+        DataInfo *style = [[DataInfo alloc] init];
+        style.type = kStyleType;
         style.objectId = [styleInfo valueForKey:@"objectId"];
         style.userObjectId = styleInfo[@"userId"];
         style.name = styleInfo[@"name"];
@@ -298,19 +309,19 @@
     if(arrItemsFound.count == 0)
     {
         // no items found, ask user to share adylix link
-        [self shareBlock];
+        // send request for more info
         return;
     }
     
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
-        ItemInfo *item = [[ItemInfo alloc] init];
+        DataInfo *item = [[DataInfo alloc] init];
+        item.type = kItemType;
         item.objectId = [itemsInfo valueForKey:@"objectId"];
         item.userObjectId = itemsInfo[@"userObjectId"];
         item.name = itemsInfo[@"name"];
         item.desc = itemsInfo[@"description"];
-        item.price = itemsInfo[@"price"];
         item.imageData = itemsInfo[@"imageFile"];
         
         
@@ -327,6 +338,19 @@
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
     
+}
+- (IBAction)btnShare:(id)sender {
+    // show share block
+    
+    // no items nearby
+    // show share action
+    [_activityImageView stopAnimating];
+    _activityImageView.hidden = YES;
+    
+    // #TODO: determine what type of info we are sharing style or item
+    // send info to be shared
+    UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 // --------------------------------------------- table view handlers ----------------------------------------------- //
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -367,7 +391,7 @@
     }
     
     
-    ItemInfo *itemFound = self.stylesArr[indexPath.row];
+    DataInfo *itemFound = self.stylesArr[indexPath.row];
     if(itemFound.name == @"unknown-default")
     {
         // show hat by default when no items discovered
@@ -406,66 +430,18 @@
 
 // -------------------------------------- push notify flow -------------------------------------------- //
 - (IBAction)btnLike:(id)sender {
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
-    NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
-    if (indexPath != nil)
-    {
-        ItemInfo *itemFound = self.stylesArr[indexPath.row];
-        NSString* userId = itemFound.userObjectId;
-        NSString* itemId = itemFound.objectId;
-        
-        //  Item* item = [[Item alloc] init];
-        //  [item like:itemId ownerId:userId];
-    }
+//    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
+//    NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
+//    if (indexPath != nil)
+//    {
+//        ItemInfo *itemFound = self.stylesArr[indexPath.row];
+//        NSString* userId = itemFound.userObjectId;
+//        NSString* itemId = itemFound.objectId;
+//        
+//        //  Item* item = [[Item alloc] init];
+//        //  [item like:itemId ownerId:userId];
+//    }
     
-}
-
-// share action
--(void) shareBlock {
-    // add default item to be added
-    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
-    ItemInfo *item = [[ItemInfo alloc] init];
-    item.name = @"unknown-default";
-    
-    [items addObject:item];
-    
-    self.stylesArr = items;
-    
-    [self.itemsTableView reloadData];
-    
-    // no items nearby
-    // show share action
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
-    
-    [self.locationManager stopUpdatingLocation];
-    
-    if(!self.alertShown)
-    {
-        self.alertShown = true;
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
-        
-        NSString *textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
-        NSURL *website = [NSURL URLWithString:@"http://www.adylix.com/"];
-        
-        NSArray *objectsToShare = @[textToShare, website];
-        
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-        
-        NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                       UIActivityTypePrint,
-                                       UIActivityTypeAssignToContact,
-                                       UIActivityTypeSaveToCameraRoll,
-                                       UIActivityTypeAddToReadingList,
-                                       UIActivityTypePostToFlickr,
-                                       UIActivityTypePostToVimeo];
-        
-        activityController.excludedActivityTypes = excludeActivities;
-        
-        
-        [self presentViewController:activityController animated:YES completion:nil];
-    }
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //
