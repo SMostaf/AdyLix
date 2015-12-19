@@ -17,8 +17,8 @@
 #import "ParseUI/PFImageView.h"
 #import "User.h"
 #import "Style.h"
-#include "DataInfo.h"
 #import "ShareHelper.h"
+
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
@@ -26,6 +26,7 @@
 
 @interface LocateController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *btnCurrStyle;
 @property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property  (nonatomic, strong) CLLocationManager* locationManager;
@@ -100,7 +101,9 @@
     [_styleImageView addGestureRecognizer:swipeUp];
     [_styleImageView addGestureRecognizer:swipeDown];
     
-
+    // update view to show current style name
+    // on click redirect user to wardrobe
+    [self getCurrentSyleInfo];
     // location manager receive updates
     [self startStandardUpdates];
 }
@@ -117,7 +120,28 @@
     [_locationManager stopUpdatingLocation];
 }
 
-// ---------------------------- swipe style gesture left/right ----------------------------------------------------- //
+#pragma mark - swipe style gesture left/right  
+
+-(void)updateProfileForStyle:(NSInteger)index
+{
+    
+    DataInfo* info = [_stylesArr objectAtIndex:index];
+    // adding rounded corners to profile image
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+    self.profileImageView.clipsToBounds = YES;
+    self.profileImageView.layer.borderWidth = 3.0f;
+    self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    // show profile image
+    UserInfo* userInfo = [User getInfoForStyle: info.userObjectId];
+    if (userInfo.profileImage) {
+        [userInfo.profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if(!error)
+                self.profileImageView.image = [UIImage imageWithData:data];
+        }];
+    }
+    // show likes number
+}
+
 -(void)showStyleAtIndex:(NSInteger)index
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
@@ -145,6 +169,7 @@
     {
         _currentStyleIndex = index;
         [self showStyleAtIndex:_currentStyleIndex];
+        [self updateProfileForStyle: _currentStyleIndex];
     }
     else
     {
@@ -194,7 +219,14 @@
     }
 }
 
-// ------------------------------------------- location manager update ---------------------------------------- //
+-(void) getCurrentSyleInfo {
+    DataInfo* currStyle = [StyleItems getCurrentStyleInfo];
+    CGSize stringsize = [currStyle.name sizeWithFont:[UIFont systemFontOfSize:9]];
+    //or whatever font you're using
+    [self.btnCurrStyle setFrame:CGRectMake(10,0,stringsize.width, stringsize.height)];
+    [self.btnCurrStyle setTitle:currStyle.name forState:UIControlStateNormal | UIControlStateSelected];
+}
+#pragma mark - location manager update
 - (void)startStandardUpdates
 {
     // Create the location manager if this object does not

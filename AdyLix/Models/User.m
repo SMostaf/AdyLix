@@ -31,6 +31,20 @@
     return user;
 }
 
++(UserInfo*) getInfoForStyle:(NSString*) styleId {
+    UserInfo* userInfo = [[UserInfo alloc]init];
+    PFQuery *usersQuery = [PFUser query];
+    [usersQuery whereKey:@"objectId" equalTo:styleId];
+    // show profile image
+    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
+    userInfo.profileImage = profileImage;
+    userInfo.likes = [self getLikes];
+    return userInfo;
+}
+
++(unsigned long) getLikes {
+    return 0;
+}
 -(NSString*) getTokenId {
     return [[PFUser currentUser] valueForKey:@"tokenId"];
 }

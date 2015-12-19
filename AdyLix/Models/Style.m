@@ -76,6 +76,7 @@
     if(!styleId)
         return 0;
     NSArray* arrItemsFound;
+    // [postQuery includeKey:@"user"];
     PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
     [query whereKey:@"styleId" equalTo:styleId];
     
@@ -114,9 +115,21 @@
     [query whereKey:@"styleId" equalTo:styleId];
     [query whereKey:@"userTo" equalTo:[[PFUser currentUser] valueForKey:@"objectId"]];
 
+    
     return [[query findObjects] count];
 }
 
+
+// fetch info for style the user is currently wearing
++(DataInfo*) getCurrentStyleInfo {
+    DataInfo* info = [[DataInfo alloc]init];
+    PFQuery *styleQuery = [PFQuery queryWithClassName:@"StyleMaster"];
+    [styleQuery whereKey:@"objectId" equalTo:[[PFUser currentUser] valueForKey:@"currentStyleId"]];
+    PFObject* currStyle = [styleQuery getFirstObject];
+    if(currStyle)
+        info.name = [currStyle valueForKey:@"name"];
+    return info;
+}
 
 // saving
 -(void) saveStyle:(DataInfo*) info {

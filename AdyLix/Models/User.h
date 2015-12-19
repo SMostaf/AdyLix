@@ -10,6 +10,7 @@
 #define User_h
 
 #import "Parse/Parse.h"
+#import "UserInfo.h"
 
 #define USER_IMAGE @"profileImage"
 
@@ -23,6 +24,7 @@
 -(NSString*) getBankId;
 
 -(PFUser*) getUserForId:(NSString*) userId;
++(PFFile*) getInfoForStyle:(NSString*) styleId;
 @end
 
 #endif /* User_h */

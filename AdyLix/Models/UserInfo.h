@@ -7,16 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "Parse/Parse.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface UserInfo : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
+@interface UserInfo : NSObject
+@property PFFile *profileImage;
+@property unsigned int likes;
 
 @end
 
-NS_ASSUME_NONNULL_END
-
-#import "UserInfo+CoreDataProperties.h"
+//NS_ASSUME_NONNULL_END
+//
+//#import "UserInfo+CoreDataProperties.h"

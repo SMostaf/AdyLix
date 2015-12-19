@@ -25,7 +25,7 @@
 -(void) like:(NSString*) styleId ownerId:(NSString*) ownerId;
 -(void) purchase:(NSString*) styleId;
 +(NSArray*) getStylesNearby:(CLLocation*) location;
-
++(DataInfo*) getCurrentStyleInfo;
 -(void) saveStyle:(DataInfo*) info;
 
 @end
