@@ -6,17 +6,16 @@
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 
-#ifndef UserController_h
-#define UserController_h
+#ifndef NotificationController_h
+#define NotificationController_h
 
-#import <UIKit/UIKit.h>
 
-#import <CoreLocation/CoreLocation.h>
+#import <ParseUI/PFQueryTableViewController.h>
 
-@interface UserController : UIViewController<CLLocationManagerDelegate>
+@interface NotificationController : PFQueryTableViewController
 
 
 @end
 
 
-#endif /* UserController_h */
+#endif /* NotificationController_h */

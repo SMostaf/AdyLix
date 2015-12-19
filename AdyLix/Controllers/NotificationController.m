@@ -1,58 +1,35 @@
 //
-//  UserController.m
+//  NotificationController.m
 //  Ady
-//
+//  Notification center shows all notifications when user like style or item
+//  a user own
 //  Created by Sahar Mostafa on 10/15/15.
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
-#import "UserController.h"
+#import <ParseUI/PFImageView.h>
+#import "NotificationController.h"
 #import "Parse/Parse.h"
 #import "MainController.h"
 #import "User.h"
 
-@interface UserController ()
-@property (weak, nonatomic) IBOutlet UILabel *lblName;
-@property (weak, nonatomic) IBOutlet UIImageView *imgProfile;
+
+
+typedef enum {
+    DecLabelTag = 100,
+    ThumbnailTag = 101,
+    CustomeTag = 102
+} NotifyTagID;
+
+
+@interface NotificationController ()
+
 
 @end
 
-@implementation UserController
-
-
-- (void) setupImage {
-    
-    // adding rounded corners to profile image
-    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.width / 2;
-    self.imgProfile.clipsToBounds = YES;
-    self.imgProfile.layer.borderWidth = 3.0f;
-    self.imgProfile.layer.borderColor = [UIColor whiteColor].CGColor;
-    
-    // show profile image
-    // in case user logged using parse
-    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
-    
-    [profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if(!error)
-            self.imgProfile.image = [UIImage imageWithData:data];
-    }];
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [self setupImage];
-}
-
-- (IBAction)btnLogout:(id)sender {
-    [PFUser logOut];
-    
-    MainController *mainController = [[MainController alloc] init];
-    
-    [self presentViewController:mainController animated:YES completion:nil];
-    
-}
+@implementation NotificationController
 
 - (void)viewDidLoad {
-    [self setupImage];
+   
     [super viewDidLoad];
 }
 - (void)didReceiveMemoryWarning {
@@ -63,5 +40,91 @@
 {
     [super viewDidUnload];
 }
+
+
+- (id)initWithCoder:(NSCoder *)aCoder
+{
+    self = [super initWithCoder:aCoder];
+    if (self) {
+        // The className to query on
+        self.parseClassName = @"ItemDetail";
+        
+        // The key of the PFObject to display in the label of the default cell style
+        self.textKey = @"name";
+        
+        // Whether the built-in pull-to-refresh is enabled
+        self.pullToRefreshEnabled = YES;
+        
+        // Whether the built-in pagination is enabled
+        self.paginationEnabled = NO;
+        
+    }
+    return self;
+}
+
+
+- (PFQuery *)queryForTable {
+    
+    PFQuery *query;
+    if ([PFUser currentUser])
+    {
+        query = [PFQuery queryWithClassName:self.parseClassName];
+        [query whereKey:@"userObjectId" equalTo:[[PFUser currentUser]
+                                                 valueForKey:@"objectId"]];
+        
+        
+        // If no objects are loaded in memory, we look to the cache
+        // first to fill the table and then subsequently do a query
+        // against the network.
+        if ([self.objects count] == 0) {
+            query.cachePolicy = kPFCachePolicyNetworkElseCache;//kPFCachePolicyCacheThenNetwork;
+        }
+        
+        [query orderByDescending:@"createdAt"];
+        
+    }
+    return query;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
+{
+    static NSString *itemTableIdentifier = @"ItemCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemTableIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
+    }
+    
+    [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
+//    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
+//    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+//    descLabel.tag = CustomeTag;
+//    descLabel.numberOfLines = 2;
+//    descLabel.textColor = [UIColor darkGrayColor];
+//    descLabel.font = [UIFont systemFontOfSize:12];
+//    descLabel.text = [object objectForKey:@"description"];
+//    [cell.contentView addSubview:descLabel];
+    
+    
+    PFFile *thumbnail = [object objectForKey:@"imageFile"];
+    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:ThumbnailTag];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        thumbnailImageView.image = [UIImage imageWithData:data];
+    }];
+    
+//    Item* item = [[Item alloc] init];
+//    unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];
+//    if (countLikes > 0)
+//    {
+//        UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
+//        likeLabel.text = [NSString stringWithFormat:@"%d%@", countLikes, @" Likes"];
+//    }
+    
+    return cell;
+}
+
+
+
 
 @end
