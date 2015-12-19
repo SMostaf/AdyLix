@@ -121,10 +121,9 @@
 }
 
 #pragma mark - swipe style gesture left/right  
-
+// shows information on user who owns current displayed style
 -(void)updateProfileForStyle:(NSInteger)index
 {
-    
     DataInfo* info = [_stylesArr objectAtIndex:index];
     // adding rounded corners to profile image
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
@@ -139,7 +138,7 @@
                 self.profileImageView.image = [UIImage imageWithData:data];
         }];
     }
-    // show likes number
+
 }
 
 -(void)showStyleAtIndex:(NSInteger)index
@@ -149,6 +148,8 @@
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
     }];
+    // can grab items in the background
+    // PFQuery [query includeKey:@"itemId"]; [query findObjectsInBackgroundWithBlock:^(NSArray* arr, NSError* err){}];
 }
 
 -(void)swipeStyleImage:(UISwipeGestureRecognizer*)recognizer
@@ -313,7 +314,7 @@
         style.name = styleInfo[@"name"];
         style.desc = styleInfo[@"description"];
         style.imageData = styleInfo[@"imageFile"];
-        
+        // cna save user object ?
         [styles addObject:style];
     }
     
@@ -348,16 +349,16 @@
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
-        DataInfo *item = [[DataInfo alloc] init];
-        item.type = kItemType;
-        item.objectId = [itemsInfo valueForKey:@"objectId"];
-        item.userObjectId = itemsInfo[@"userObjectId"];
-        item.name = itemsInfo[@"name"];
-        item.desc = itemsInfo[@"description"];
-        item.imageData = itemsInfo[@"imageFile"];
+        DataInfo *info = [[DataInfo alloc] init];
+        info.type = kItemType;
+        info.objectId = [itemsInfo valueForKey:@"objectId"];
+        info.userObjectId = itemsInfo[@"userObjectId"];
+        info.name = itemsInfo[@"name"];
+        info.desc = itemsInfo[@"description"];
+        info.imageData = itemsInfo[@"imageFile"];
         
         
-        [items addObject:item];
+        [items addObject:info];
     }
     
     _currStyleDetail.items = items;
@@ -371,6 +372,7 @@
     _activityImageView.hidden = YES;
     
 }
+
 - (IBAction)btnShare:(id)sender {
     // show share block
     
@@ -384,96 +386,18 @@
     UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty];
     [self presentViewController:activityController animated:YES completion:nil];
 }
-// --------------------------------------------- table view handlers ----------------------------------------------- //
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *itemTableIdentifier = @"ItemCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemTableIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
-    }
-    
-    [[cell.contentView viewWithTag:DESC_CUSTOM_TAG]removeFromSuperview] ;
-    // Configure the cell
-    UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
-    nameLabel.text = @"";
-    
-    UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
-    priceLabel.text = @"";
-    
-    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
-    
-    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
-    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
-    [descLabel removeFromSuperview];
-    descLabel.tag = DESC_CUSTOM_TAG;
-    descLabel.text = @"";
-    descLabel.numberOfLines = 2;
-    descLabel.textColor = [UIColor darkGrayColor];
-    descLabel.font = [UIFont systemFontOfSize:12];
-    [cell.contentView addSubview:descLabel];
-    
-    for(UIView *view in cell.contentView.subviews) {
-        if(view.tag == 1) {
-            UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-            [tap setNumberOfTapsRequired:1];
-            [view addGestureRecognizer:tap];
-        }
-    }
-    
-    
-    DataInfo *itemFound = self.stylesArr[indexPath.row];
-    if(itemFound.name == @"unknown-default")
-    {
-        // show hat by default when no items discovered
-        nameLabel.text = @"The Hat";
-        descLabel.text  = @"Items discovered nearby will appear here, spread the word!";
-        priceLabel.text = @"$$";
-        
-        UIImage *img = [UIImage imageNamed:@"Icon-40@2x.png"];
-        NSData *data = UIImagePNGRepresentation(img);
-        thumbnailImageView.image = [UIImage imageWithData:data];
-        
+
+#pragma mark - push notify flow
+- (IBAction) btnLike:(id)sender {
+    if (_currStyleDetail.currentItemIndex != 0) {
+        // swiped down, user liked an item
+        DataInfo* info = _currStyleDetail.items[_currStyleDetail.currentItemIndex];
+        [StyleItems like:_stylesArr[_currentStyleIndex] itemId:info.objectId ownerId: info.userObjectId];
     }
     else {
-        nameLabel.text = itemFound.name;
-        descLabel.text = itemFound.desc;
-        
-        PFFile *thumbnail = itemFound.imageData;
-        
-        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if(!error)
-                thumbnailImageView.image = [UIImage imageWithData:data];
-        }];
+        DataInfo* info = _stylesArr[_currentStyleIndex];
+        [StyleItems like:_stylesArr[_currentStyleIndex] itemId:nil ownerId: info.userObjectId];
     }
-    
-    return cell;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.stylesArr count];
-}
-
-// -------------------------------------- push notify flow -------------------------------------------- //
-- (IBAction)btnLike:(id)sender {
-//    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
-//    NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];
-//    if (indexPath != nil)
-//    {
-//        ItemInfo *itemFound = self.stylesArr[indexPath.row];
-//        NSString* userId = itemFound.userObjectId;
-//        NSString* itemId = itemFound.objectId;
-//        
-//        //  Item* item = [[Item alloc] init];
-//        //  [item like:itemId ownerId:userId];
-//    }
-    
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //

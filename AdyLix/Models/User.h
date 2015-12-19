@@ -23,8 +23,8 @@
 -(NSString*) getTokenId;
 -(NSString*) getBankId;
 
--(PFUser*) getUserForId:(NSString*) userId;
-+(PFFile*) getInfoForStyle:(NSString*) styleId;
++(PFUser*) getUserForId:(NSString*) userId;
++(UserInfo*) getInfoForStyle:(NSString*) styleId;
 @end
 
 #endif /* User_h */

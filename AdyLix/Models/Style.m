@@ -11,6 +11,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "Style.h"
+#import "Item.h"
+#import "User.h"
 #import "Parse/Parse.h"
 
 @interface StyleItems()
@@ -57,6 +59,7 @@
     PFQuery *stylesQuery = [PFQuery queryWithClassName:@"StyleMaster"];
     // #TODO: remove DEBUG
    // [stylesQuery whereKey:@"userId" containedIn:arrUsers];
+    [stylesQuery includeKey:@"userId"];
     [stylesQuery whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
 
     
@@ -69,6 +72,13 @@
     NSArray* arrStylesFound = [stylesQuery findObjects];
 
     return arrStylesFound;
+}
+
++(PFObject*) getStyleForId:(NSString*) styleId {
+    
+    PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
+    [query whereKey:@"objectId" equalTo:styleId];
+    return [query getFirstObject];
 }
 
 
@@ -86,26 +96,31 @@
     
 }
 
--(void) like:(NSString*) styleId ownerId:(NSString*) ownerId {
-    // get user id of owner
-//    PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
-//    [query whereKey:@"objectId" equalTo:itemId];
-//    PFObject* item = [query getFirstObject];
-//    if(item)
-//    {
-        //NSString* ownerId = [item valueForKey:@"userObjectId"];
++(void) like:(NSString*) styleId itemId:(NSString*)itemId ownerId:(NSString*) ownerId {
+    // get item object
+    PFObject* itemObj = nil;
+    PFObject* styleObj = nil;
+    PFUser* owner = nil;;
+    if(itemId)
+         itemObj = [Item getItemForId:itemId];
+    if(styleId)
+        styleObj = [StyleItems getStyleForId:styleId];
+    if(ownerId)
+        owner = [User getUserForId:ownerId];
+    // like item ntifcation will be sent after save
+    PFObject *like = [PFObject objectWithClassName:@"ItemLike"];
+    if(styleObj)
+        [like setObject:styleObj forKey:@"styleId"];
+    if(itemObj)
+        [like setObject:itemObj forKey:@"itemId"];
+    
+    [like setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userFrom"];
+    [like setObject:owner forKey:@"userTo"];
         
-        // like item ntifcation will be sent after save
-        PFObject *item = [PFObject objectWithClassName:@"StyleLike"];
-        [item setObject:styleId forKey:@"itemId"];
-        [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userFrom"];
-        [item setObject:ownerId forKey:@"userTo"];
-        
-        [item saveInBackground];
-        
-   // }
+    [like saveInBackground];
 
 }
+
 
 
 -(unsigned long) getLikesForStyle:(NSString*) styleId {

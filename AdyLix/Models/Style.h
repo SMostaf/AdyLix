@@ -22,7 +22,7 @@
 
 -(unsigned long) getLikesForSytle:(NSString*) styleId;
 +(NSArray*) getItemsForStyle:(NSString*) styleId;
--(void) like:(NSString*) styleId ownerId:(NSString*) ownerId;
++(void) like:(NSString*) styleId itemId:(NSString*)itemId ownerId:(NSString*) ownerId;
 -(void) purchase:(NSString*) styleId;
 +(NSArray*) getStylesNearby:(CLLocation*) location;
 +(DataInfo*) getCurrentStyleInfo;
