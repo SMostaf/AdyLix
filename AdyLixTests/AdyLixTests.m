@@ -82,14 +82,14 @@
 
 -(void) testStyleSave {
     
-    ItemInfo* info = [[ItemInfo alloc]init];
+   // ItemInfo* info = [[ItemInfo alloc]init];
     // fill stub
     
     PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
-    [item setObject:[PFUser currentUser] forKey:@"userId"];
-    [item setObject:info.desc forKey:@"description"];
-    [item setObject:info.name forKey:@"name"];
-    [item setObject:info.imageData forKey:@"imageFile"];
+//    [item setObject:[PFUser currentUser] forKey:@"userId"];
+//    [item setObject:info.desc forKey:@"description"];
+//    [item setObject:info.name forKey:@"name"];
+//    [item setObject:info.imageData forKey:@"imageFile"];
     
     [item saveInBackground];
     
