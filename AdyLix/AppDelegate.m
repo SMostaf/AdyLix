@@ -57,7 +57,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
-    if ([PFUser currentUser]) {
+    //if ([PFUser currentUser]) {
         // #TODO: navigate to notification center
 //        if ([self.tabBarController viewControllers].count > UAPActivityTabBarItemIndex) {
 //            UITabBarItem *tabBarItem = [[self.tabBarController.viewControllers objectAtIndex:UAPActivityTabBarItemIndex] tabBarItem];
@@ -73,7 +73,7 @@
 //                tabBarItem.badgeValue = @"1";
 //            }
 //        }
-    }
+    //}
 }
 
 
