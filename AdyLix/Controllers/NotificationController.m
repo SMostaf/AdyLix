@@ -47,7 +47,7 @@ typedef enum {
     self = [super initWithCoder:aCoder];
     if (self) {
         // The className to query on
-        self.parseClassName = @"ItemDetail";
+        self.parseClassName = @"ItemLike";
         
         // The key of the PFObject to display in the label of the default cell style
         self.textKey = @"name";
@@ -69,8 +69,7 @@ typedef enum {
     if ([PFUser currentUser])
     {
         query = [PFQuery queryWithClassName:self.parseClassName];
-        [query whereKey:@"userObjectId" equalTo:[[PFUser currentUser]
-                                                 valueForKey:@"objectId"]];
+        [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
         
         
         // If no objects are loaded in memory, we look to the cache
@@ -94,8 +93,16 @@ typedef enum {
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
+    // User name liked your style name
     
-    [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
+    UILabel *likeLabel = (UILabel*) [cell viewWithTag:DecLabelTag];
+    PFUser* user = [object objectForKey:@"userFrom"];
+    PFObject* styleObj = [object objectForKey:@"styleId"];
+    if(user && styleObj)
+        likeLabel.text = [NSString stringWithFormat:@"%@%@",[user objectForKey:@"name"], [styleObj objectForKey:@"name"]];
+    
+    // [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
+    
 //    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
 //    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
 //    descLabel.tag = CustomeTag;
@@ -106,12 +113,12 @@ typedef enum {
 //    [cell.contentView addSubview:descLabel];
     
     
-    PFFile *thumbnail = [object objectForKey:@"imageFile"];
-    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:ThumbnailTag];
-    
-    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        thumbnailImageView.image = [UIImage imageWithData:data];
-    }];
+//    PFFile *thumbnail = [object objectForKey:@"imageFile"];
+//    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:ThumbnailTag];
+//    
+//    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//        thumbnailImageView.image = [UIImage imageWithData:data];
+//    }];
     
 //    Item* item = [[Item alloc] init];
 //    unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];

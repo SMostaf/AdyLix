@@ -25,6 +25,10 @@
 
 
 @interface LocateController ()
+@property (weak, nonatomic) IBOutlet UILabel *lblLikes;
+@property (weak, nonatomic) IBOutlet UIButton *btnShare;
+
+@property (weak, nonatomic) IBOutlet UIButton *btnLike;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCurrStyle;
 @property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
@@ -101,6 +105,8 @@
     [_styleImageView addGestureRecognizer:swipeUp];
     [_styleImageView addGestureRecognizer:swipeDown];
     
+    self.btnShare.hidden = YES;
+    self.btnLike.hidden = YES;
     // update view to show current style name
     // on click redirect user to wardrobe
     [self getCurrentSyleInfo];
@@ -120,16 +126,33 @@
     [_locationManager stopUpdatingLocation];
 }
 
-#pragma mark - swipe style gesture left/right  
+-(void) getLikes:(NSInteger)index type:(enum DataType) type {
+    DataInfo* info = nil;
+    unsigned long count = 0;
+    if (type == kStyleType) {
+        info = [_stylesArr objectAtIndex:index];
+        count =  [StyleItems getLikesForStyle: info.objectId];
+    }
+    else if (type == kItemType) {
+        info = [_currStyleDetail.items objectAtIndex:index];
+        count =  [Item getLikesForItem: info.objectId];
+    }
+    info.likes = count;
+    // showing text instead of icon for likes for now
+    self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
+    
+}
+
+#pragma mark - swipe style gesture left/right
 // shows information on user who owns current displayed style
 -(void)updateProfileForStyle:(NSInteger)index
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
     // adding rounded corners to profile image
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+    self.profileImageView.layer.cornerRadius = (self.profileImageView.frame.size.width/2) - 15;
     self.profileImageView.clipsToBounds = YES;
-    self.profileImageView.layer.borderWidth = 3.0f;
-    self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.profileImageView.layer.borderWidth = 1.0f;
+    self.profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
     // show profile image
     UserInfo* userInfo = [User getInfoForStyle: info.userObjectId];
     if (userInfo.profileImage) {
@@ -148,13 +171,14 @@
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
     }];
-    // can grab items in the background
-    // PFQuery [query includeKey:@"itemId"]; [query findObjectsInBackgroundWithBlock:^(NSArray* arr, NSError* err){}];
+    // update likes count for current showing style
+    [self getLikes:index type:kStyleType];
 }
 
 -(void)swipeStyleImage:(UISwipeGestureRecognizer*)recognizer
 {
     NSInteger index = _currentStyleIndex;
+    NSInteger limit = [_stylesArr count] -  1;
     _currStyleDetail.currentItemIndex = 0;
     
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
@@ -166,7 +190,7 @@
         index--;
     }
     
-    if (index >= 0 || index < ([_stylesArr count] - 1))
+    if (index >= 0 && index <= limit)
     {
         _currentStyleIndex = index;
         [self showStyleAtIndex:_currentStyleIndex];
@@ -187,12 +211,15 @@
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
     }];
+    
+    [self getLikes:0 type:kItemType];
 }
 
 // swipe up down items
 -(void) swipeItemImage:(UISwipeGestureRecognizer*)recognizer
 {
     NSInteger index = [_currStyleDetail currentItemIndex];
+    NSInteger limit = _currStyleDetail.currentItemsLimit;
     
     if (recognizer.direction == UISwipeGestureRecognizerDirectionUp)
     {
@@ -201,6 +228,7 @@
             // query style and grab its items
             DataInfo* currStyle = _stylesArr[_currentStyleIndex];
             [self getItemsForStyle:[currStyle objectId]];
+            limit = _currStyleDetail.currentItemsLimit;
         }
         index++;
     }
@@ -209,7 +237,7 @@
         index--;
     }
     
-    if (index >= 0 || index < ([[_currStyleDetail items] count] - 1))
+    if (index >= 0 && index <= limit)
     {
         _currStyleDetail.currentItemIndex = index;
         [self showItemAtIndex:_currStyleDetail.currentItemIndex];
@@ -221,11 +249,13 @@
 }
 
 -(void) getCurrentSyleInfo {
+    
     DataInfo* currStyle = [StyleItems getCurrentStyleInfo];
-    CGSize stringsize = [currStyle.name sizeWithFont:[UIFont systemFontOfSize:9]];
-    //or whatever font you're using
-    [self.btnCurrStyle setFrame:CGRectMake(10,0,stringsize.width, stringsize.height)];
-    [self.btnCurrStyle setTitle:currStyle.name forState:UIControlStateNormal | UIControlStateSelected];
+    if (currStyle) {
+        //CGSize stringsize = [currStyle.name sizeWithFont:[UIFont systemFontOfSize:9]];
+      //  [self.btnCurrStyle setFrame:CGRectMake(10,0,stringsize.width, stringsize.height)];
+        [self.btnCurrStyle setTitle: currStyle.name forState: UIControlStateNormal];
+    }
 }
 #pragma mark - location manager update
 - (void)startStandardUpdates
@@ -236,6 +266,7 @@
         _locationManager = [[CLLocationManager alloc] init];
     
     _locationManager.delegate = self;
+    
     _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
     
     // Set a movement threshold for new events.
@@ -262,6 +293,7 @@
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+    
     if (abs(howRecent) < 15.0) {
         // If the event is recent, do something with it.
         NSLog(@"latitude %+.6f, longitude %+.6f\n",
@@ -279,6 +311,7 @@
 -(void) getNearbyStyles:(CLLocation*) location {
     // query db for nearby items
     NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
+  
     if(arrStylesFound.count == 0)
     {
         // add default item to be added
@@ -288,7 +321,7 @@
         
         [items addObject:item];
         
-        self.stylesArr = items;
+        _stylesArr = items;
 
         
         // no items found, ask user to share adylix link
@@ -310,23 +343,31 @@
         DataInfo *style = [[DataInfo alloc] init];
         style.type = kStyleType;
         style.objectId = [styleInfo valueForKey:@"objectId"];
-        style.userObjectId = styleInfo[@"userId"];
+        style.userObjectId = [styleInfo valueForKey:@"userId"];
         style.name = styleInfo[@"name"];
         style.desc = styleInfo[@"description"];
         style.imageData = styleInfo[@"imageFile"];
-        // cna save user object ?
+
         [styles addObject:style];
     }
     
-    self.stylesArr = styles;
+    _stylesArr = styles;
+    if([_stylesArr count] > 0) {
+      self.btnShare.hidden = NO;
+      self.btnLike.hidden = NO;
+        // get profile for first style
+        [self updateProfileForStyle: 0];
+        
+        // show first image
+        PFFile *thumbnail = [[_stylesArr objectAtIndex:0] imageData];
     
-    // show first image
-    PFFile *thumbnail = [[self.stylesArr objectAtIndex:0] imageData];
-    
-    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        _styleImageView.image = [UIImage imageWithData:data];
-    }];
-    
+        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            _styleImageView.image = [UIImage imageWithData:data];
+        }];
+        
+        // get likes for first style
+        [self getLikes:0 type:kStyleType];
+    }
     _currStyleDetail = [[StyleDetail alloc] init];
     _currStyleDetail.currentItemIndex = 0;
     
@@ -337,22 +378,25 @@
 
 
 -(void) getItemsForStyle:(NSString*) styleId {
+    
+    [_activityImageView startAnimating];
     // query db for nearby items
     NSArray* arrItemsFound = [StyleItems getItemsForStyle:styleId];
     if(arrItemsFound.count == 0)
     {
+        // #TODO
         // no items found, ask user to share adylix link
         // send request for more info
         return;
     }
-    
+    PFUser* user = [[StyleItems getStyleForId:styleId] valueForKey:@"userId"];
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
         DataInfo *info = [[DataInfo alloc] init];
         info.type = kItemType;
         info.objectId = [itemsInfo valueForKey:@"objectId"];
-        info.userObjectId = itemsInfo[@"userObjectId"];
+        info.userObjectId = user;
         info.name = itemsInfo[@"name"];
         info.desc = itemsInfo[@"description"];
         info.imageData = itemsInfo[@"imageFile"];
@@ -363,11 +407,8 @@
     
     _currStyleDetail.items = items;
     _currStyleDetail.currentItemIndex = 0;
-    
-    //self.stylesArr = items;
-    
-    //[self.itemsTableView reloadData];
-    
+    _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
+ 
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
     
@@ -389,15 +430,20 @@
 
 #pragma mark - push notify flow
 - (IBAction) btnLike:(id)sender {
+    DataInfo* info = nil;
     if (_currStyleDetail.currentItemIndex != 0) {
         // swiped down, user liked an item
-        DataInfo* info = _currStyleDetail.items[_currStyleDetail.currentItemIndex];
-        [StyleItems like:_stylesArr[_currentStyleIndex] itemId:info.objectId ownerId: info.userObjectId];
+        info = _currStyleDetail.items[_currStyleDetail.currentItemIndex];
+        [StyleItems like:[_stylesArr[_currentStyleIndex] objectId] itemId:info.objectId owner: info.userObjectId];
     }
     else {
-        DataInfo* info = _stylesArr[_currentStyleIndex];
-        [StyleItems like:_stylesArr[_currentStyleIndex] itemId:nil ownerId: info.userObjectId];
+        info = _stylesArr[_currentStyleIndex];
+        [StyleItems like:[_stylesArr[_currentStyleIndex] objectId] itemId:nil owner: info.userObjectId];
     }
+    // get current like count and increment
+    // update label
+    unsigned int counter = info.likes + 1;
+    self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", counter, @"likes"];
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //
