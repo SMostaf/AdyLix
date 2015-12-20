@@ -11,7 +11,7 @@
 #import "Parse/Parse.h"
 #import "MainController.h"
 #import "User.h"
-
+#import "Style.h"
 
 
 typedef enum {
@@ -87,19 +87,26 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object
 {
+
     static NSString *itemTableIdentifier = @"ItemCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemTableIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
     }
-    // User name liked your style name
-    
-    UILabel *likeLabel = (UILabel*) [cell viewWithTag:DecLabelTag];
-    PFUser* user = [object objectForKey:@"userFrom"];
+
+    PFUser* userObj = [object objectForKey:@"userFrom"];
     PFObject* styleObj = [object objectForKey:@"styleId"];
-    if(user && styleObj)
-        likeLabel.text = [NSString stringWithFormat:@"%@%@",[user objectForKey:@"name"], [styleObj objectForKey:@"name"]];
+    if(userObj && styleObj) {
+        PFObject* styleInfo = [StyleItems getStyleForId:styleObj.objectId];
+        PFQuery* userQuery = [PFUser query];
+        [userQuery whereKey:@"objectId" equalTo:userObj.objectId];
+        PFObject* userInfo = [userQuery getFirstObject];
+        NSString* userName = [userInfo valueForKey:@"username"];
+        NSString* styleName = [styleInfo valueForKey:@"name"];
+        // User name liked your name style
+        cell.textLabel.text = [NSString stringWithFormat:@"%@%@%@%@", userName, @" likes your ", styleName, @" style"];
+    }
     
     // [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
     
