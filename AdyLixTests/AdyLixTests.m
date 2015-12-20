@@ -115,5 +115,42 @@
         // Put the code you want to measure the time of here.
     }];
 }
+#pragma mark - fixtures
 
+
+// for testing: adding fixtures to db
++(void) addObjForTest {
+    // for testing
+    PFObject* style = [StyleItems getStyleForId:@"ipkTFPi5MF"];
+    [style setValue: [PFUser currentUser]  forKey:@"userId"];
+    [style save];
+    
+    PFObject* style2 = [StyleItems getStyleForId:@"A2p2VL6uuX"];
+    [style2 setValue: [PFUser currentUser]  forKey:@"userId"];
+    [style2 save];
+    
+    PFObject* style3 = [StyleItems getStyleForId:@"zY3vC5tHRq"];
+    [style3 setValue: [PFUser currentUser]  forKey:@"userId"];
+    [style3 save];
+    
+    
+    PFObject* item = [Item getItemForId:@"Q9gipHOurW"];
+    [item setValue: style forKey:@"styleId"];
+    [item save];
+    
+    
+    PFObject* item1 = [Item getItemForId:@"0rnHgmoc6U"];
+    [item1 setValue: style forKey:@"styleId"];
+    [item1 save];
+    
+    
+    PFObject* item3 = [Item getItemForId:@"4rjRYicxMt"];
+    [item3 setValue: style2 forKey:@"styleId"];
+    [item3 save];
+    
+    [[PFUser currentUser] setObject:style forKey:@"currentStyleId"];
+    [[PFUser currentUser] save];
+    
+    
+}
 @end
