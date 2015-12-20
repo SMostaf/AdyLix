@@ -1,40 +1,71 @@
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> AdyLix Routing for Push APIs <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Parse.Cloud.afterSave("ItemLike", function(request) {
   // trigger to fire after user likes an item
+  console.log("Push in progress");
   var itemId = request.object.get('itemId');
-  var userId = request.object.get('ownerId');
- 
+  var userId = request.object.get('userTo').id;
+  var styleId = request.object.get("styleId").id;
   var pushQuery = new Parse.Query(Parse.Installation);
   pushQuery.equalTo('deviceType', 'ios');
   pushQuery.equalTo('user', userId);
 
-  var itemDetail = Parse.Object.extend("ItemDetail");
-  var itemQuery  = new Parse.Query(itemDetail);
-  itemQuery.get(itemId, {
-  success: function(object) {
-     var name = object.get("name");
-     Parse.Push.send({
-      where: pushQuery, // Set our Installation query
-      data: {
-        alert: "Received New Like for Item: " + name,
-        badge: "Increment"
+  if(itemId) { // individual item like
+      var itemObj = Parse.Object.extend("ItemDetail");
+      var itemQuery  = new Parse.Query(itemObj);
+
+      itemQuery.get(itemId, {
+      success: function(object) {
+         var name = object.get("name");
+         Parse.Push.send({
+          where: pushQuery, // Set our Installation query
+          data: {
+            alert: "Received New Like for Item "  + name,
+            badge: "Increment"
+          }
+       }, {
+        success: function() {
+          // Push was successful
+          console.log('Like item success');
+        },
+        error: function(error) {
+          throw "Got an error " + error.code + " : " + error.message;
+        }
+      });
+
+      },
+
+      error: function(object, error) {
+         throw "Got an error " + error.code + " : " + error.message;
       }
-   }, {
-    success: function() {
-      // Push was successful
+    });
+ } else { // whole style like
+      var styleObj = Parse.Object.extend("StyleMaster");
+      var styleQuery  = new Parse.Query(styleObj);
+
+      styleQuery.get(styleId, {
+      success: function(object) {
+         var name = object.get("name");
+         Parse.Push.send({
+          where: pushQuery, // Set our Installation query
+          data: {
+            alert: "Received New Like for Style " + name,
+            badge: "Increment"
+          }
+       }, {
+        success: function() {
+          // Push was successful
+          console.log('Like style success');
+        },
+        error: function(error) {
+          throw "Got an error " + error.code + " : " + error.message;
+        }
+      });
     },
-    error: function(error) {
-      throw "Got an error " + error.code + " : " + error.message;
-    }
-  });
-
-  },
-
-  error: function(object, error) {
-     throw "Got an error " + error.code + " : " + error.message;
-  }
-});
- 
+      error: function(object, error) {
+         throw "Got an error " + error.code + " : " + error.message;
+      }
+    });
+ }
 
 });
 
@@ -227,7 +258,7 @@ Parse.Cloud.define("transfer", function(request, response) {
       }
         return output;
   };
-
+// ------------------------------------------------------------ works with older version of parse --------------------------- //
 // recepient creation depricated
 //#TODO: move to managed accounts
 Stripe.Recipients = {};
