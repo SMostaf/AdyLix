@@ -11,23 +11,26 @@
 
 #import "Parse/Parse.h"
 #import "DataInfo.h"
+#import "Item.h"
 
 @interface StyleDetail : NSObject
 @property NSArray* items;
 @property NSInteger currentItemIndex;
+@property unsigned int currentItemsLimit;
 @end
 
 
 @interface StyleItems : NSObject
 
--(unsigned long) getLikesForSytle:(NSString*) styleId;
++(unsigned long) getLikesForStyle:(NSString*) styleId;
 +(NSArray*) getItemsForStyle:(NSString*) styleId;
-+(void) like:(NSString*) styleId itemId:(NSString*)itemId ownerId:(NSString*) ownerId;
++(void) like:(NSString*) styleId itemId:(NSString*)itemId owner:(PFUser*) owner;
 -(void) purchase:(NSString*) styleId;
 +(NSArray*) getStylesNearby:(CLLocation*) location;
 +(DataInfo*) getCurrentStyleInfo;
 -(void) saveStyle:(DataInfo*) info;
-
+// for test cases
++(PFObject*) getStyleForId:(NSString*) styleId;
 @end
 
 #endif /* Style_h */

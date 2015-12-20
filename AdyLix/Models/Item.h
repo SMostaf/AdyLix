@@ -20,10 +20,11 @@ typedef NS_ENUM(NSInteger, ITMStatus) {
     ITMPurchased  // Item purchased after a successfull transaction
 };
 
--(unsigned long) getLikesForItem:(NSString*) itemId;
++(unsigned long) getLikesForItem:(NSString*) itemId;
 -(void) like:(NSString*) itemId ownerId:(NSString*) ownerId;
 -(void) purchase:(NSString*) itemId;
 +(NSArray*) getItemsNearby:(CLLocation*) location;
++(PFObject*) getItemForId:(NSString*) itemId;
 @end
 
 #endif /* Item_h */

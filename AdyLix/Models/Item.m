@@ -36,7 +36,7 @@
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
    
     // #TODO: remove DEBUG
-   // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
+    // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     //[usersQuery whereKey:@"email" notEqualTo:[[PFUser currentUser] email]];
     [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     //[usersQuery orderByAscending:@"orderByAscending"];
@@ -47,9 +47,7 @@
     NSArray* arrUsers = [usersQuery findObjects];
     // no users nearby
     if(arrUsers.count == 0)
-    {
         return nil;
-    }
     
     // query nearby users and find their items
     PFQuery *query = [PFQuery queryWithClassName:@"ItemDetail"];
@@ -91,13 +89,19 @@
 
 }
 
++(PFObject*) getItemForId:(NSString*) itemId {
+    
+    PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
+    [query whereKey:@"objectId" equalTo:itemId];
+    return [query getFirstObject];
+}
 
--(unsigned long) getLikesForItem:(NSString*) itemId {
++(unsigned long) getLikesForItem:(NSString*) itemId {
     if(!itemId)
         return 0;
     PFQuery* query = [PFQuery queryWithClassName:@"ItemLike"];
     [query whereKey:@"itemId" equalTo:itemId];
-    [query whereKey:@"userTo" equalTo:[[PFUser currentUser] valueForKey:@"objectId"]];
+    [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
 
     return [[query findObjects] count];
 }

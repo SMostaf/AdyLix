@@ -20,11 +20,12 @@ enum DataType {
 
 @property enum DataType type;
 @property NSString* objectId;
-@property NSString* userObjectId;
+@property PFUser* userObjectId;
 @property NSString* name;
 @property NSString* desc;
 @property PFFile* imageData;
 @property bool isDiscoverable;
+@property unsigned int likes;
 
 -(void) like;
 -(unsigned long) getLikes;

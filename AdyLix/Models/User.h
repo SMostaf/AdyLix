@@ -24,7 +24,7 @@
 -(NSString*) getBankId;
 
 +(PFUser*) getUserForId:(NSString*) userId;
-+(UserInfo*) getInfoForStyle:(NSString*) styleId;
++(UserInfo*) getInfoForStyle:(PFUser*) user;
 @end
 
 #endif /* User_h */

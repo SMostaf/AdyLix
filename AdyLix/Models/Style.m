@@ -11,7 +11,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "Style.h"
-#import "Item.h"
 #import "User.h"
 #import "Parse/Parse.h"
 
@@ -34,17 +33,14 @@
 +(NSArray*) getStylesNearby:(CLLocation*) location
 {
     // get users nearby
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLocation: location];
-    // Create a query for places
-    //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
     CGFloat km = 0.5f;
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
-   
+    
     // #TODO: for DEBUG purpose
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
+    //[usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     //[usersQuery orderByAscending:@"orderByAscending"];
     // Limit what could be a lot of points.
     usersQuery.limit = 100;
@@ -54,20 +50,19 @@
     if(arrUsers.count == 0)
         return nil;
     
-   // query nearby users and find their items
-   // NSMutableArray *arrStylesFound = [[NSMutableArray alloc]init];
+    // query nearby users and find their items
+    // NSMutableArray *arrStylesFound = [[NSMutableArray alloc]init];
     PFQuery *stylesQuery = [PFQuery queryWithClassName:@"StyleMaster"];
     // #TODO: remove DEBUG
-   // [stylesQuery whereKey:@"userId" containedIn:arrUsers];
-    [stylesQuery includeKey:@"userId"];
+    // [stylesQuery whereKey:@"userId" containedIn:arrUsers];
     [stylesQuery whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
-
     
-//    for (PFObject *object in arrUsers) {
-//        [arrStylesFound addObject:[object objectId]];
-//    }
-//    [query whereKey:@"userObjectId" containedIn:arrStylesFound];
-   
+    
+    //    for (PFObject *object in arrUsers) {
+    //        [arrStylesFound addObject:[object objectId]];
+    //    }
+    //    [query whereKey:@"userObjectId" containedIn:arrStylesFound];
+    
     //[query orderByDescending:@"objectId"];
     NSArray* arrStylesFound = [stylesQuery findObjects];
 
@@ -77,8 +72,9 @@
 +(PFObject*) getStyleForId:(NSString*) styleId {
     
     PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
-    [query whereKey:@"objectId" equalTo:styleId];
-    return [query getFirstObject];
+    [query whereKey:@"objectId" equalTo: styleId];
+    PFObject* styleObj = [query getFirstObject];
+    return styleObj;
 }
 
 
@@ -86,9 +82,8 @@
     if(!styleId)
         return 0;
     NSArray* arrItemsFound;
-    // [postQuery includeKey:@"user"];
     PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
-    [query whereKey:@"styleId" equalTo:styleId];
+    [query whereKey:@"styleId" equalTo:[StyleItems getStyleForId:styleId]];
     
     arrItemsFound = [query findObjects];
     
@@ -96,17 +91,16 @@
     
 }
 
-+(void) like:(NSString*) styleId itemId:(NSString*)itemId ownerId:(NSString*) ownerId {
++(void) like:(NSString*) styleId itemId:(NSString*) itemId owner:(PFUser*) owner {
     // get item object
     PFObject* itemObj = nil;
     PFObject* styleObj = nil;
-    PFUser* owner = nil;;
+    
     if(itemId)
          itemObj = [Item getItemForId:itemId];
     if(styleId)
         styleObj = [StyleItems getStyleForId:styleId];
-    if(ownerId)
-        owner = [User getUserForId:ownerId];
+
     // like item ntifcation will be sent after save
     PFObject *like = [PFObject objectWithClassName:@"ItemLike"];
     if(styleObj)
@@ -114,35 +108,38 @@
     if(itemObj)
         [like setObject:itemObj forKey:@"itemId"];
     
-    [like setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userFrom"];
+    [like setObject:[PFUser currentUser] forKey:@"userFrom"];
     [like setObject:owner forKey:@"userTo"];
         
     [like saveInBackground];
 
 }
 
-
-
--(unsigned long) getLikesForStyle:(NSString*) styleId {
++(unsigned long) getLikesForStyle:(NSString*) styleId {
     if(!styleId)
         return 0;
-    PFQuery* query = [PFQuery queryWithClassName:@"StyleLike"];
-    [query whereKey:@"styleId" equalTo:styleId];
-    [query whereKey:@"userTo" equalTo:[[PFUser currentUser] valueForKey:@"objectId"]];
-
+    PFQuery* query = [PFQuery queryWithClassName:@"ItemLike"];
+    [query whereKey:@"styleId" equalTo:[StyleItems getStyleForId: styleId]];
+    [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
     
     return [[query findObjects] count];
 }
 
-
 // fetch info for style the user is currently wearing
 +(DataInfo*) getCurrentStyleInfo {
+    // *******************************
+    //#TODO remove
+    //[StyleItems addObjForTest];
+    // *******************************
     DataInfo* info = [[DataInfo alloc]init];
-    PFQuery *styleQuery = [PFQuery queryWithClassName:@"StyleMaster"];
-    [styleQuery whereKey:@"objectId" equalTo:[[PFUser currentUser] valueForKey:@"currentStyleId"]];
-    PFObject* currStyle = [styleQuery getFirstObject];
-    if(currStyle)
-        info.name = [currStyle valueForKey:@"name"];
+    PFObject* currStyle = [[PFUser currentUser] valueForKey:@"currentStyleId"];
+    if(currStyle) {
+        PFQuery * query = [PFQuery queryWithClassName:@"StyleMaster"];
+        [query whereKey:@"objectId" equalTo:currStyle.objectId];
+        PFObject* styleObj = [query getFirstObject];
+        if(styleObj)
+            info.name = [styleObj valueForKey:@"name"];
+    }
     return info;
 }
 
@@ -156,8 +153,9 @@
     [item setObject:info.imageData forKey:@"imageFile"];
     
     [item saveInBackground];
- 
 }
+
+
 // ---------------------------------------- disabled -------------------------------------------- //
 -(void) purchase:(NSString*) itemId {
     // mark item as purchased

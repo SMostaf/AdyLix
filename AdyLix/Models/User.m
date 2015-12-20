@@ -23,21 +23,24 @@
     return self;
 }
 
--(PFUser*) getUserForId:(NSString*) userId {
++(PFUser*) getUserForId:(NSString*) userId {
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:userId];
     PFUser *user = (PFUser *)[query getFirstObject];
-
     return user;
 }
 
-+(UserInfo*) getInfoForStyle:(NSString*) styleId {
+// get user info owning the passed style
++(UserInfo*) getInfoForStyle:(PFUser*) user {
     UserInfo* userInfo = [[UserInfo alloc]init];
-    PFQuery *usersQuery = [PFUser query];
-    [usersQuery whereKey:@"objectId" equalTo:styleId];
     // show profile image
-    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
-    userInfo.profileImage = profileImage;
+    PFQuery * query = [PFUser query];
+    [query whereKey:@"objectId" equalTo:user.objectId];
+    PFObject* userObj = [query getFirstObject];
+    if(userObj) {
+        PFFile *profileImage = [userObj valueForKey:@"profileImage"];
+        userInfo.profileImage = profileImage;
+    }
     return userInfo;
 }
 
