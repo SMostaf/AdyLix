@@ -75,5 +75,5 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/AppDelegate.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/PFFacebookUtils.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/ParseFacebookUtilsV4.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/MainController.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/AppRelated.h

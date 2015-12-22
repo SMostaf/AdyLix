@@ -3,7 +3,7 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/CloudCode/PFCloudCodeController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFTask.h \
@@ -16,7 +16,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFAssert.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCommandResult.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/CommandRunner/PFCommandRunning.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDecoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/PFRESTCloudCommand.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/PFRESTCommand.h \

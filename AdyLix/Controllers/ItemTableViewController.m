@@ -115,12 +115,11 @@ typedef enum {
                     thumbnailImageView.image = [UIImage imageWithData:data];
     }];
 
-    Item* item = [[Item alloc] init];
-    unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];
+    unsigned long countLikes = [Item getLikesForItem: [object valueForKey:@"objectId"]];
     if (countLikes > 0)
     {
         UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
-        likeLabel.text = [NSString stringWithFormat:@"%d%@", countLikes, @" Likes"];
+        likeLabel.text = [NSString stringWithFormat:@"%lu%@", countLikes, @" Likes"];
     }
 
     return cell;

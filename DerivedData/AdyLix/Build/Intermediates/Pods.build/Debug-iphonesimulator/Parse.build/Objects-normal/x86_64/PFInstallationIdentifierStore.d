@@ -2,6 +2,8 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Installation/InstallationIdentifierStore/PFInstallationIdentifierStore.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Installation/InstallationIdentifierStore/PFInstallationIdentifierStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFTask.h \
@@ -9,8 +11,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationTokenRegistration.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFInternalUtils.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFAssert.h \
@@ -40,5 +40,7 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFProduct.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFPurchase.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFAsyncTaskQueue.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/PFPersistenceController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/Group/PFPersistenceGroup.h

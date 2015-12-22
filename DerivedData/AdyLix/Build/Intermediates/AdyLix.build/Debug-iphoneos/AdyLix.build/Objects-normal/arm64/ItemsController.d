@@ -46,4 +46,5 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/User.h
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/User.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/UserInfo.h

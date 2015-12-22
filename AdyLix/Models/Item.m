@@ -35,9 +35,8 @@
     CGFloat km = 1.0f;
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
    
-    // #TODO: remove DEBUG
+    // #TODO: remove DEBUG order by closest items 
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    //[usersQuery whereKey:@"email" notEqualTo:[[PFUser currentUser] email]];
     [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     //[usersQuery orderByAscending:@"orderByAscending"];
     
@@ -66,27 +65,6 @@
         return nil;
     }
     return arrItemsFound;
-}
-
--(void) like:(NSString*) itemId ownerId:(NSString*) ownerId {
-    // get user id of owner
-//    PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
-//    [query whereKey:@"objectId" equalTo:itemId];
-//    PFObject* item = [query getFirstObject];
-//    if(item)
-//    {
-        //NSString* ownerId = [item valueForKey:@"userObjectId"];
-        
-        // like item ntifcation will be sent after save
-        PFObject *item = [PFObject objectWithClassName:@"ItemLike"];
-        [item setObject:itemId forKey:@"itemId"];
-        [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userFrom"];
-        [item setObject:ownerId forKey:@"userTo"];
-        
-        [item saveInBackground];
-        
-   // }
-
 }
 
 +(PFObject*) getItemForId:(NSString*) itemId {

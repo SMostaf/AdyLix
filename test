@@ -1,2 +1,17 @@
 test roles app: Betty access token
 CAAXknbxWkgsBAEgn5bn6Yj2bIsRgMOR7V1PI5wL9IYrmhKqS1guWx75ijZCZAqFklGRxbLKXGg0ZAioF3SMnz0PzFL4H3RKhtVPg8U4uZB170PZAPaIuXnJJdxTZBZAZCzrNI9NQEhbGmxS7DZANgr7oZCKYuoPjKDXdYbhmagsJMfbp6ozeaZCiYQKrRLaT2jryr6dAyRo73WjuQZDZD
+
+
+curl -X POST \
+  -H "X-Parse-Application-Id:AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" \
+  -H "X-Parse-REST-API-Key:36tCnMKHTomoh588fsxhqZjf9bvDHelKwEsYr1rj" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "where": {
+          "deviceType": "ios"
+        },
+        "data": {
+          "alert": "Hello World!"
+        }
+      }' \
+  https://api.parse.com/1/push

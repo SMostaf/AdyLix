@@ -8,58 +8,61 @@
 
 #import <Foundation/Foundation.h>
 #import "ShareHelper.h"
+#import "datainfo.h"
 
 @implementation ShareHelper
 
-// share action
-+(void) shareInfo {
-    // add default item to be added
-    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
-    ItemInfo *item = [[ItemInfo alloc] init];
-    item.name = @"unknown-default";
-    
-    [items addObject:item];
-    
-    self.stylesArr = items;
-    
+// share action pops up share view
+// restricts to email and social networks
+// #TODO: share image of style or item
++(UIActivityViewController*) shareInfo:(enum ShareType) type info:(DataInfo*) info {
 
-    [self.locationManager stopUpdatingLocation];
-    
-   
-        
-        NSString *textToShare;
-        NSURL *website;
-    
-        switch (state) {
-                
-            case kShareItem: break;
+    NSString *textToShare;
+    NSArray *objectsToShare;
+
+    switch (type) {
             
-            case kShareStyle: break;
-                
-            case kEmpty: {
-                textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
-                website = [NSURL URLWithString:@"http://www.adylix.com/"];
+        case kShareItem: {
+            
+            textToShare = @"Sharing this item discovered by AdyLix";
+            NSData* styleImage = [info.imageData getData];
+            objectsToShare = @[textToShare, styleImage];
 
-            }
-                break;
         }
+            break;
+        
+        case kShareStyle: {
+            
+            textToShare = @"Sharing this style discovered by AdyLix";
+            NSData* itemImage = [info.imageData getData];
+            objectsToShare = @[textToShare, itemImage];
+        }
+            break;
+            
+        case kEmpty: {
+            textToShare = @"AdyLix is a cool App helps you locate your interest in the street, check it out!";
+            NSURL* data = [NSURL URLWithString:@"http://www.adylix.com/"];
+            objectsToShare = @[textToShare, data];
+
+        }
+            break;
+    }
     
-        NSArray *objectsToShare = @[textToShare, website];
-        
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-        
-        NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                       UIActivityTypePrint,
-                                       UIActivityTypeAssignToContact,
-                                       UIActivityTypeSaveToCameraRoll,
-                                       UIActivityTypeAddToReadingList,
-                                       UIActivityTypePostToFlickr,
-                                       UIActivityTypePostToVimeo];
-        
-        activityController.excludedActivityTypes = excludeActivities;
-        
-        
-        [self presentViewController:activityController animated:YES completion:nil];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToFlickr,
+                                   UIActivityTypePostToVimeo];
+    
+    activityController.excludedActivityTypes = excludeActivities;
+    
+    return activityController;
+
 }
 
 @end

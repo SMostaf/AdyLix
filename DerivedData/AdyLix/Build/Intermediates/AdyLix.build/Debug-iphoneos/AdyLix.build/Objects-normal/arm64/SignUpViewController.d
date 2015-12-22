@@ -1,6 +1,6 @@
 dependencies: \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/SignUpViewController.m \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/SignUpViewController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/SignUpViewController.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFURL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFMeasurementEvent.h \

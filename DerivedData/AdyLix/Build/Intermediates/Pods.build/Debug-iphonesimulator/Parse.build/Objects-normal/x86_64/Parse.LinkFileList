@@ -45,6 +45,7 @@
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFileController.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFileDataStream.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFileManager.o
+/Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFilePersistenceGroup.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFileStagingController.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFFileState.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFGeoPoint.o
@@ -90,6 +91,7 @@
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFOfflineStore.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFOperationSet.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFPaymentTransactionObserver.o
+/Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFPersistenceController.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFPin.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFPinningEventuallyQueue.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFPinningObjectStore.o
@@ -144,6 +146,7 @@
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserAuthenticationController.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserConstants.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserController.o
+/Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserDefaultsPersistenceGroup.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserFileCodingLogic.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFUserState.o
 /Users/smostaf1/Projects/AdyLix/DerivedData/AdyLix/Build/Intermediates/Pods.build/Debug-iphonesimulator/Parse.build/Objects-normal/x86_64/PFWeakValue.o

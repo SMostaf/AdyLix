@@ -1,4 +1,4 @@
-dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.m \
+dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/Helpers/FBLogin.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFURL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFMeasurementEvent.h \
@@ -42,7 +42,7 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Helpers/FBLogin.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKGraphRequestDataAttachment.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKGraphErrorRecoveryProcessor.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKAppLinkResolver.h \
@@ -63,4 +63,15 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKCopying.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKAccessToken.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKCoreKit.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Modules/module.modulemap
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Modules/module.modulemap \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginTooltipView.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginManagerLoginResult.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginConstants.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKTooltipView.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginManager.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginButton.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginKit.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Modules/module.modulemap \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/PFFacebookUtils.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/ParseFacebookUtilsV4.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Modules/module.modulemap

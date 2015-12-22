@@ -9,5 +9,15 @@
 #ifndef ShareHelper_h
 #define ShareHelper_h
 
+#import <UIKit/UIKit.h>
+
+@interface ShareHelper : NSObject
+enum ShareType {
+    kEmpty = 0,
+    kShareItem = 1,
+    kShareStyle = 2
+};
++(UIActivityViewController*) shareInfo:(enum ShareType) type;
+@end
 
 #endif /* ShareHelper_h */

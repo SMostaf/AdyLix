@@ -1,7 +1,6 @@
 dependencies: \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/UserController.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/UserController.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/UI/ASStarRatingView.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFURL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFMeasurementEvent.h \
@@ -45,5 +44,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/User.h
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/MainController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/User.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/UserInfo.h

@@ -3,7 +3,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
@@ -37,6 +36,8 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFSubclassing.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/CommandRunner/URLSession/PFURLSessionCommandRunner.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/CommandRunner/PFCommandRunning.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/PFPersistenceController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/Group/PFPersistenceGroup.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Push/Manager/PFPushManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFInstallation.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Purchase/Controller/PFPurchaseController.h \

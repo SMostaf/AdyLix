@@ -8,7 +8,6 @@ dependencies: /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Parse.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFInternalUtils.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Parse.h \
@@ -60,5 +59,4 @@ dependencies: /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Parse.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFLogging.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Object/Subclassing/PFObjectSubclassingController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Installation/PFInstallationPrivate.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Product/PFProduct+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCategoryLoader.h

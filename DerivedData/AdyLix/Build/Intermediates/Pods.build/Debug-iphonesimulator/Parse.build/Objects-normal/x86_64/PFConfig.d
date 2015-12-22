@@ -6,7 +6,6 @@ dependencies: /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConfig.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationTokenRegistration.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Config/PFConfig_Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
@@ -14,9 +13,9 @@ dependencies: /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConfig.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Config/Controller/PFConfigController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreDataProvider.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Config/Controller/PFCurrentConfigController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/User/CurrentUserController/PFCurrentUserController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Object/CurrentController/PFCurrentObjectControlling.h \

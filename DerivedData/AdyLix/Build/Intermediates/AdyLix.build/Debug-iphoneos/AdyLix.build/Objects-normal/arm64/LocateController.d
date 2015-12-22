@@ -59,7 +59,9 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Headers/PFCollectionViewCell.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Headers/ParseUI.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/ItemInfo.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Models/User.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/UserInfo.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Models/Style.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/StyleInfo.h
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/DataInfo.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Models/Item.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/UI/ShareHelper.h

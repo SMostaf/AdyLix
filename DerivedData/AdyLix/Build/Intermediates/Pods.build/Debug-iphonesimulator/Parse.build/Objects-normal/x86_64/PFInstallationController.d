@@ -5,7 +5,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Object/Controller/PFObjectControlling.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \

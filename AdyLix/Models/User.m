@@ -31,7 +31,7 @@
 }
 
 // get user info owning the passed style
-+(UserInfo*) getInfoForStyle:(PFUser*) user {
++(UserInfo*) getInfoForUser:(PFUser*) user {
     UserInfo* userInfo = [[UserInfo alloc]init];
     // show profile image
     PFQuery * query = [PFUser query];
@@ -40,6 +40,7 @@
     if(userObj) {
         PFFile *profileImage = [userObj valueForKey:@"profileImage"];
         userInfo.profileImage = profileImage;
+        userInfo.name = [userObj valueForKey:@"username"];
     }
     return userInfo;
 }

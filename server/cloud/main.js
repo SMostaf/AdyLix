@@ -4,10 +4,15 @@ Parse.Cloud.afterSave("ItemLike", function(request) {
   console.log("Push in progress");
   var itemId = request.object.get('itemId');
   var userId = request.object.get('userTo').id;
-  var styleId = request.object.get("styleId").id;
+  var styleId = request.object.get('styleId').id;
+
+  var userQuery = new Parse.Query(Parse.User);
+  userQuery.equalTo("objectId", userId);
+  
   var pushQuery = new Parse.Query(Parse.Installation);
   pushQuery.equalTo('deviceType', 'ios');
-  pushQuery.equalTo('user', userId);
+  pushQuery.matchesQuery('user', userQuery);
+
 
   if(itemId) { // individual item like
       var itemObj = Parse.Object.extend("ItemDetail");

@@ -3,7 +3,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFPurchase.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFTask.h \
@@ -21,6 +20,7 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFSubclassing.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Purchase/Controller/PFPurchaseController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/User/PFUserPrivate.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFUser.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Parse_Private.h \
@@ -40,5 +40,4 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNetworkActivityIndicatorManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFPush.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h

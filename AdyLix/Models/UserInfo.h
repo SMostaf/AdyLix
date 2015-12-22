@@ -12,6 +12,7 @@
 @interface UserInfo : NSObject
 @property PFFile *profileImage;
 @property unsigned int likes;
+@property NSString* name;
 
 @end
 

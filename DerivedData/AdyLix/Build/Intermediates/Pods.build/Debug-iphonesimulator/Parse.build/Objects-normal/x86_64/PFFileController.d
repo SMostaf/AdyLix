@@ -3,7 +3,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/File/Controller/PFFileController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationToken.h \
@@ -26,4 +25,5 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFHash.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/PFRESTFileCommand.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/PFRESTCommand.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFNetworkCommand.h
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFNetworkCommand.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFErrorUtilities.h

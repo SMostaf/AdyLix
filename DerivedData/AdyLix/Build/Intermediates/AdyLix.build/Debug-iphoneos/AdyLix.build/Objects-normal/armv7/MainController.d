@@ -1,6 +1,7 @@
-dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.m \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/connector.h \
+dependencies: \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/MainController.m \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/MainController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Helpers/connector.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFURL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFMeasurementEvent.h \
@@ -45,7 +46,7 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/LocateController.h \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/SignUpViewController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/SignUpViewController.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Headers/PFTextField.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Headers/PFSignUpViewController.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseUI.framework/Headers/PFSignUpView.h \

@@ -97,6 +97,7 @@ typedef enum {
 
     PFUser* userObj = [object objectForKey:@"userFrom"];
     PFObject* styleObj = [object objectForKey:@"styleId"];
+    // find a better way to query table
     if(userObj && styleObj) {
         PFObject* styleInfo = [StyleItems getStyleForId:styleObj.objectId];
         PFQuery* userQuery = [PFUser query];

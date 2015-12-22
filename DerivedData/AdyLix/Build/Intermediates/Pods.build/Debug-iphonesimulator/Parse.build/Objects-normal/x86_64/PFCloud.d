@@ -6,17 +6,16 @@ dependencies: /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFCloud.m \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationTokenRegistration.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFInternalUtils.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/CloudCode/PFCloudCodeController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCommandResult.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreDataProvider.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/User/PFUserPrivate.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFUser.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFObject.h \

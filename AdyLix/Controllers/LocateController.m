@@ -25,6 +25,10 @@
 
 
 @interface LocateController ()
+@property (weak, nonatomic) IBOutlet UILabel *lblItemsCount;
+@property (weak, nonatomic) IBOutlet UILabel *lblUserName;
+@property (weak, nonatomic) IBOutlet UILabel *lblStyleName;
+
 @property (weak, nonatomic) IBOutlet UILabel *lblLikes;
 @property (weak, nonatomic) IBOutlet UIButton *btnShare;
 
@@ -138,6 +142,7 @@
         count =  [Item getLikesForItem: info.objectId];
     }
     info.likes = count;
+    self.lblLikes.hidden = NO;
     // showing text instead of icon for likes for now
     self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
     
@@ -154,14 +159,14 @@
     self.profileImageView.layer.borderWidth = 1.0f;
     self.profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
     // show profile image
-    UserInfo* userInfo = [User getInfoForStyle: info.userObjectId];
+    UserInfo* userInfo = [User getInfoForUser: info.userObjectId];
     if (userInfo.profileImage) {
         [userInfo.profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             if(!error)
                 self.profileImageView.image = [UIImage imageWithData:data];
         }];
     }
-
+    [self getLikes:index type:kStyleType];
 }
 
 -(void)showStyleAtIndex:(NSInteger)index
@@ -171,6 +176,10 @@
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
     }];
+    self.lblStyleName.text = info.name;
+    self.lblUserName.text = [NSString stringWithFormat:@"%@%@", @"by ", [[User getInfoForUser:info.userObjectId] name]];
+    // update image for owner
+    [self updateProfileForStyle: index];
     // update likes count for current showing style
     [self getLikes:index type:kStyleType];
 }
@@ -194,7 +203,6 @@
     {
         _currentStyleIndex = index;
         [self showStyleAtIndex:_currentStyleIndex];
-        [self updateProfileForStyle: _currentStyleIndex];
     }
     else
     {
@@ -355,18 +363,9 @@
     if([_stylesArr count] > 0) {
       self.btnShare.hidden = NO;
       self.btnLike.hidden = NO;
-        // get profile for first style
-        [self updateProfileForStyle: 0];
-        
         // show first image
-        PFFile *thumbnail = [[_stylesArr objectAtIndex:0] imageData];
-    
-        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            _styleImageView.image = [UIImage imageWithData:data];
-        }];
-        
-        // get likes for first style
-        [self getLikes:0 type:kStyleType];
+        // get profile for first style
+        [self showStyleAtIndex:0];
     }
     _currStyleDetail = [[StyleDetail alloc] init];
     _currStyleDetail.currentItemIndex = 0;
@@ -408,7 +407,10 @@
     _currStyleDetail.items = items;
     _currStyleDetail.currentItemIndex = 0;
     _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
- 
+    
+    self.lblItemsCount.hidden = NO;
+    self.lblItemsCount.text = [NSString stringWithFormat:@"%lu%@", [_currStyleDetail.items count], @" items"];
+    
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
     
@@ -443,7 +445,7 @@
     // get current like count and increment
     // update label
     unsigned int counter = info.likes + 1;
-    self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", counter, @"likes"];
+    self.lblLikes.text = [NSString stringWithFormat:@"%lu", counter];
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //

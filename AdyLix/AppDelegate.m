@@ -26,7 +26,6 @@
     // stripe payment init
     //[Stripe setDefaultPublishableKey:StripePublishableKey];
     
-   
     // enable push notification
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
@@ -38,6 +37,9 @@
     [self handlePush:launchOptions];
     [self setupParseWithOptions:launchOptions];
     
+    
+//    // tab bar UI customization
+//    [self customizeTabBar];
     return YES;
 }
 
@@ -117,6 +119,26 @@
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+//#pragma mark - UI customize
+//-(void) customizeTabBar {
+//    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+//    UITabBar *tabBar = tabBarController.tabBar;
+//    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
+//    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
+//    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
+//    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+//
+//    tabBarItem1.title = @"Home";
+//    tabBarItem2.title = @"Maps";
+//    tabBarItem3.title = @"My Plan";
+//    tabBarItem4.title = @"Settings";
+//
+//    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"/Users/smostaf1/Projects/AdyLix/Res/discover.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"/Users/smostaf1/Projects/AdyLix/Res/discover.png"]];
+////    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"maps_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"maps.png"]];
+////    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"myplan_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"myplan.png"]];
+////    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"settings_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"settings.png"]];
+//}
 
 #pragma mark - notification
 

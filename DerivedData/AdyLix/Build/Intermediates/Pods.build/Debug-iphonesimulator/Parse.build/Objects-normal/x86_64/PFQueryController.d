@@ -3,7 +3,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Query/Controller/PFQueryController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationToken.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationTokenRegistration.h \

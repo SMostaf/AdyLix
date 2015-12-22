@@ -1,4 +1,4 @@
-dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.m \
+dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/Helpers/FBLogin.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFWebViewAppLinkResolver.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFURL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Bolts.framework/Headers/BFMeasurementEvent.h \
@@ -42,7 +42,7 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/FBLogin.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Helpers/FBLogin.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKGraphRequestDataAttachment.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKGraphErrorRecoveryProcessor.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKCoreKit.framework/Headers/FBSDKAppLinkResolver.h \

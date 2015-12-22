@@ -3,9 +3,9 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/SQLite/PFSQLiteDatabase.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/SQLite/PFSQLiteDatabase_Private.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Headers/Public/sqlite3/sqlite3.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFTaskCompletionSource.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
@@ -44,4 +44,5 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFPurchase.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ThreadSafety/PFThreadsafety.h

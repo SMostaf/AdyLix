@@ -64,5 +64,16 @@ dependencies: /Users/smostaf1/Projects/AdyLix/AdyLix/AppDelegate.m \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/PFACL.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Headers/Parse.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/Parse.framework/Modules/module.modulemap \
-  /Users/smostaf1/Projects/AdyLix/AdyLix/MainController.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginTooltipView.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginManagerLoginResult.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginConstants.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKTooltipView.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginManager.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginButton.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Headers/FBSDKLoginKit.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/FBSDKLoginKit.framework/Modules/module.modulemap \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/PFFacebookUtils.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Headers/ParseFacebookUtilsV4.h \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Frameworks/ParseFacebookUtilsV4.framework/Modules/module.modulemap \
+  /Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/MainController.h \
   /Users/smostaf1/Projects/AdyLix/AdyLix/AppRelated.h

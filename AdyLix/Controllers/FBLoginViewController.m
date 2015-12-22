@@ -21,8 +21,8 @@
 	[super viewDidLoad];
 }
 
-// Outlet for FBLogin button
-- (IBAction)login:(id)sender {
+
+- (IBAction)FBLogin:(id)sender {
     // Disable the Login button to prevent multiple touches
     [_btnLogin setEnabled:NO];
     
@@ -43,7 +43,9 @@
     // Did we login successfully ?
     if (loggedIn) {
         // navigate to table view controller with the discovery view
+        UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"tabController"];
         
+        [self presentViewController:tabView animated:YES completion:nil];
     } else {
         // Show error alert
         [[[UIAlertView alloc] initWithTitle:@"Login Failed"

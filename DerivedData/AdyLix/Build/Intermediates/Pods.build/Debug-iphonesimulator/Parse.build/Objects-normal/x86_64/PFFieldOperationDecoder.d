@@ -7,5 +7,4 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDecoder.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/FieldOperation/PFFieldOperation.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h

@@ -3,7 +3,6 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Push/ChannelsController/PFPushChannelsController.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFNullability.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreDataProvider.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
@@ -22,4 +21,5 @@ dependencies: \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFInstallation.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFObject.h \
   /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFACL.h \
-  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFSubclassing.h
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFSubclassing.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Installation/Constants/PFInstallationConstants.h
