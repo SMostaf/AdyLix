@@ -9,8 +9,9 @@
 #ifndef ItemsController_h
 #define ItemsController_h
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVCaptureOutput.h>
 
-@interface ItemsController : UIViewController<UITextViewDelegate>
+@interface ItemsController : UIViewController<UITextViewDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 
 
 @end

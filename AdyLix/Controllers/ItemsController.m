@@ -7,6 +7,8 @@
 //
 #import <CoreLocation/CoreLocation.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <AVFoundation/AVMediaFormat.h>
+#import <AVFoundation/AVCaptureInput.h>
 #import "MBProgressHUD.h"
 #import "ItemsController.h"
 #import "RegisterItemController.h"
@@ -14,13 +16,17 @@
 #import "User.h"
 
 @interface ItemsController ()
+@property (weak, nonatomic) IBOutlet UISwitch *currStyleSwitch;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationItem;
 @property (weak, nonatomic) IBOutlet UITextView *txtDesc;
 @property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
 @property UIImage* itemImage;
+@property (weak, nonatomic) IBOutlet UIImageView *feedImage;
+@property BOOL camViewShowing;
 //@property RegisterItemController* regController;
+
 @end
 
 @implementation ItemsController
@@ -39,17 +45,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.txtDesc.text = @"Enter Item Description";
-    self.txtDesc.textColor = [UIColor lightGrayColor];
-    self.txtDesc.delegate = self;
+    //self.txtName.text = @"Enter Item Description";
+    self.txtName.textColor = [UIColor lightGrayColor];
+    self.txtName.delegate = self;
     
     self.navigationView.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
                                                                              style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    
-    // start camera feed
-    [self startCameraControllerFromViewController: self
-                                    usingDelegate: self];
+  //  [self captureImage];
 }
+
+-(void) viewDidAppear:(BOOL)animated {
+    
+    if(!self.camViewShowing) {
+        [self startCameraControllerFromViewController: self
+                                    usingDelegate: self];
+        self.camViewShowing = true;
+    }
+
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    if(touch.phase == UITouchPhaseBegan) {
+        [self.txtName resignFirstResponder];
+    }
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
     self.txtDesc.text = @"";
@@ -65,6 +91,82 @@
         self.txtDesc.text = @"Comment";
         [self.txtDesc resignFirstResponder];
     }
+}
+
+
+- (void)captureImage
+{
+    AVCaptureSession *session = [[AVCaptureSession alloc] init];
+    session.sessionPreset = AVCaptureSessionPresetHigh;
+    
+    AVCaptureDevice *device = [self frontCamera];
+    
+    
+    NSError *error = nil;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+    if (!input) {
+        // Handle the error appropriately.
+        NSLog(@"no input.....");
+    }
+    [session addInput:input];
+    
+    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+    [session addOutput:output];
+    output.videoSettings = @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
+    
+    dispatch_queue_t queue = dispatch_queue_create("MyQueue", NULL);
+    
+    [output setSampleBufferDelegate:self queue:queue];
+    
+    [session startRunning];
+    
+    //[session stopRunning];
+}
+
+- (AVCaptureDevice *)frontCamera {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == AVCaptureDevicePositionFront) {
+            return device;
+        }
+    }
+    return nil;
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput
+didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+       fromConnection:(AVCaptureConnection *)connection {
+    
+    
+    CGImageRef cgImage = [self imageFromSampleBuffer:sampleBuffer];
+    self.feedImage.image = [UIImage imageWithCGImage: cgImage ];
+    CGImageRelease( cgImage );
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"];
+    NSData* data = UIImagePNGRepresentation(self.feedImage.image);
+    [data writeToFile:filePath atomically:YES];
+}
+
+- (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
+{
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CVPixelBufferLockBaseAddress(imageBuffer,0);
+    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
+    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
+    size_t width = CVPixelBufferGetWidth(imageBuffer);
+    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef newContext = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
+    CGContextRelease(newContext);
+    
+    CGColorSpaceRelease(colorSpace);
+    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+    
+    return newImage;
 }
 
 - (IBAction)btnAddItem:(id)sender {
@@ -88,10 +190,10 @@
         return;
     }
 
-
     
-    PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
-    [item setObject:self.txtName.text forKey:@"name"];
+    
+    PFObject *style = [PFObject objectWithClassName:@"StyleMaster"];
+    [style setObject:self.txtName.text forKey:@"name"];
     //[item setObject:self.txtDesc.text forKey:@"description"];
     
 //    if (self.chkDiscover.on)
@@ -99,13 +201,13 @@
 //    else
 //        [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
 
-    [item setObject:[NSDate date] forKey:@"timeStamp"];
-    [item setObject:[PFUser currentUser] forKey:@"userId"];
+    [style setObject:[NSDate date] forKey:@"timeStamp"];
+    [style setObject:[PFUser currentUser] forKey:@"userId"];
 
     // item image
     NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);
     PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
-    [item setObject:imageFile forKey:@"imageFile"];
+    [style setObject:imageFile forKey:@"imageFile"];
     
     
     // Show progress
@@ -115,14 +217,23 @@
     [hud show:YES];
     
     // Upload item to Parse
-    [item saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [style saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         [hud hide:YES];
         
         if (!error) {
+            
+            // check if user wants to set the new style as current style
+            if (self.currStyleSwitch.isOn)
+            {
+                PFUser* currentUser = [PFUser currentUser];
+                [currentUser setObject:style forKey:@"currentStyleId"];
+                [currentUser saveInBackground];
+            }
             // Show success message
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved your item" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         
+            
             
             // Notify table view to reload the recipes from Parse cloud
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
@@ -218,8 +329,9 @@
 - (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
     
     UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-    self.itemImage = originalImage;
-   
+    
+    self.feedImage.image = self.itemImage = originalImage;
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
 
 }

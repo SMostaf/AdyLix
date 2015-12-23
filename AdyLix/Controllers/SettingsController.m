@@ -42,10 +42,13 @@
     // to be filtered by other users
     [[PFUser currentUser] setObject:[NSNumber numberWithBool:[self.discoverSwitch isOn]] forKey:@"discoverable"];
     [[PFUser currentUser] saveInBackground];
+    
+     [self dismissViewControllerAnimated:YES completion:nil];
 
 }
 
 - (IBAction)btnCancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad {

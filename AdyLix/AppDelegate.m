@@ -7,14 +7,18 @@
 //
 
 #import "AppDelegate.h"
+#import <UIKit/UIApplication.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
 #import "AppRelated.h"
 
-@interface AppDelegate ()
+#define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
 
+
+@interface AppDelegate ()
+//@property UIStatusBarItem* statusItem;
 @end
 
 @implementation AppDelegate
@@ -37,9 +41,21 @@
     [self handlePush:launchOptions];
     [self setupParseWithOptions:launchOptions];
     
+
+    // tab bar UI customization
+    [self customizeMenuBar];
     
-//    // tab bar UI customization
-//    [self customizeTabBar];
+//    if ([FBSDKAccessToken currentAccessToken]) {
+//        UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
+//
+//        //UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
+//        
+//        UITabBarController *tabView = [mainStoryboard instantiateViewControllerWithIdentifier:@"tabController"];
+//        [tabView setSelectedIndex:1];
+//        [ROOTVIEW presentViewController:tabView animated:YES completion:nil];
+//        //[navigationController pushViewController:tabView animated:NO];
+//
+//    }
     return YES;
 }
 
@@ -120,25 +136,33 @@
     [self saveContext];
 }
 
-//#pragma mark - UI customize
-//-(void) customizeTabBar {
-//    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-//    UITabBar *tabBar = tabBarController.tabBar;
-//    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
-//    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
-//    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
-//    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
-//
-//    tabBarItem1.title = @"Home";
-//    tabBarItem2.title = @"Maps";
-//    tabBarItem3.title = @"My Plan";
-//    tabBarItem4.title = @"Settings";
-//
-//    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"/Users/smostaf1/Projects/AdyLix/Res/discover.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"/Users/smostaf1/Projects/AdyLix/Res/discover.png"]];
-////    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"maps_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"maps.png"]];
-////    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"myplan_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"myplan.png"]];
-////    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"settings_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"settings.png"]];
-//}
+#pragma mark - UI customize
+-(void) customizeMenuBar {
+
+    UIColor* liteMaroon = [UIColor colorWithRed:179.0/255.0 green:17.0/255.0 blue:28.0/255.0 alpha:1];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:liteMaroon];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+
+
+    [[UIToolbar appearance] setTintColor:liteMaroon];
+    [[UIToolbar appearance] setBarTintColor:liteMaroon];
+    
+    
+//    // Change the background color of navigation bar
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+//    
+//    // Change the font style of the navigation bar
+//    NSShadow *shadow = [[NSShadow alloc] init];
+//    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+//    shadow.shadowOffset = CGSizeMake(0, 0);
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                           [UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+//                                                           shadow, NSShadowAttributeName,
+//                                                           [UIFont fontWithName:@"Helvetica-Light" size:21.0], NSFontAttributeName, nil]];
+}
 
 #pragma mark - notification
 

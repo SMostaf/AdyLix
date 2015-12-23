@@ -25,6 +25,8 @@
 
 +(PFUser*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;
++(NSData*) getFBProfilePic:(PFUser*) user;
++(NSString*) getFBUserName:(PFUser*) user;
 @end
 
 #endif /* User_h */

@@ -5,6 +5,7 @@
 
 #import "FBLoginViewController.h"
 #import "FBLogin.h"
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
 
 @interface FBLoginViewController ()<FBLoginDelegate>
 
@@ -15,12 +16,22 @@
 @implementation FBLoginViewController
 
 
-
+-(void) viewDidAppear:(BOOL)animated {
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self goToMainView];
+    }
+}
 - (void) viewDidLoad
 {
 	[super viewDidLoad];
+   
 }
 
+-(void) goToMainView {
+    UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"tabController"];
+    [tabView setSelectedIndex:1];
+    [self presentViewController:tabView animated:YES completion:nil];
+}
 
 - (IBAction)FBLogin:(id)sender {
     // Disable the Login button to prevent multiple touches
@@ -43,9 +54,7 @@
     // Did we login successfully ?
     if (loggedIn) {
         // navigate to table view controller with the discovery view
-        UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"tabController"];
-        
-        [self presentViewController:tabView animated:YES completion:nil];
+        [self goToMainView];
     } else {
         // Show error alert
         [[[UIAlertView alloc] initWithTitle:@"Login Failed"

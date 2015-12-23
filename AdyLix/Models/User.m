@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "User.h"
 
 @interface User()
@@ -29,7 +30,46 @@
     PFUser *user = (PFUser *)[query getFirstObject];
     return user;
 }
++(NSString*) getFBAccessToken:(PFUser*) user {
+    NSDictionary *accessDict = [user valueForKey:@"authData"];
+    if(!accessDict)
+        return nil;
+    return accessDict[@"facebook"][@"access_token"];
+}
+// fetch profile pic using access token
++(NSData*) getFBProfilePic:(PFUser *)user {
+    
+    NSString* accessToken = [User getFBAccessToken: user];
+    if([accessToken length] > 0) {
+        // PFSession *fbSession = [PFFacebookUtils session];
+        // NSString *accessToken = [fbSession accessToken];
+        NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me/picture?type=large&return_ssl_resources=1&access_token=%@", accessToken]];
 
+        return [NSData dataWithContentsOfURL:pictureURL];
+    }
+    return nil;
+}
+
++(NSString*) getFBUserName:(PFUser*) user
+{
+    NSString* accessToken = [User getFBAccessToken: user];
+    NSString* userFullName = nil;
+    if([accessToken length] > 0) {
+
+    NSURL *infoURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me?return_ssl_resources=1&access_token=%@", accessToken]];
+                      
+    NSData* infoData = [NSData dataWithContentsOfURL:infoURL];
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:infoData
+                                                             options:kNilOptions
+                                                               error:&error];
+    if(!error)
+      userFullName = json[@"name"];
+    }
+    
+    return userFullName;
+    
+}
 // get user info owning the passed style
 +(UserInfo*) getInfoForUser:(PFUser*) user {
     UserInfo* userInfo = [[UserInfo alloc]init];
