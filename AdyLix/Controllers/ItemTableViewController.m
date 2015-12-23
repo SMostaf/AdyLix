@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 #import <ParseUI/PFImageView.h>
 #import "ItemTableViewController.h"
-#import "Item.h"
+#import "Style.h"
+#import "UserController.h"
+#import "ItemsController.h"
 
 //#define DESC_CUSTOM_TAG 1444
 
@@ -30,10 +32,60 @@ typedef enum {
 
 @implementation ItemTableViewController
 
+-(void) showProfile:(id)sender {
+    
+    UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
+    
+    //  [self.navigationController pushViewController:userController animated:NO];
+    
+    //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentModalViewController:userController animated:YES];
+}
+
+-(void) showSelfie:(id)sender{
+    
+    
+    ItemsController* snapController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
+    [self presentViewController:snapController animated:YES completion:NULL];
+}
 
 - (void) viewDidAppear:(BOOL)animated
 {
+    UINavigationItem *navigationItem = [[UINavigationItem alloc]init];
+    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    navbar.backgroundColor = [UIColor redColor];
+    
+    UIImage* imageMain = [UIImage imageNamed:@"menu.png"];
+    CGRect frameimg = CGRectMake(0, 0, imageMain.size.width, imageMain.size.height);
+    UIButton *imgButton = [[UIButton alloc] initWithFrame:frameimg];
+    [imgButton setBackgroundImage:imageMain forState:UIControlStateNormal];
+    [imgButton addTarget:self action:@selector(showProfile:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [imgButton setShowsTouchWhenHighlighted:YES];
+    
+    UIBarButtonItem *menuButton =[[UIBarButtonItem alloc] initWithCustomView:imgButton];
+    navigationItem.leftBarButtonItem = menuButton;
+
+    
+    UIImage* imageSnap = [UIImage imageNamed:@"camera.png"];
+    CGRect snapFrameimg = CGRectMake(0, 0, imageSnap.size.width, imageSnap.size.height);
+    UIButton *imgSnapButton = [[UIButton alloc] initWithFrame:snapFrameimg];
+    [imgSnapButton setBackgroundImage:imageSnap forState:UIControlStateNormal];
+    [imgSnapButton addTarget:self action:@selector(showSelfie:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [imgSnapButton setShowsTouchWhenHighlighted:YES];
+    
+    UIBarButtonItem *snapButton =[[UIBarButtonItem alloc] initWithCustomView:imgSnapButton];
+    navigationItem.rightBarButtonItem = snapButton;
+    
+    
+    navbar.items = @[navigationItem];
+    
+    [self.view addSubview:navbar];
+    
+
   [self loadObjects];
+    
 }
 
 - (id)initWithCoder:(NSCoder *)aCoder
@@ -41,7 +93,7 @@ typedef enum {
     self = [super initWithCoder:aCoder];
     if (self) {
         // The className to query on
-        self.parseClassName = @"ItemDetail";
+        self.parseClassName = @"StyleMaster";
         
         // The key of the PFObject to display in the label of the default cell style
         self.textKey = @"name";
@@ -63,8 +115,7 @@ typedef enum {
     if ([PFUser currentUser])
     {
         query = [PFQuery queryWithClassName:self.parseClassName];
-        [query whereKey:@"userObjectId" equalTo:[[PFUser currentUser]
-                                                valueForKey:@"objectId"]];
+        [query whereKey:@"userId" equalTo:[PFUser currentUser]];
 
 
         // If no objects are loaded in memory, we look to the cache
@@ -94,18 +145,18 @@ typedef enum {
     UILabel *nameLabel = (UILabel*) [cell viewWithTag:NameLabelTag];
     nameLabel.text = [object objectForKey:@"name"];
     
-    UILabel *priceLabel = (UILabel*) [cell viewWithTag:PriceLabelTag];
-    priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
+//    UILabel *priceLabel = (UILabel*) [cell viewWithTag:PriceLabelTag];
+//    priceLabel.text = [NSString stringWithFormat:@"%@%@", @"$", [object objectForKey:@"price"]];
 
     //UILabel *descLabel = (UILabel*) [cell viewWithTag:102];
-    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
-    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
-    descLabel.tag = CustomeTag;
-    descLabel.numberOfLines = 2;
-    descLabel.textColor = [UIColor darkGrayColor];
-    descLabel.font = [UIFont systemFontOfSize:12];
-    descLabel.text = [object objectForKey:@"description"];
-    [cell.contentView addSubview:descLabel];
+//    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
+//    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+//    descLabel.tag = CustomeTag;
+//    descLabel.numberOfLines = 2;
+//    descLabel.textColor = [UIColor darkGrayColor];
+//    descLabel.font = [UIFont systemFontOfSize:12];
+//    descLabel.text = [object objectForKey:@"description"];
+//    [cell.contentView addSubview:descLabel];
 
     
     PFFile *thumbnail = [object objectForKey:@"imageFile"];
@@ -115,7 +166,7 @@ typedef enum {
                     thumbnailImageView.image = [UIImage imageWithData:data];
     }];
 
-    unsigned long countLikes = [Item getLikesForItem: [object valueForKey:@"objectId"]];
+    unsigned long countLikes = [StyleItems getLikesForStyle: [object valueForKey:@"objectId"]];
     if (countLikes > 0)
     {
         UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
