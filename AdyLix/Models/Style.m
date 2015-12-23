@@ -69,6 +69,14 @@
     return arrStylesFound;
 }
 
++(NSString*) getStyleForObj:(PFObject*) style {
+    
+    PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
+    [query whereKey:@"objectId" equalTo:style.objectId];
+    PFObject* styleObj = [query getFirstObject];
+    return [styleObj valueForKey:@"name"];
+}
+
 +(PFObject*) getStyleForId:(NSString*) styleId {
     
     PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];

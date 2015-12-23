@@ -25,6 +25,9 @@
 
 
 @interface LocateController ()
+
+
+
 @property (weak, nonatomic) IBOutlet UILabel *lblItemsCount;
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
 @property (weak, nonatomic) IBOutlet UILabel *lblStyleName;
@@ -44,9 +47,14 @@
 @property (strong, nonatomic) NSArray *stylesArr;
 @property NSInteger currentStyleIndex;
 @property StyleDetail* currStyleDetail;
+
+@property  (nonatomic, strong) UINavigationItem* navigationItem1;
 @end
 
 @implementation LocateController
+
+- (IBAction)navProfile:(id)sender {
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -120,8 +128,9 @@
 
 - (void)viewDidLoad {
     
-    [super viewDidLoad];
+    [super viewDidLoad];  
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -166,7 +175,6 @@
                 self.profileImageView.image = [UIImage imageWithData:data];
         }];
     }
-    [self getLikes:index type:kStyleType];
 }
 
 -(void)showStyleAtIndex:(NSInteger)index
@@ -220,7 +228,7 @@
         _styleImageView.image = [UIImage imageWithData:data];
     }];
     
-    [self getLikes:0 type:kItemType];
+    [self getLikes:index type:kItemType];
 }
 
 // swipe up down items
@@ -445,7 +453,7 @@
     // get current like count and increment
     // update label
     unsigned int counter = info.likes + 1;
-    self.lblLikes.text = [NSString stringWithFormat:@"%lu", counter];
+    self.lblLikes.text = [NSString stringWithFormat:@"%lu%@", counter, "@ likes"];
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //

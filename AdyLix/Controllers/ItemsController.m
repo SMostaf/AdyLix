@@ -14,14 +14,27 @@
 #import "User.h"
 
 @interface ItemsController ()
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationItem;
 @property (weak, nonatomic) IBOutlet UITextView *txtDesc;
 @property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
 @property (weak, nonatomic) IBOutlet UITextField *txtName;
-//@property UIImage* itemImage;
-@property RegisterItemController* regController;
+@property UIImage* itemImage;
+//@property RegisterItemController* regController;
 @end
 
 @implementation ItemsController
+
+
+-(void)back:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)btnCancel:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,6 +43,12 @@
     self.txtDesc.textColor = [UIColor lightGrayColor];
     self.txtDesc.delegate = self;
     
+    self.navigationView.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+                                                                             style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    
+    // start camera feed
+    [self startCameraControllerFromViewController: self
+                                    usingDelegate: self];
 }
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -54,18 +73,15 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-
 
 - (IBAction)btnSave:(id)sender {
     @try
     {
-    UIImage* itemImage = [self.regController getImage];
+   // UIImage* itemImage = [self.regController getImage];
         
     if (self.txtName.text.length == 0
-        || itemImage == nil)
+        || self.itemImage == nil)
     {
          [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         
@@ -74,22 +90,20 @@
 
 
     
-    PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
+    PFObject *item = [PFObject objectWithClassName:@"StyleMaster"];
     [item setObject:self.txtName.text forKey:@"name"];
-    [item setObject:self.txtDesc.text forKey:@"description"];
+    //[item setObject:self.txtDesc.text forKey:@"description"];
     
-    if (self.chkDiscover.on)
-        [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
-    else
-        [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
+//    if (self.chkDiscover.on)
+//        [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+//    else
+//        [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
 
-    NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
     [item setObject:[NSDate date] forKey:@"timeStamp"];
-    [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userObjectId"];
+    [item setObject:[PFUser currentUser] forKey:@"userId"];
 
     // item image
-   
-    NSData* data = UIImageJPEGRepresentation(itemImage, 0.5f);
+    NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);
     PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
     [item setObject:imageFile forKey:@"imageFile"];
     
@@ -141,32 +155,29 @@
         || (controller == nil))
         return NO;
     
-    self.regController = [[RegisterItemController alloc]init];
+    //self.regController = [[RegisterItemController alloc]init];
     
-    [controller presentModalViewController: self.regController animated: YES];
-//    
-//    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-//    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
-//    
-//    // Displays a control that allows the user to choose picture or
-//    // movie capture, if both are available:
-//    cameraUI.mediaTypes =
-//    [UIImagePickerController availableMediaTypesForSourceType:
-//     UIImagePickerControllerSourceTypeCamera];
-//    
-//    // Hides the controls for moving & scaling pictures, or for
-//    // trimming movies. To instead show the controls, use YES.
-//    cameraUI.allowsEditing = NO;
-//    
-//    cameraUI.delegate = delegate;
-//    
-//    [controller presentModalViewController: cameraUI animated: YES];
+    //[controller presentModalViewController: self.regController animated: YES];
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes =
+    [UIImagePickerController availableMediaTypesForSourceType:
+     UIImagePickerControllerSourceTypeCamera];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentModalViewController: cameraUI animated: YES];
     return YES;
 }
 
-- (IBAction)btnCancel:(id)sender {
-   [self.navigationController popViewControllerAnimated:YES];
-}
 
 
 #pragma mark - pic delegate
@@ -196,22 +207,22 @@
 
 
 # pragma mark - camera delegate
-//// For responding to the user tapping Cancel.
-//- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
-//    
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//
-//}
-//
-//// For responding to the user accepting a newly-captured picture or movie
-//- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
-//    
-//    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
-//    self.itemImage = originalImage;
-//   
-//    [picker dismissViewControllerAnimated:YES completion:nil];
-//
-//}
+// For responding to the user tapping Cancel.
+- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info {
+    
+    UIImage *originalImage = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.itemImage = originalImage;
+   
+    [picker dismissViewControllerAnimated:YES completion:nil];
+
+}
 
 
 @end
