@@ -13,10 +13,12 @@
 #import "Style.h"
 #import "UserController.h"
 #import "ItemsController.h"
+#import "Utility.h"
 
 //#define DESC_CUSTOM_TAG 1444
 
 @interface ItemTableViewController()
+
 @property (strong, nonatomic) IBOutlet UITableView *tblview;
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
@@ -56,33 +58,9 @@ typedef enum {
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    UINavigationItem *navigationItem = [[UINavigationItem alloc]init];
-    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
+    UINavigationItem* navigationItem = [Utility getNavItem];
+   UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     navbar.backgroundColor = [UIColor redColor];
-    
-    UIImage* imageMain = [UIImage imageNamed:@"menu.png"];
-    CGRect frameimg = CGRectMake(0, 0, imageMain.size.width, imageMain.size.height);
-    UIButton *imgButton = [[UIButton alloc] initWithFrame:frameimg];
-    [imgButton setBackgroundImage:imageMain forState:UIControlStateNormal];
-    [imgButton addTarget:self action:@selector(showProfile:)
-        forControlEvents:UIControlEventTouchUpInside];
-    [imgButton setShowsTouchWhenHighlighted:YES];
-    
-    UIBarButtonItem *menuButton =[[UIBarButtonItem alloc] initWithCustomView:imgButton];
-    navigationItem.leftBarButtonItem = menuButton;
-
-    
-    UIImage* imageSnap = [UIImage imageNamed:@"camera.png"];
-    CGRect snapFrameimg = CGRectMake(0, 0, imageSnap.size.width, imageSnap.size.height);
-    UIButton *imgSnapButton = [[UIButton alloc] initWithFrame:snapFrameimg];
-    [imgSnapButton setBackgroundImage:imageSnap forState:UIControlStateNormal];
-    [imgSnapButton addTarget:self action:@selector(showSelfie:)
-            forControlEvents:UIControlEventTouchUpInside];
-    [imgSnapButton setShowsTouchWhenHighlighted:YES];
-    
-    UIBarButtonItem *snapButton =[[UIBarButtonItem alloc] initWithCustomView:imgSnapButton];
-    navigationItem.rightBarButtonItem = snapButton;
-    
     
     navbar.items = @[navigationItem];
     
@@ -131,7 +109,7 @@ typedef enum {
         if ([self.objects count] == 0) {
             query.cachePolicy = kPFCachePolicyNetworkElseCache;//kPFCachePolicyCacheThenNetwork;
         }
-
+        
         [query orderByDescending:@"createdAt"];
 
     }
@@ -228,4 +206,26 @@ typedef enum {
     }
 }
 
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSInteger numOfSections = 0;
+    if ([self.objects count])
+    {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        numOfSections                 = 1;
+        self.tblview.backgroundView   = nil;
+    }
+    else
+    {
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblview.bounds.size.width, self.tblview.bounds.size.height)];
+        noDataLabel.text             = @"No style added";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        self.tblview.backgroundView = noDataLabel;
+        self.tblview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    
+    return numOfSections;
+}
 @end

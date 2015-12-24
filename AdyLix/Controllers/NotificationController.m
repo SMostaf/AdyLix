@@ -12,7 +12,7 @@
 #import "MainController.h"
 #import "User.h"
 #import "Style.h"
-
+#import "Utility.h"
 
 typedef enum {
     DecLabelTag = 100,
@@ -23,15 +23,30 @@ typedef enum {
 
 @interface NotificationController ()
 
+@property (strong, nonatomic) IBOutlet UITableView *tblView;
 
 @end
 
 @implementation NotificationController
 
-- (void)viewDidLoad {
-   
+- (void) viewDidAppear:(BOOL)animated
+{
     [super viewDidLoad];
+    UINavigationItem* navigationItem = [Utility getNavItem];
+    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
+    navbar.backgroundColor = [UIColor redColor];
+    
+
+    navbar.items = @[navigationItem];
+    
+    [self.view addSubview:navbar];
+    
+    self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+    
+
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -76,9 +91,9 @@ typedef enum {
         // first to fill the table and then subsequently do a query
         // against the network.
         if ([self.objects count] == 0) {
-            query.cachePolicy = kPFCachePolicyNetworkElseCache;//kPFCachePolicyCacheThenNetwork;
+            query.cachePolicy = kPFCachePolicyCacheThenNetwork;
         }
-        
+
         [query orderByDescending:@"createdAt"];
         
     }
@@ -100,46 +115,35 @@ typedef enum {
     // find a better way to query table
     if(userObj && styleObj) {
         PFObject* styleInfo = [StyleItems getStyleForId:styleObj.objectId];
-        PFQuery* userQuery = [PFUser query];
-        [userQuery whereKey:@"objectId" equalTo:userObj.objectId];
-        PFObject* userInfo = [userQuery getFirstObject];
+        PFObject* userInfo =  [User getUserForId:userObj.objectId];
         NSString* userName = [userInfo valueForKey:@"username"];
         NSString* styleName = [styleInfo valueForKey:@"name"];
         // User name liked your name style
         cell.textLabel.text = [NSString stringWithFormat:@"%@%@%@%@", userName, @" likes your ", styleName, @" style"];
     }
-    
-    // [[cell.contentView viewWithTag:CustomeTag]removeFromSuperview];
-    
-//    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
-//    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
-//    descLabel.tag = CustomeTag;
-//    descLabel.numberOfLines = 2;
-//    descLabel.textColor = [UIColor darkGrayColor];
-//    descLabel.font = [UIFont systemFontOfSize:12];
-//    descLabel.text = [object objectForKey:@"description"];
-//    [cell.contentView addSubview:descLabel];
-    
-    
-//    PFFile *thumbnail = [object objectForKey:@"imageFile"];
-//    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:ThumbnailTag];
-//    
-//    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//        thumbnailImageView.image = [UIImage imageWithData:data];
-//    }];
-    
-//    Item* item = [[Item alloc] init];
-//    unsigned long countLikes = [item getLikesForItem: [object valueForKey:@"objectId"]];
-//    if (countLikes > 0)
-//    {
-//        UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
-//        likeLabel.text = [NSString stringWithFormat:@"%d%@", countLikes, @" Likes"];
-//    }
-    
     return cell;
 }
 
-
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    NSInteger numOfSections = 0;
+    if ([self.objects count])
+    {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        numOfSections                 = 1;
+        self.tblView.backgroundView   = nil;
+    }
+    else
+    {
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblView.bounds.size.width, self.tblView.bounds.size.height)];
+        noDataLabel.text             = @"No notifications";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        self.tblView.backgroundView = noDataLabel;
+        self.tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    
+    return numOfSections;
+}
 
 @end
