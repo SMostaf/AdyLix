@@ -13,18 +13,11 @@
 #import "ItemsController.h"
 #import "RegisterItemController.h"
 #import "Parse/Parse.h"
+#import "Style.h"
 #import "User.h"
 
 @interface ItemsController ()
-@property (weak, nonatomic) IBOutlet UISwitch *currStyleSwitch;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationView;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationItem;
-@property (weak, nonatomic) IBOutlet UITextView *txtDesc;
-@property (weak, nonatomic) IBOutlet UISwitch *chkDiscover;
-@property (weak, nonatomic) IBOutlet UITextField *txtName;
-@property UIImage* itemImage;
-@property (weak, nonatomic) IBOutlet UIImageView *feedImage;
-@property BOOL camViewShowing;
+
 //@property RegisterItemController* regController;
 
 @end
@@ -43,6 +36,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     //self.txtName.text = @"Enter Item Description";
@@ -57,6 +51,19 @@
 -(void) viewDidAppear:(BOOL)animated {
     
     if(!self.camViewShowing) {
+        
+        PFObject* styleObj = [StyleItems getStyleForId:self.editStyleId];
+        
+        self.txtName.text = [styleObj valueForKey:@"name"];
+        
+        PFFile* thumbnail = [styleObj valueForKey:@"imageFile"];
+        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            self.feedImage.image = [UIImage imageWithData:data];
+        }];
+        
+        self.chkDiscover.on = [StyleItems isCurrentStyle:styleObj];
+
+        
         [self startCameraControllerFromViewController: self
                                     usingDelegate: self];
         self.camViewShowing = true;
@@ -91,82 +98,6 @@
         self.txtDesc.text = @"Comment";
         [self.txtDesc resignFirstResponder];
     }
-}
-
-
-- (void)captureImage
-{
-    AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    session.sessionPreset = AVCaptureSessionPresetHigh;
-    
-    AVCaptureDevice *device = [self frontCamera];
-    
-    
-    NSError *error = nil;
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
-    if (!input) {
-        // Handle the error appropriately.
-        NSLog(@"no input.....");
-    }
-    [session addInput:input];
-    
-    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-    [session addOutput:output];
-    output.videoSettings = @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
-    
-    dispatch_queue_t queue = dispatch_queue_create("MyQueue", NULL);
-    
-    [output setSampleBufferDelegate:self queue:queue];
-    
-    [session startRunning];
-    
-    //[session stopRunning];
-}
-
-- (AVCaptureDevice *)frontCamera {
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-    for (AVCaptureDevice *device in devices) {
-        if ([device position] == AVCaptureDevicePositionFront) {
-            return device;
-        }
-    }
-    return nil;
-}
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput
-didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
-       fromConnection:(AVCaptureConnection *)connection {
-    
-    
-    CGImageRef cgImage = [self imageFromSampleBuffer:sampleBuffer];
-    self.feedImage.image = [UIImage imageWithCGImage: cgImage ];
-    CGImageRelease( cgImage );
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"];
-    NSData* data = UIImagePNGRepresentation(self.feedImage.image);
-    [data writeToFile:filePath atomically:YES];
-}
-
-- (CGImageRef) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
-{
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    CVPixelBufferLockBaseAddress(imageBuffer,0);
-    uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0);
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef newContext = CGBitmapContextCreate(baseAddress, width, height, 8, bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGImageRef newImage = CGBitmapContextCreateImage(newContext);
-    CGContextRelease(newContext);
-    
-    CGColorSpaceRelease(colorSpace);
-    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-    
-    return newImage;
 }
 
 - (IBAction)btnAddItem:(id)sender {
@@ -246,8 +177,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             [alert show];
             
         }
-        
-    }];
+     }];
     }
     @catch (NSException *exception) {
         NSLog(@"Caught an exception on saving item");
