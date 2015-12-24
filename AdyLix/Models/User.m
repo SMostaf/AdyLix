@@ -24,12 +24,12 @@
     return self;
 }
 
-+(PFUser*) getUserForId:(NSString*) userId {
++(PFObject*) getUserForId:(NSString*) userId {
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:userId];
-    PFUser *user = (PFUser *)[query getFirstObject];
-    return user;
+    return(PFUser *)[query getFirstObject];
 }
+
 +(NSString*) getFBAccessToken:(PFUser*) user {
     NSDictionary *accessDict = [user valueForKey:@"authData"];
     if(!accessDict)

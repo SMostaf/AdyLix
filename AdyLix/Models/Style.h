@@ -25,6 +25,8 @@
 +(unsigned long) getLikesForStyle:(NSString*) styleId;
 +(NSArray*) getItemsForStyle:(NSString*) styleId;
 +(NSString*) getStyleForObj:(PFObject*) style;
++(BOOL) isCurrentStyle:(PFObject*) style;
++(NSArray*) getStylesForUser:(PFUser*) user;
 +(void) like:(NSString*) styleId itemId:(NSString*)itemId owner:(PFUser*) owner;
 -(void) purchase:(NSString*) styleId;
 +(NSArray*) getStylesNearby:(CLLocation*) location;

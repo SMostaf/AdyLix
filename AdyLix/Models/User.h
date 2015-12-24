@@ -23,7 +23,7 @@
 -(NSString*) getTokenId;
 -(NSString*) getBankId;
 
-+(PFUser*) getUserForId:(NSString*) userId;
++(PFObject*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;
 +(NSData*) getFBProfilePic:(PFUser*) user;
 +(NSString*) getFBUserName:(PFUser*) user;

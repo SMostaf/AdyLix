@@ -18,7 +18,7 @@
 #import "User.h"
 #import "Style.h"
 #import "ShareHelper.h"
-
+#import "UserController.h"
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
@@ -124,6 +124,9 @@
     [self getCurrentSyleInfo];
     // location manager receive updates
     [self startStandardUpdates];
+    
+    [_activityImageView stopAnimating];
+    _activityImageView.hidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -138,6 +141,17 @@
     
     [_locationManager stopUpdatingLocation];
 }
+
+- (IBAction)btnUsersProfile:(id)sender {
+    // show profile view for style owners
+    DataInfo* info = [_stylesArr objectAtIndex:_currentStyleIndex];
+    UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
+    userController.user = info.userObjectId;
+    
+    [self presentViewController:userController animated: YES completion:nil];
+
+}
+
 
 -(void) getLikes:(NSInteger)index type:(enum DataType) type {
     DataInfo* info = nil;
@@ -163,18 +177,18 @@
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
     // adding rounded corners to profile image
-    self.profileImageView.layer.cornerRadius = (self.profileImageView.frame.size.width/2) - 15;
+    self.profileImageView.layer.cornerRadius = (self.profileImageView.frame.size.width/2) - 5;
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.borderWidth = 1.0f;
     self.profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
     // show profile image
-    UserInfo* userInfo = [User getInfoForUser: info.userObjectId];
-    if (userInfo.profileImage) {
-        [userInfo.profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            if(!error)
-                self.profileImageView.image = [UIImage imageWithData:data];
-        }];
+    NSData* imageData = [User getFBProfilePic:info.userObjectId];
+    if(imageData) {
+        self.profileImageView.image = [UIImage imageWithData:imageData];
     }
+    else
+        self.profileImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
+    
 }
 
 -(void)showStyleAtIndex:(NSInteger)index
@@ -347,7 +361,7 @@
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         
 
-            UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty];
+            UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
             [self presentViewController:activityController animated:YES completion:nil];
         }
         return;
@@ -377,9 +391,6 @@
     }
     _currStyleDetail = [[StyleDetail alloc] init];
     _currStyleDetail.currentItemIndex = 0;
-    
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
     
 }
 
@@ -431,10 +442,20 @@
     // show share action
     [_activityImageView stopAnimating];
     _activityImageView.hidden = YES;
-    
-    // #TODO: determine what type of info we are sharing style or item
+    DataInfo* dataInfo;
+    enum ShareType type;
     // send info to be shared
-    UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty];
+    if(_currStyleDetail.currentItemIndex == 0) {
+        type = kShareStyle;
+        dataInfo = [_stylesArr objectAtIndex:_currentStyleIndex];
+    }
+    else {
+        type = kShareItem;
+        dataInfo = [_currStyleDetail.items objectAtIndex:_currStyleDetail.currentItemIndex];
+
+    }
+    
+    UIActivityViewController* activityController = [ShareHelper shareInfo:type info:dataInfo];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 

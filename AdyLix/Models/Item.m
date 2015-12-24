@@ -32,10 +32,13 @@
     //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
-    CGFloat km = 1.0f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
-   
-    // #TODO: remove DEBUG order by closest items 
+    CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
+    if (miles == 0) //preference not set
+        miles = 1.0f;
+    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
+    
+    [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
+    // #TODO: remove DEBUG order by closest items
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     //[usersQuery orderByAscending:@"orderByAscending"];

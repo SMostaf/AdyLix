@@ -11,10 +11,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import <CoreLocation/CoreLocation.h>
+#import <Parse/Parse.h>
 
-@interface UserController : UIViewController<CLLocationManagerDelegate>
+@interface UserController : UIViewController
 
+@property PFUser* user;
 
 @end
 

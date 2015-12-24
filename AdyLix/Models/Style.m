@@ -35,8 +35,14 @@
     // get users nearby
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
-    CGFloat km = 0.5f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
+    //CGFloat km = 0.5f;
+    //[usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
+    CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
+    if (miles == 0) //preference not set
+        miles = 1.0f;
+    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
+    
+    [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
     
     // #TODO: for DEBUG purpose
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
@@ -70,11 +76,14 @@
 }
 
 +(NSString*) getStyleForObj:(PFObject*) style {
-    
-    PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
-    [query whereKey:@"objectId" equalTo:style.objectId];
-    PFObject* styleObj = [query getFirstObject];
-    return [styleObj valueForKey:@"name"];
+    NSString* styleName = nil;
+    if (style != nil) {
+        PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
+        [query whereKey:@"objectId" equalTo:style.objectId];
+        PFObject* styleObj = [query getFirstObject];
+        styleName = [styleObj valueForKey:@"name"];
+    }
+    return styleName;
 }
 
 +(PFObject*) getStyleForId:(NSString*) styleId {
@@ -97,6 +106,19 @@
     
     return arrItemsFound;
     
+}
+
++(BOOL) isCurrentStyle:(PFObject*) style {
+    
+    if([[PFUser currentUser] valueForKey:@"currentStyleId"] == style)
+        return YES;
+    return NO;
+}
+
++(NSArray*) getStylesForUser:(PFUser*) user {
+    PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
+    [query whereKey:@"userId" equalTo:user];
+    return [query findObjects];
 }
 
 +(void) like:(NSString*) styleId itemId:(NSString*) itemId owner:(PFUser*) owner {
@@ -135,10 +157,6 @@
 
 // fetch info for style the user is currently wearing
 +(DataInfo*) getCurrentStyleInfo {
-    // *******************************
-    //#TODO remove
-    //[StyleItems addObjForTest];
-    // *******************************
     DataInfo* info = [[DataInfo alloc]init];
     PFObject* currStyle = [[PFUser currentUser] valueForKey:@"currentStyleId"];
     if(currStyle) {
