@@ -28,6 +28,7 @@
 
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *imgMoreBorder;
 @property (weak, nonatomic) IBOutlet UILabel *lblItemsCount;
 @property (weak, nonatomic) IBOutlet UILabel *lblUserName;
 @property (weak, nonatomic) IBOutlet UILabel *lblStyleName;
@@ -134,6 +135,46 @@
     [super viewDidLoad];  
 }
 
+-(void) adjustUIBorder {
+    
+//    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
+//    
+//    [lbl setText:@"Testo di prova..."];
+//    [lbl setBackgroundColor:[UIColor clearColor]];
+//    [[self view] addSubview:lbl];
+//    [lbl sizeToFit];
+    
+    CALayer* layer = [self.styleImageView layer];
+    
+    CALayer *rightBorder = [CALayer layer];
+    rightBorder.cornerRadius = 5;
+    rightBorder.masksToBounds = YES;
+    rightBorder.borderColor = [UIColor darkGrayColor].CGColor;
+    rightBorder.borderWidth = 2;
+    rightBorder.frame = CGRectMake(layer.frame.size.height + 37, 0, 1, layer.frame.size.width - 30);
+    [rightBorder setBorderColor:[UIColor blackColor].CGColor];
+    
+    CALayer *rightBorder1 = [CALayer layer];
+    rightBorder1.cornerRadius = 5;
+    rightBorder1.masksToBounds = YES;
+    rightBorder1.borderColor = [UIColor darkGrayColor].CGColor;
+    rightBorder1.borderWidth = 2;
+    rightBorder1.frame = CGRectMake(layer.frame.size.height + 42, 0, 1, layer.frame.size.width - 30);
+    [rightBorder1 setBorderColor:[UIColor blackColor].CGColor];
+
+    
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.cornerRadius = 5;
+    bottomBorder.masksToBounds = YES;
+    bottomBorder.borderColor = [UIColor darkGrayColor].CGColor;
+    bottomBorder.borderWidth = 2;
+    bottomBorder.frame = CGRectMake(-1, layer.frame.size.height - 1,layer.frame.size.width, 1);
+    [bottomBorder setBorderColor:[UIColor blackColor].CGColor];
+    
+    
+    [layer addSublayer:rightBorder];
+    [layer addSublayer:rightBorder1];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -330,10 +371,7 @@
               location.coordinate.latitude,
               location.coordinate.longitude);
         // keep updating current user location
-        PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: location];
-        [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-        [[PFUser currentUser] saveInBackground];
-        
+        [User saveLocation: location];
         [self getNearbyStyles: location];
     }
 }
@@ -342,8 +380,15 @@
     // query db for nearby items
     NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
   
+ 
     if(arrStylesFound.count == 0)
     {
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
+        noDataLabel.text             = @"No styles nearby";
+        noDataLabel.textColor        = [UIColor blackColor];
+        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+        [self.view addSubview:noDataLabel];
+        
         // add default item to be added
         NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
         DataInfo *item = [[DataInfo alloc] init];
@@ -366,6 +411,12 @@
         }
         return;
     }
+    
+    if(arrStylesFound.count > 1) {
+        [self adjustUIBorder]; // adjust border UI for discovery image frame
+        self.imgMoreBorder.hidden = NO;
+    }
+    
     
     NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
     for(NSDictionary *styleInfo in arrStylesFound) {
@@ -473,8 +524,10 @@
     }
     // get current like count and increment
     // update label
-    unsigned int counter = info.likes + 1;
-    self.lblLikes.text = [NSString stringWithFormat:@"%lu%@", counter, "@ likes"];
+    if (info != nil) {
+        unsigned int counter = info.likes + 1;
+        self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" likes"];
+    }
 }
 
 // -------------------------------------- payment flow ----------------------------------------------- //

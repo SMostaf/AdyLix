@@ -24,6 +24,12 @@
     return self;
 }
 
++(void) saveLocation:(CLLocation *)location {
+    PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: location];
+    [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+    [[PFUser currentUser] saveInBackground];
+}
+
 +(PFObject*) getUserForId:(NSString*) userId {
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:userId];

@@ -113,8 +113,8 @@
                                     <action selector="btnUsersProfile:" destination="SwS-mF-R51" eventType="touchUpInside" id="GTs-Pu-VXm"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="framesBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="xjv-CT-CE8">
-                                <rect key="frame" x="323" y="378" width="32" height="22"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="framesBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="xjv-CT-CE8">
+                                <rect key="frame" x="326" y="378" width="32" height="22"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,6 +124,7 @@
                         <outlet property="btnCurrStyle" destination="EDN-Fm-QFG" id="C27-9j-gJA"/>
                         <outlet property="btnLike" destination="O8c-hq-rmx" id="2h4-ih-hCm"/>
                         <outlet property="btnShare" destination="m9L-7d-2yh" id="gO4-Gh-Yoi"/>
+                        <outlet property="imgMoreBorder" destination="xjv-CT-CE8" id="PJe-Kf-GxV"/>
                         <outlet property="lblItemsCount" destination="NEt-gQ-SeR" id="udQ-VN-4bA"/>
                         <outlet property="lblLikes" destination="1kD-bT-JIH" id="KmM-vb-hqZ"/>
                         <outlet property="lblStyleName" destination="Pyl-MA-Yly" id="zf9-y9-v4a"/>
@@ -232,7 +233,7 @@
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="45" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="119" id="MkW-hs-ZUJ">
-                                <rect key="frame" x="0.0" y="34" width="600" height="119"/>
+                                <rect key="frame" x="0.0" y="98" width="600" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MkW-hs-ZUJ" id="tG7-hK-nrQ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="118.5"/>
@@ -630,6 +631,6 @@
         <image name="submit.jpg" width="260" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="P3r-93-Vrz"/>
+        <segue reference="iwA-HK-lUw"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -23,6 +23,7 @@
 -(NSString*) getTokenId;
 -(NSString*) getBankId;
 
++(void) saveLocation:(CLLocation*) location;
 +(PFObject*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;
 +(NSData*) getFBProfilePic:(PFUser*) user;
