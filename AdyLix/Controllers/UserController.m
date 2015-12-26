@@ -47,8 +47,9 @@
         NSString* userName = [User getFBUserName:self.user];
         if([userName length] > 0)
             self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:self.user]];
-
-        self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ",  [StyleItems getStyleForObj:[[User getUserForId:self.user.objectId] valueForKey:@"currentStyleId"]]];
+        PFObject* currStyle = [[User getUserForId:self.user.objectId] valueForKey:@"currentStyleId"];
+        if (currStyle != nil)
+            self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ",  [StyleItems getStyleForObj:currStyle]];
         
         NSData* imageData = [User getFBProfilePic:self.user];
         self.imgProfile.image = [UIImage imageWithData:imageData];

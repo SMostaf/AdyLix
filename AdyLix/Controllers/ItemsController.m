@@ -51,19 +51,20 @@
 -(void) viewDidAppear:(BOOL)animated {
     
     if(!self.camViewShowing) {
-        
-        PFObject* styleObj = [StyleItems getStyleForId:self.editStyleId];
-        
-        self.txtName.text = [styleObj valueForKey:@"name"];
-        
-        PFFile* thumbnail = [styleObj valueForKey:@"imageFile"];
-        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            self.feedImage.image = [UIImage imageWithData:data];
-        }];
-        
-        self.chkDiscover.on = [StyleItems isCurrentStyle:styleObj];
+        // if the edit view is opened from the item tableview controller
+        if(self.editStyleId) {
+            PFObject* styleObj = [StyleItems getStyleForId:self.editStyleId];
+            
+            self.txtName.text = [styleObj valueForKey:@"name"];
+            
+            PFFile* thumbnail = [styleObj valueForKey:@"imageFile"];
+            [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                self.feedImage.image = [UIImage imageWithData:data];
+            }];
+            
+            self.chkDiscover.on = [StyleItems isCurrentStyle:styleObj];
 
-        
+        }
         [self startCameraControllerFromViewController: self
                                     usingDelegate: self];
         self.camViewShowing = true;

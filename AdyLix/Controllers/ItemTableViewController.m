@@ -58,7 +58,7 @@ typedef enum {
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    UINavigationItem* navigationItem = [Utility getNavItem];
+    UINavigationItem* navigationItem = [Utility getNavItem:self];
    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     navbar.backgroundColor = [UIColor redColor];
     
@@ -209,7 +209,7 @@ typedef enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSInteger numOfSections = 0;
+    NSInteger numOfSections = 1;
     if ([self.objects count])
     {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

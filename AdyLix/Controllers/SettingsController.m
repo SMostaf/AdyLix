@@ -50,9 +50,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
+-(void) viewDidDisappear:(BOOL)animated {
     
     [[NSUserDefaults standardUserDefaults] setFloat:[self.discRange value] forKey:@"range"];
     [[NSUserDefaults standardUserDefaults] setBool:[self.discSwitch isOn] forKey:@"discoverable"];
@@ -61,6 +59,11 @@
     [[PFUser currentUser] setObject:[NSNumber numberWithBool:[self.discSwitch isOn]] forKey:@"discoverable"];
     [[PFUser currentUser] saveInBackground];
     
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
 }
 
 -(void)back:(id)sender
