@@ -11,7 +11,7 @@
 
 #import "BaseViewController.h"
 
-@interface SettingsController : BaseViewController
+@interface SettingsController : UITableViewController
 
 
 @end

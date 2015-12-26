@@ -7,13 +7,17 @@
 //
 #import "SettingsController.h"
 #import <Parse/Parse.h>
+#import "Utility.h"
 
 @interface SettingsController ()
 
-@property (weak, nonatomic) IBOutlet UISlider *proxRange;
-@property (weak, nonatomic) IBOutlet UISwitch *discoverSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *lblPoints;
+@property (weak, nonatomic) IBOutlet UISlider *discRange;
+@property (weak, nonatomic) IBOutlet UISwitch *discSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *lblPoints;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navbar;
+
+@property (strong, nonatomic) IBOutlet UITableView *tblView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @end
@@ -21,48 +25,25 @@
 @implementation SettingsController
 
 
--(void)back:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 
 - (void)viewWillAppear:(BOOL)animated {
     
-}
 
-- (IBAction)btnRedeem:(id)sender {
-}
-
-- (IBAction)btnSave:(id)sender {
+    self.tblView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
     
-    [[NSUserDefaults standardUserDefaults] setFloat:[self.proxRange value] forKey:@"range"];
-    [[NSUserDefaults standardUserDefaults] setBool:[self.discoverSwitch isOn] forKey:@"discoverable"];
-
-    // to be filtered by other users
-    [[PFUser currentUser] setObject:[NSNumber numberWithBool:[self.discoverSwitch isOn]] forKey:@"discoverable"];
-    [[PFUser currentUser] saveInBackground];
-    
-     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
-- (IBAction)btnCancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (void)viewDidLoad {
 
     [super viewDidLoad];
     
-   self.proxRange.value = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"];
-   self.discoverSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"discoverable"];
+   self.discRange.value = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"];
+   self.discSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"discoverable"];
 
     
    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
                                                                              style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    
-
     
 }
 - (void)didReceiveMemoryWarning {
@@ -72,7 +53,19 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    
+    [[NSUserDefaults standardUserDefaults] setFloat:[self.discRange value] forKey:@"range"];
+    [[NSUserDefaults standardUserDefaults] setBool:[self.discSwitch isOn] forKey:@"discoverable"];
+    
+    // to be filtered by other users
+    [[PFUser currentUser] setObject:[NSNumber numberWithBool:[self.discSwitch isOn]] forKey:@"discoverable"];
+    [[PFUser currentUser] saveInBackground];
+    
 }
 
+-(void)back:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
