@@ -192,7 +192,7 @@
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="30" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="57" id="anc-1N-TN9">
-                                <rect key="frame" x="0.0" y="92" width="600" height="57"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="anc-1N-TN9" id="AZx-sV-xMH">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="56.5"/>
@@ -233,7 +233,7 @@
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="45" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="119" id="MkW-hs-ZUJ">
-                                <rect key="frame" x="0.0" y="98" width="600" height="119"/>
+                                <rect key="frame" x="0.0" y="34" width="600" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MkW-hs-ZUJ" id="tG7-hK-nrQ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="118.5"/>
@@ -562,12 +562,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="qOm-DU-B9x" kind="show" id="WD4-rS-0Zf"/>
+                        <segue destination="5nh-CM-G2V" kind="show" id="fZA-fq-GQA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OAY-Hu-1a1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-877" y="437"/>
+            <point key="canvasLocation" x="-1561" y="233"/>
         </scene>
         <!--Main Controller-->
         <scene sceneID="rIm-Vr-kaa">

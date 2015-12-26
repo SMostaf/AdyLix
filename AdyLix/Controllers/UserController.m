@@ -8,7 +8,7 @@
 #import "UserController.h"
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "Parse/Parse.h"
-#import "MainController.h"
+#import "FBLoginViewController.h"
 #import "User.h"
 #import "Style.h"
 
@@ -48,8 +48,11 @@
         if([userName length] > 0)
             self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:self.user]];
         PFObject* currStyle = [[User getUserForId:self.user.objectId] valueForKey:@"currentStyleId"];
-        if (currStyle != nil)
-            self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ",  [StyleItems getStyleForObj:currStyle]];
+        if (currStyle != nil) {
+            NSString* styleName = [StyleItems getStyleForObj:currStyle];
+            if ([styleName length] > 0)
+                self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ", styleName];
+        }
         
         NSData* imageData = [User getFBProfilePic:self.user];
         self.imgProfile.image = [UIImage imageWithData:imageData];
@@ -92,9 +95,8 @@
     
     [PFUser logOut];
     
-    MainController *mainController = [[MainController alloc] init];
-    
-    [self presentViewController:mainController animated:YES completion:nil];
+    FBLoginViewController *loginController = [[FBLoginViewController alloc] init];
+    [self presentViewController:loginController animated:YES completion:nil];
     
 }
 
