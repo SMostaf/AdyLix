@@ -1,0 +1,45 @@
+dependencies: \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.m \
+  /Users/smostaf1/Projects/AdyLix/Pods/Target\ Support\ Files/Parse/Parse-prefix.pch \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/ParseManager.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConstants.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFDataProvider.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/LocalDataStore/OfflineStore/PFOfflineStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFMacros.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFExecutor.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/BFTask+Private.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFTask.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationToken.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFCancellationTokenRegistration.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Bolts/Bolts/Common/BFDefines.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFInternalUtils.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEncoder.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Analytics/Controller/PFAnalyticsController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFAssert.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCommandCache.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFEventuallyQueue.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFNetworkCommand.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFConfig.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreManager.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFCoreDataProvider.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFFileManager.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Installation/InstallationIdentifierStore/PFInstallationIdentifierStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/KeyValueCache/PFKeyValueCache.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFKeychainStore.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFLogging.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFLogger.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/MultiProcessLock/PFMultiProcessFileLockController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/PFPinningEventuallyQueue.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFUser.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFObject.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFACL.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFSubclassing.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/CommandRunner/URLSession/PFURLSessionCommandRunner.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Commands/CommandRunner/PFCommandRunning.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/PFPersistenceController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Persistence/Group/PFPersistenceGroup.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Push/Manager/PFPushManager.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFInstallation.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/Internal/Purchase/Controller/PFPurchaseController.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFProduct.h \
+  /Users/smostaf1/Projects/AdyLix/Pods/Parse/Parse/PFFile.h

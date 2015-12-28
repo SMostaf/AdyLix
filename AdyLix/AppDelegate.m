@@ -7,26 +7,19 @@
 //
 
 #import "AppDelegate.h"
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <UIKit/UIApplication.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
-//#import "Stripe.h"
+#import "FBLoginViewController.h"
+#import "AppRelated.h"
 
-//#TODO: move to constant file
-NSString *const AppDelegateApplicationDidReceiveRemoteNotification  = @"com.parse.Anypic.appDelegate.applicationDidReceiveRemoteNotification";
-
-NSString * const StripePublishableKey = @"pk_test_qEGQmR4XAdo9rIQDsU30dKBZ";//sk_test_0hmo7YaWTsDPo1KouO8hRrEN";
-NSString* kPushPayloadFromUserObjectIdKey = @"itm";
-typedef enum {
-    UAPHomeTabBarItemIndex = 0,
-    UAPEmptyTabBarItemIndex = 1,
-    UAPActivityTabBarItemIndex = 2
-} APTabBarControllerViewControllerIndex;
-
+#define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
 
 
 @interface AppDelegate ()
-
+//@property UIStatusBarItem* statusItem;
 @end
 
 @implementation AppDelegate
@@ -38,25 +31,45 @@ typedef enum {
     // stripe payment init
     //[Stripe setDefaultPublishableKey:StripePublishableKey];
     
-   
     // enable push notification
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
     [self handlePush:launchOptions];
+    [self setupParseWithOptions:launchOptions];
+    
 
-//    if (![PFUser currentUser])
-//    {
-//        MainController *mainController = [[MainController alloc] init];
-//        
-//        UINavigationController* navController = (UINavigationController *)self.window.rootViewController;
-//        [navController pushViewController:mainController animated:YES];
+    // tab bar UI customization
+    [self customizeMenuBar];
+//    
+//    UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
+//    
+//    if ([FBSDKAccessToken currentAccessToken]) {
+//        UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
+//       
+//        UITabBarController *tabView = [mainStoryboard instantiateViewControllerWithIdentifier:@"tabController"];
+//        [tabView setSelectedIndex:1];
+//        //[ROOTVIEW presentViewController:tabView animated:YES completion:nil];
+//        [navigationController pushViewController:tabView animated:NO];
 //
+//    }
+//    else {
+//        FBLoginViewController* loginController = [[FBLoginViewController alloc]init];
+//         [ROOTVIEW presentViewController:loginController animated:YES completion:nil];
 //    }
     return YES;
 }
+
+- (void)setupParseWithOptions:(NSDictionary *)launchOptions
+{
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+}
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Store the deviceToken in the current Installation and save it to Parse
@@ -66,8 +79,11 @@ typedef enum {
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // push notify
     [PFPush handlePush:userInfo];
-    if ([PFUser currentUser]) {
+    
+    //if ([PFUser currentUser]) {
         // #TODO: navigate to notification center
 //        if ([self.tabBarController viewControllers].count > UAPActivityTabBarItemIndex) {
 //            UITabBarItem *tabBarItem = [[self.tabBarController.viewControllers objectAtIndex:UAPActivityTabBarItemIndex] tabBarItem];
@@ -83,8 +99,9 @@ typedef enum {
 //                tabBarItem.badgeValue = @"1";
 //            }
 //        }
-    }
+    //}
 }
+
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
@@ -125,6 +142,34 @@ typedef enum {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+#pragma mark - UI customize
+-(void) customizeMenuBar {
+
+    UIColor* liteMaroon = [UIColor colorWithRed:179.0/255.0 green:17.0/255.0 blue:28.0/255.0 alpha:1];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:liteMaroon];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+
+
+    [[UIToolbar appearance] setTintColor:liteMaroon];
+    [[UIToolbar appearance] setBarTintColor:liteMaroon];
+    
+    
+//    // Change the background color of navigation bar
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+//    
+//    // Change the font style of the navigation bar
+//    NSShadow *shadow = [[NSShadow alloc] init];
+//    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+//    shadow.shadowOffset = CGSizeMake(0, 0);
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                           [UIColor colorWithRed:10.0/255.0 green:10.0/255.0 blue:10.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+//                                                           shadow, NSShadowAttributeName,
+//                                                           [UIFont fontWithName:@"Helvetica-Light" size:21.0], NSFontAttributeName, nil]];
 }
 
 #pragma mark - notification
@@ -228,17 +273,14 @@ typedef enum {
     return _managedObjectContext;
 }
 
-/*
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication
-                                                       annotation:annotation];
-}*/
+                                                       annotation:annotation
+            ];
+}
 
 #pragma mark - Core Data Saving support
 

@@ -32,12 +32,14 @@
     //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
-    CGFloat km = 1.0f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
-   
-    // #TODO: remove DEBUG
-   // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    //[usersQuery whereKey:@"email" notEqualTo:[[PFUser currentUser] email]];
+    CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
+    if (miles == 0) //preference not set
+        miles = 1.0f;
+    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
+    
+    [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
+    // #TODO: remove DEBUG order by closest items
+    // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     //[usersQuery orderByAscending:@"orderByAscending"];
     
@@ -47,9 +49,7 @@
     NSArray* arrUsers = [usersQuery findObjects];
     // no users nearby
     if(arrUsers.count == 0)
-    {
         return nil;
-    }
     
     // query nearby users and find their items
     PFQuery *query = [PFQuery queryWithClassName:@"ItemDetail"];
@@ -70,34 +70,19 @@
     return arrItemsFound;
 }
 
--(void) like:(NSString*) itemId ownerId:(NSString*) ownerId {
-    // get user id of owner
-//    PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
-//    [query whereKey:@"objectId" equalTo:itemId];
-//    PFObject* item = [query getFirstObject];
-//    if(item)
-//    {
-        //NSString* ownerId = [item valueForKey:@"userObjectId"];
-        
-        // like item ntifcation will be sent after save
-        PFObject *item = [PFObject objectWithClassName:@"ItemLike"];
-        [item setObject:itemId forKey:@"itemId"];
-        [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userFrom"];
-        [item setObject:ownerId forKey:@"userTo"];
-        
-        [item saveInBackground];
-        
-   // }
-
++(PFObject*) getItemForId:(NSString*) itemId {
+    
+    PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
+    [query whereKey:@"objectId" equalTo:itemId];
+    return [query getFirstObject];
 }
 
-
--(unsigned long) getLikesForItem:(NSString*) itemId {
++(unsigned long) getLikesForItem:(NSString*) itemId {
     if(!itemId)
         return 0;
     PFQuery* query = [PFQuery queryWithClassName:@"ItemLike"];
     [query whereKey:@"itemId" equalTo:itemId];
-    [query whereKey:@"userTo" equalTo:[[PFUser currentUser] valueForKey:@"objectId"]];
+    [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
 
     return [[query findObjects] count];
 }

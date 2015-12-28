@@ -1,0 +1,10 @@
+pod 'Parse'
+pod 'ParseUI'
+pod 'FBSDKCoreKit'
+pod 'FBSDKLoginKit'
+pod 'FBSDKShareKit'
+pod 'ParseFacebookUtilsV4'
+pod 'sqlite3'
+#pod 'Stripe'
+#pod 'ApplePayStubs'
+#pod ‘TTTAttributedLabel’

@@ -85,24 +85,6 @@
 }
 
 
-/*
- UIImage *croppedImg = nil;
- CGRect cropRect = CGRectMake("AS YOu Need"); //set your rect size.
- croppedImg = [self croppIngimageByImageName:self.imageView.image toRect:cropRect];
- Use following code for call croppIngimageByImageName:toRect: method that return UIImage (with specific size of image)
- 
- - (UIImage *)croppIngimageByImageName:(UIImage *)imageToCrop toRect:(CGRect)rect
- {
- //CGRect CropRect = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height+15);
- 
- CGImageRef imageRef = CGImageCreateWithImageInRect([imageToCrop CGImage], rect);
- UIImage *cropped = [UIImage imageWithCGImage:imageRef];
- CGImageRelease(imageRef);
- 
- return cropped;
- }
- */
-
 -(UIImage*) getImage {
     return _croppedImg;
 }
@@ -212,79 +194,9 @@
 //    [aPath closePath];
 }
 
-/*
-- (IBAction)btnSave:(id)sender {
-    @try
-    {
-        
-    if (self.txtName.text.length == 0 || self.txtPrice.text.length == 0
-        || self.itemImage == nil)
-    {
-         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
-        return;
-    }
 
+# pragma mark - camera delegate
 
-    
-    PFObject *item = [PFObject objectWithClassName:@"ItemDetail"];
-    [item setObject:self.txtName.text forKey:@"name"];
-    [item setObject:self.txtPrice.text forKey:@"price"];
-    [item setObject:self.txtDesc.text forKey:@"description"];
-    
-    if (self.chkDiscover.on)
-        [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
-    else
-        [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
-
-    NSString* userName = [[PFUser currentUser] objectForKey:@"username"];
-    [item setObject:[NSDate date] forKey:@"timeStamp"];
-    [item setObject:[[PFUser currentUser] valueForKey:@"objectId"] forKey:@"userObjectId"];
-
-    // item image
-   
-    NSData* data = UIImageJPEGRepresentation(self.itemImage, 0.5f);
-    PFFile *imageFile = [PFFile fileWithName:@"Image.jpg" data:data];
-    [item setObject:imageFile forKey:@"imageFile"];
-    
-    
-    // Show progress
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Uploading";
-    [hud show:YES];
-    
-    // Upload item to Parse
-    [item saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [hud hide:YES];
-        
-        if (!error) {
-            // Show success message
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved your item" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        
-            
-            // Notify table view to reload the recipes from Parse cloud
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-            
-            // Dismiss the controller
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            
-        }
-        
-    }];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Caught an exception on saving item");
-    }
-}
-*/
-
-// camera  related
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
                                    usingDelegate: (id <UIImagePickerControllerDelegate,
                                                    UINavigationControllerDelegate>) delegate {
@@ -345,8 +257,6 @@
     //[self presentModalViewController: picker animated: YES];
 }
 
-
-# pragma mark - camera delegate
 
 
 @end

@@ -9,7 +9,7 @@
 #ifndef itemTableViewController_h
 #define itemTableViewController_h
 
-#import <Parse/Parse.h>
+#import <ParseUI/PFQueryTableViewController.h>
 
 @interface ItemTableViewController : PFQueryTableViewController
 
