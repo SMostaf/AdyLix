@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "ShareHelper.h"
-#import "datainfo.h"
 
 @implementation ShareHelper
 

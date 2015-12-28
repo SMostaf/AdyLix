@@ -150,7 +150,7 @@
         return 0;
     PFQuery* query = [PFQuery queryWithClassName:@"ItemLike"];
     [query whereKey:@"styleId" equalTo:[StyleItems getStyleForId: styleId]];
-    [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
+    //[query whereKey:@"userTo" equalTo:[PFUser currentUser]];
     
     return [[query findObjects] count];
 }

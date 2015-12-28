@@ -17,6 +17,7 @@
 
 
 -(void) viewDidAppear:(BOOL)animated {
+    // #TODO should navigate directly from app delegate
     if ([FBSDKAccessToken currentAccessToken]) {
         [self goToMainView];
     }

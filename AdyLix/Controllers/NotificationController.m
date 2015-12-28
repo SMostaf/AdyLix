@@ -31,8 +31,8 @@ typedef enum {
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    UINavigationItem* navigationItem = [Utility getNavItem];
+
+    UINavigationItem* navigationItem = [Utility getNavItem:self];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     navbar.backgroundColor = [UIColor redColor];
     

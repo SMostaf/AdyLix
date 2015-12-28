@@ -20,10 +20,8 @@
 
 - (void)viewDidLoad {
     
-    
     [super viewDidLoad];
-    
-    
+
     UIImage* imageMain = [UIImage imageNamed:@"menu.png"];
     CGRect frameimg = CGRectMake(0, 0, imageMain.size.width, imageMain.size.height);
     UIButton *imgButton = [[UIButton alloc] initWithFrame:frameimg];

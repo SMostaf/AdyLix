@@ -12,6 +12,7 @@
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
+#import "FBLoginViewController.h"
 #import "AppRelated.h"
 
 #define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
@@ -44,17 +45,21 @@
 
     // tab bar UI customization
     [self customizeMenuBar];
-    
+//    
+//    UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
+//    
 //    if ([FBSDKAccessToken currentAccessToken]) {
 //        UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
-//
-//        //UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
-//        
+//       
 //        UITabBarController *tabView = [mainStoryboard instantiateViewControllerWithIdentifier:@"tabController"];
 //        [tabView setSelectedIndex:1];
-//        [ROOTVIEW presentViewController:tabView animated:YES completion:nil];
-//        //[navigationController pushViewController:tabView animated:NO];
+//        //[ROOTVIEW presentViewController:tabView animated:YES completion:nil];
+//        [navigationController pushViewController:tabView animated:NO];
 //
+//    }
+//    else {
+//        FBLoginViewController* loginController = [[FBLoginViewController alloc]init];
+//         [ROOTVIEW presentViewController:loginController animated:YES completion:nil];
 //    }
     return YES;
 }
@@ -74,7 +79,10 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // push notify
     [PFPush handlePush:userInfo];
+    
     //if ([PFUser currentUser]) {
         // #TODO: navigate to notification center
 //        if ([self.tabBarController viewControllers].count > UAPActivityTabBarItemIndex) {
