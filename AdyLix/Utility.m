@@ -12,7 +12,7 @@
 
 @implementation Utility
 
-+(UINavigationItem*) getNavItem {
++(UINavigationItem*) getNavItem:(id) obj {
     UINavigationItem *navigationItem = [[UINavigationItem alloc]init];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     navbar.backgroundColor = [UIColor redColor];
@@ -21,7 +21,7 @@
     CGRect frameimg = CGRectMake(0, 0, imageMain.size.width, imageMain.size.height);
     UIButton *imgButton = [[UIButton alloc] initWithFrame:frameimg];
     [imgButton setBackgroundImage:imageMain forState:UIControlStateNormal];
-    [imgButton addTarget:self action:@selector(showProfile:)
+    [imgButton addTarget:obj action:@selector(showProfile:)
         forControlEvents:UIControlEventTouchUpInside];
     [imgButton setShowsTouchWhenHighlighted:YES];
 
@@ -33,7 +33,7 @@
     CGRect snapFrameimg = CGRectMake(0, 0, imageSnap.size.width, imageSnap.size.height);
     UIButton *imgSnapButton = [[UIButton alloc] initWithFrame:snapFrameimg];
     [imgSnapButton setBackgroundImage:imageSnap forState:UIControlStateNormal];
-    [imgSnapButton addTarget:self action:@selector(showSelfie:)
+    [imgSnapButton addTarget:obj action:@selector(showSelfie:)
             forControlEvents:UIControlEventTouchUpInside];
     [imgSnapButton setShowsTouchWhenHighlighted:YES];
 

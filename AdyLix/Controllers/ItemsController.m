@@ -65,7 +65,8 @@
             self.chkDiscover.on = [StyleItems isCurrentStyle:styleObj];
 
         }
-        [self startCameraControllerFromViewController: self
+        else
+            [self startCameraControllerFromViewController: self
                                     usingDelegate: self];
         self.camViewShowing = true;
     }
@@ -185,6 +186,12 @@
     }
 }
 
+- (IBAction)btnCamera:(id)sender {
+  
+    [self startCameraControllerFromViewController: self
+                                    usingDelegate: self];
+
+}
 
 // camera  related
 - (BOOL) startCameraControllerFromViewController: (UIViewController*) controller

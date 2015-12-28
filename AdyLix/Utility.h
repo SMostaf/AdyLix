@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 
 @interface Utility : NSObject
-+(UINavigationItem*) getNavItem;
++(UINavigationItem*) getNavItem:(id) obj;
 
 @end
 

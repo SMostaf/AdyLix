@@ -53,7 +53,7 @@ typedef enum {
 }
 
 -(void) viewDidLoad {
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -67,6 +67,7 @@ typedef enum {
     [self.view addSubview:navbar];
     
     self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+
     
 
    [self loadObjects];
@@ -181,29 +182,48 @@ typedef enum {
         cell.backgroundColor = altCellColor;
     }
 }
-- (IBAction)btnRowEdit:(id)sender {
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tblView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    UITableViewCell *cell = [self.tblView cellForRowAtIndexPath:indexPath];
-    NSString *objectId = ((UILabel*)([cell viewWithTag:IDTag])).text;
-    
 
-    ItemsController *itemController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
-    itemController.editStyleId = objectId;
-    
-    [self presentViewController:itemController animated: YES completion:nil];
-}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Editing");
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *object = [self.objects objectAtIndex:indexPath.row];
-        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            [self loadObjects];
-        }];
-    }
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        PFObject *object = [self.objects objectAtIndex:indexPath.row];
+//        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            [self loadObjects];
+//        }];
+//    }
+}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                    {
+                                        PFObject *object = [self.objects objectAtIndex:indexPath.row];
+                                        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                            [self loadObjects];
+                                        }];
+                                    }];
+    delete.backgroundColor = [UIColor redColor];
+    
+    
+    UITableViewRowAction *edit = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@" Update " handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                  {
+                                      UITableViewCell *cell = [self.tblView cellForRowAtIndexPath:indexPath];
+                                      NSString *objectId = ((UILabel*)([cell viewWithTag:IDTag])).text;
+                                      
+                                      
+                                      ItemsController *itemController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
+                                      itemController.editStyleId = objectId;
+                                      
+                                      [self presentViewController:itemController animated: YES completion:nil];
+                                      
+                                      
+                                  }];
+
+    edit.backgroundColor = [UIColor colorWithRed:0.188 green:0.514 blue:0.984 alpha:1];
+    
+    return @[delete, edit]; //array with all the buttons you want. 1,2,3, etc...
 }
 
 
