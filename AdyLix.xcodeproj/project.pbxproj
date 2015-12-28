@@ -77,7 +77,6 @@
 		0A6976A61C2A6B03009F614C /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6976A51C2A6B03009F614C /* SettingsController.m */; };
 		0A6A1B011C28E27A008E3C6F /* bk-mk.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B001C28E27A008E3C6F /* bk-mk.png */; };
 		0A6A1B031C28F18B008E3C6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B021C28F18B008E3C6F /* Assets.xcassets */; };
-		0A6A1B051C28F3A0008E3C6F /* facebook-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B041C28F3A0008E3C6F /* facebook-icon.png */; };
 		0A6A1B0B1C28F949008E3C6F /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B0A1C28F949008E3C6F /* map.png */; };
 		0A6A1B0E1C28FA9D008E3C6F /* map2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B0C1C28FA9D008E3C6F /* map2x.png */; };
 		0A6A1B0F1C28FA9D008E3C6F /* map3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6A1B0D1C28FA9D008E3C6F /* map3x.png */; };
@@ -254,7 +253,6 @@
 		0A6976A51C2A6B03009F614C /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsController.m; path = Controllers/SettingsController.m; sourceTree = "<group>"; };
 		0A6A1B001C28E27A008E3C6F /* bk-mk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bk-mk.png"; path = "Res/bk-mk.png"; sourceTree = "<group>"; };
 		0A6A1B021C28F18B008E3C6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0A6A1B041C28F3A0008E3C6F /* facebook-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-icon.png"; sourceTree = "<group>"; };
 		0A6A1B0A1C28F949008E3C6F /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = Res/map.png; sourceTree = "<group>"; };
 		0A6A1B0C1C28FA9D008E3C6F /* map2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map2x.png; path = Res/map2x.png; sourceTree = "<group>"; };
 		0A6A1B0D1C28FA9D008E3C6F /* map3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map3x.png; path = Res/map3x.png; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				0A6A1B0C1C28FA9D008E3C6F /* map2x.png */,
 				0A6A1B0D1C28FA9D008E3C6F /* map3x.png */,
 				0A6A1B0A1C28F949008E3C6F /* map.png */,
-				0A6A1B041C28F3A0008E3C6F /* facebook-icon.png */,
 				0A6A1B001C28E27A008E3C6F /* bk-mk.png */,
 				0A6BED1A1C28A85C0089EB23 /* disocver.png */,
 				0A6BED1B1C28A85D0089EB23 /* reel.png */,
@@ -885,7 +882,6 @@
 				0A9C70C31C2490970044EC03 /* FBLogin.png in Resources */,
 				0A70DC621C13F5590000E328 /* scanbutton.png in Resources */,
 				0A47BC791BDAAE9400D362B9 /* Default@2x.png in Resources */,
-				0A6A1B051C28F3A0008E3C6F /* facebook-icon.png in Resources */,
 				0AAEC3A41C2C6A1F000468E3 /* emptyProfile.png in Resources */,
 				0A47BC751BDAAE9400D362B9 /* Default-568h@2x.png in Resources */,
 				0A70DC611C13F5590000E328 /* overlaygraphic.png in Resources */,
