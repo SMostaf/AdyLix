@@ -85,9 +85,10 @@
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
 //                                                                                      //        style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     
-    UINavigationItem* navMenuItems = [Utility getNavForProfile:self];
+    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
+    self.navBar.items = @[navigationItem];
+    [self.view addSubview:self.navBar];
     
-    self.navBar.items = @[navMenuItems];
     
     [self.view addSubview:self.navBar];
     

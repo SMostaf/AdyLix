@@ -71,10 +71,7 @@ typedef enum {
 {
     UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.backgroundColor = [UIColor redColor];
-    
     navbar.items = @[navigationItem];
-    
     [self.view addSubview:navbar];
     
     self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);

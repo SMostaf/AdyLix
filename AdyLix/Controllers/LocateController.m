@@ -28,6 +28,7 @@
 @interface LocateController ()
 
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgMoreBorder;
 @property (weak, nonatomic) IBOutlet UILabel *lblItemsCount;
@@ -98,12 +99,12 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    [self.activityView startAnimating];
   
     // adjust menu items
-    UINavigationItem* navMenuItems = [Utility getNavMainMenu:self];
-    
-    self.navBar.items = @[navMenuItems];
-    
+    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
+    self.navBar.items = @[navigationItem];
     [self.view addSubview:self.navBar];
     
     
@@ -138,13 +139,11 @@
     self.btnShare.hidden = YES;
     self.btnLike.hidden = YES;
     
-   
     // update view to show current style name
     // on click redirect user to wardrobe
     [self getCurrentSyleInfo];
     // location manager receive updates
     [self startStandardUpdates];
-    
     
   //  [_activityImageView stopAnimating];
   //  _activityImageView.hidden = YES;
@@ -152,14 +151,7 @@
 
 // function to give the effect of multiple styles
 -(void) adjustUIBorder {
-    
-//    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
-//    
-//    [lbl setText:@"Testo di prova..."];
-//    [lbl setBackgroundColor:[UIColor clearColor]];
-//    [[self view] addSubview:lbl];
-//    [lbl sizeToFit];
-    
+
     CALayer* layer = [self.styleImageView layer];
     
     CALayer *rightBorder = [CALayer layer];
@@ -199,18 +191,17 @@
     [_locationManager stopUpdatingLocation];
 }
 
-- (IBAction)btnUsersProfile:(id)sender {
+- (IBAction) btnUsersProfile:(id)sender {
     // show profile view for style owners
     DataInfo* info = [_stylesArr objectAtIndex:_currentStyleIndex];
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
     userController.user = info.userObjectId;
     
     [self presentViewController:userController animated: NO completion:nil];
-
 }
 
-
 -(void) getLikes:(NSInteger)index type:(enum DataType) type {
+    
     DataInfo* info = nil;
     unsigned long count = 0;
     if (type == kStyleType) {
@@ -230,7 +221,7 @@
 
 #pragma mark - swipe style gesture left/right
 // shows information on user who owns current displayed style
--(void)updateProfileForStyle:(NSInteger)index
+-(void) updateProfileForStyle:(NSInteger) index
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
     // adding rounded corners to profile image
@@ -248,7 +239,7 @@
     
 }
 
--(void)showStyleAtIndex:(NSInteger)index
+-(void) showStyleAtIndex:(NSInteger) index
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
@@ -263,7 +254,7 @@
     [self getLikes:index type:kStyleType];
 }
 
--(void)swipeStyleImage:(UISwipeGestureRecognizer*)recognizer
+-(void) swipeStyleImage:(UISwipeGestureRecognizer*) recognizer
 {
     NSInteger index = _currentStyleIndex;
     NSInteger limit = [_stylesArr count] -  1;
@@ -290,7 +281,7 @@
     
 }
 
--(void)showItemAtIndex:(NSInteger)index
+-(void) showItemAtIndex:(NSInteger) index
 {
     // get array of currentStyle showing
     DataInfo* info = [[_currStyleDetail items] objectAtIndex:index];
@@ -303,7 +294,7 @@
 }
 
 // swipe up down items
--(void) swipeItemImage:(UISwipeGestureRecognizer*)recognizer
+-(void) swipeItemImage:(UISwipeGestureRecognizer*) recognizer
 {
     NSInteger index = [_currStyleDetail currentItemIndex];
     NSInteger limit = _currStyleDetail.currentItemsLimit;
@@ -345,7 +336,7 @@
     }
 }
 #pragma mark - location manager update
-- (void)startStandardUpdates
+- (void) startStandardUpdates
 {
     // Create the location manager if this object does not
     // already have one.
@@ -366,7 +357,7 @@
     [_locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
@@ -375,7 +366,7 @@
 }
 
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     // If it's a relatively recent event, turn off updates to save power.
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
@@ -389,6 +380,8 @@
         // keep updating current user location
         [User saveLocation: location];
         [self getNearbyStyles: location];
+        
+        [self.activityView stopAnimating];
     }
 }
 
@@ -558,7 +551,7 @@
     
 }
 
-- (IBAction)btnPurchase:(id)sender {
+-(IBAction) btnPurchase:(id) sender {
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
     NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];

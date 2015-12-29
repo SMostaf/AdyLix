@@ -57,7 +57,7 @@
 +(UINavigationItem*) getNavMainMenu:(id) obj {
 
     UINavigationItem *navigationItem = [[UINavigationItem alloc]init];
-    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
+   // UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     
     // menu icon goes to profile
     UIImage* imageMain = [UIImage imageNamed:@"menu.png"];

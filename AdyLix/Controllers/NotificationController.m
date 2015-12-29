@@ -34,35 +34,29 @@ typedef enum {
 
 - (void) viewDidAppear:(BOOL)animated
 {
-
     UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.backgroundColor = [UIColor redColor];
-    
-
     navbar.items = @[navigationItem];
-    
     [self.view addSubview:navbar];
     
     self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
-    
 
 }
 
 -(void) showLocater:(id)sender {
     LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
-    [self presentViewController:locateController animated:YES completion:nil];
+    [self presentViewController:locateController animated:NO completion:nil];
 }
 
 
 -(void) showWardrobe:(id)sender {
     WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
-    [self presentViewController:wardrobeController animated:YES completion:nil];
+    [self presentViewController:wardrobeController animated:NO completion:nil];
 }
 
 -(void) showNotify:(id)sender {
     NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
-    [self presentViewController:notifyController animated:YES completion:nil];
+    [self presentViewController:notifyController animated:NO completion:nil];
 }
 
 -(void) showProfile:(id)sender {
