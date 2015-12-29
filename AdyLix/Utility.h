@@ -11,8 +11,8 @@
 #import <UIKit/UIKit.h>
 
 @interface Utility : NSObject
-+(UINavigationItem*) getNavItem:(id) obj;
-
++(UINavigationItem*) getNavMainMenu:(id) obj;
++(UINavigationItem*) getNavForProfile:(id) obj;
 @end
 
 #endif /* Utility_h */

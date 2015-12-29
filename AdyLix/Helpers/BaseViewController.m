@@ -10,7 +10,10 @@
 #import "BaseViewController.h"
 
 #import "UserController.h"
-#import "ItemsController.h"
+#import "RegisterController.h"
+#import "WardrobeController.h"
+#import "LocateController.h"
+#import "NotificationController.h"
 
 @implementation BaseViewController
 
@@ -56,6 +59,22 @@
     
 }
 
+
+-(void) showLocater:(id)sender {
+    LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
+    [self presentViewController:locateController animated:YES completion:nil];
+}
+
+
+-(void) showWardrobe:(id)sender {
+   WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
+   [self presentViewController:wardrobeController animated:YES completion:nil];
+}
+
+-(void) showNotify:(id)sender {
+    NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
+    [self presentViewController:notifyController animated:YES completion:nil];
+}
                                               
 -(void) showProfile:(id)sender {
     
@@ -64,13 +83,13 @@
     //  [self.navigationController pushViewController:userController animated:NO];
 
     //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentModalViewController:userController animated:YES];
+    [self presentViewController:userController animated:YES completion:nil];
 }
 
 -(void) showSelfie:(id)sender{
 
     
-    ItemsController* snapController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
+    RegisterController* snapController = [self.storyboard instantiateViewControllerWithIdentifier:@"registerController"];
     [self presentViewController:snapController animated:YES completion:NULL];
 }
 
