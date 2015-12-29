@@ -10,10 +10,10 @@
 #define UserController_h
 
 #import <UIKit/UIKit.h>
-
+#import "BaseViewController.h"
 #import <Parse/Parse.h>
 
-@interface UserController : UIViewController
+@interface UserController : BaseViewController
 
 @property PFUser* user;
 

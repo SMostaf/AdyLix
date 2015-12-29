@@ -11,6 +11,7 @@
 #import "FBLoginViewController.h"
 #import "User.h"
 #import "Style.h"
+#import "Utility.h"
 
 @interface UserController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblStyleName;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnLogout;
 @property (weak, nonatomic) IBOutlet UILabel *lblStylesCount;
 @property (weak, nonatomic) IBOutlet UIButton *btnSettings;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
 @end
 
@@ -81,8 +83,19 @@
 //            self.imgProfile.image = [UIImage imageWithData:data];
 //    }];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
-                                                                             style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+//                                                                             style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+//
+//
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+//                                                                                      //        style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    
+    UINavigationItem* navMenuItems = [Utility getNavForProfile:self];
+    
+    self.navBar.items = @[navMenuItems];
+    
+    [self.view addSubview:self.navBar];
+    
 
 }
 

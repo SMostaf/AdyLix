@@ -19,6 +19,7 @@
 #import "Style.h"
 #import "ShareHelper.h"
 #import "UserController.h"
+#import "Utility.h"
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
@@ -48,8 +49,9 @@
 @property (strong, nonatomic) NSArray *stylesArr;
 @property NSInteger currentStyleIndex;
 @property StyleDetail* currStyleDetail;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
-@property  (nonatomic, strong) UINavigationItem* navigationItem1;
+
 @end
 
 @implementation LocateController
@@ -59,7 +61,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.stylesArr = [[NSArray alloc]init];
     
     // show progress indicator
     UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
@@ -88,9 +89,25 @@
                                           firstImage.size.width,
                                           firstImage.size.height);
     
-    [self.view addSubview:_activityImageView];
+  //  [self.view addSubview:_activityImageView];
+
+    //[_activityImageView startAnimating];
+
+}
+
+- (void)viewDidLoad {
     
-    [_activityImageView startAnimating];
+    [super viewDidLoad];
+  
+    // adjust menu items
+    UINavigationItem* navMenuItems = [Utility getNavMainMenu:self];
+    
+    self.navBar.items = @[navMenuItems];
+    
+    [self.view addSubview:self.navBar];
+    
+    
+    self.stylesArr = [[NSArray alloc]init];
     
     [_styleImageView setUserInteractionEnabled:YES];
     // swipe manipulate style
@@ -120,21 +137,20 @@
     
     self.btnShare.hidden = YES;
     self.btnLike.hidden = YES;
+    
+   
     // update view to show current style name
     // on click redirect user to wardrobe
     [self getCurrentSyleInfo];
     // location manager receive updates
     [self startStandardUpdates];
     
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
-}
-
-- (void)viewDidLoad {
     
-    [super viewDidLoad];  
+  //  [_activityImageView stopAnimating];
+  //  _activityImageView.hidden = YES;
 }
 
+// function to give the effect of multiple styles
 -(void) adjustUIBorder {
     
 //    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];

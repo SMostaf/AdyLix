@@ -8,8 +8,11 @@
 //
 #import <ParseUI/PFImageView.h>
 #import "NotificationController.h"
+#import "UserController.h"
+#import "RegisterController.h"
+#import "WardrobeController.h"
+#import "LocateController.h"
 #import "Parse/Parse.h"
-#import "MainController.h"
 #import "User.h"
 #import "Style.h"
 #import "Utility.h"
@@ -32,7 +35,7 @@ typedef enum {
 - (void) viewDidAppear:(BOOL)animated
 {
 
-    UINavigationItem* navigationItem = [Utility getNavItem:self];
+    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
     navbar.backgroundColor = [UIColor redColor];
     
@@ -44,6 +47,32 @@ typedef enum {
     self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
     
 
+}
+
+-(void) showLocater:(id)sender {
+    LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
+    [self presentViewController:locateController animated:YES completion:nil];
+}
+
+
+-(void) showWardrobe:(id)sender {
+    WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
+    [self presentViewController:wardrobeController animated:YES completion:nil];
+}
+
+-(void) showNotify:(id)sender {
+    NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
+    [self presentViewController:notifyController animated:YES completion:nil];
+}
+
+-(void) showProfile:(id)sender {
+    
+    UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
+    
+    //  [self.navigationController pushViewController:userController animated:NO];
+    
+    //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:userController animated:YES completion:nil];
 }
 
 

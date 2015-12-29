@@ -6,6 +6,7 @@
 #import "FBLoginViewController.h"
 #import "FBLogin.h"
 #import <FBSDKCoreKit/FBSDKAccessToken.h>
+#import "LocateController.h"
 
 @interface FBLoginViewController ()<FBLoginDelegate>
 
@@ -29,9 +30,9 @@
 }
 
 -(void) goToMainView {
-    UITabBarController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"tabController"];
-    [tabView setSelectedIndex:1];
-    [self presentViewController:tabView animated:YES completion:nil];
+    LocateController *discoveryView = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
+    //[tabView setSelectedIndex:1];
+    [self presentViewController:discoveryView animated:YES completion:nil];
 }
 
 - (IBAction)FBLogin:(id)sender {
