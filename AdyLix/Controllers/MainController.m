@@ -11,8 +11,7 @@
 #import "Parse/Parse.h"
 #import "LocateController.h"
 #import "SignUpViewController.h"
-#import "TabBarController.h"
-#import "ItemsController.h"
+#import "RegisterController.h"
 #include "ParseUI/PFLogInViewController.h"
 
 

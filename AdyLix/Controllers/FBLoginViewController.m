@@ -32,7 +32,7 @@
 -(void) goToMainView {
     LocateController *discoveryView = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
     //[tabView setSelectedIndex:1];
-    [self presentViewController:discoveryView animated:YES completion:nil];
+    [self presentViewController:discoveryView animated:NO completion:nil];
 }
 
 - (IBAction)FBLogin:(id)sender {

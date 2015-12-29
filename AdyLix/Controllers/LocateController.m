@@ -205,7 +205,7 @@
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
     userController.user = info.userObjectId;
     
-    [self presentViewController:userController animated: YES completion:nil];
+    [self presentViewController:userController animated: NO completion:nil];
 
 }
 

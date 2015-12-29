@@ -62,18 +62,18 @@
 
 -(void) showLocater:(id)sender {
     LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
-    [self presentViewController:locateController animated:YES completion:nil];
+    [self presentViewController:locateController animated:NO completion:nil];
 }
 
 
 -(void) showWardrobe:(id)sender {
    WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
-   [self presentViewController:wardrobeController animated:YES completion:nil];
+   [self presentViewController:wardrobeController animated:NO completion:nil];
 }
 
 -(void) showNotify:(id)sender {
     NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
-    [self presentViewController:notifyController animated:YES completion:nil];
+    [self presentViewController:notifyController animated:NO completion:nil];
 }
                                               
 -(void) showProfile:(id)sender {
@@ -83,14 +83,14 @@
     //  [self.navigationController pushViewController:userController animated:NO];
 
     //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentViewController:userController animated:YES completion:nil];
+    [self presentViewController:userController animated:NO completion:nil];
 }
 
 -(void) showSelfie:(id)sender{
 
     
     RegisterController* snapController = [self.storyboard instantiateViewControllerWithIdentifier:@"registerController"];
-    [self presentViewController:snapController animated:YES completion:NULL];
+    [self presentViewController:snapController animated:NO completion:NULL];
 }
 
 @end
