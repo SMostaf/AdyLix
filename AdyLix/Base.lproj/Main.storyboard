@@ -498,14 +498,11 @@
                                     <constraint firstAttribute="height" constant="141" id="yzl-UF-gg0"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8DX-RN-ghA">
-                                <rect key="frame" x="82" y="310" width="301" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UX4-yr-hEU">
+                                <rect key="frame" x="0.0" y="20" width="383" height="44"/>
+                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQ5-Sf-Bmi">
-                                <rect key="frame" x="27" y="403" width="112" height="30"/>
+                                <rect key="frame" x="15" y="79" width="112" height="30"/>
                                 <state key="normal" title="Change Style"/>
                                 <connections>
                                     <action selector="btnChangeStyle:" destination="xhh-gC-gby" eventType="touchUpInside" id="GlC-H6-23s"/>
@@ -513,7 +510,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixY-xk-fsT">
-                                <rect key="frame" x="261" y="79" width="66" height="30"/>
+                                <rect key="frame" x="247" y="79" width="66" height="30"/>
                                 <state key="normal" title="settings"/>
                                 <connections>
                                     <action selector="btnSettingd:" destination="xhh-gC-gby" eventType="touchUpInside" id="Dlk-lt-PCl"/>
@@ -521,14 +518,17 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="# of styles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3a-wq-CdT">
-                                <rect key="frame" x="82" y="358" width="166" height="30"/>
+                                <rect key="frame" x="121" y="331" width="166" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UX4-yr-hEU">
-                                <rect key="frame" x="0.0" y="20" width="383" height="44"/>
-                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You are looking fabulous in night outfit" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8DX-RN-ghA">
+                                <rect key="frame" x="121" y="358" width="262" height="90"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

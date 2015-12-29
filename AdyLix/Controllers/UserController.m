@@ -42,38 +42,33 @@
     self.imgProfile.layer.borderWidth = 3.0f;
     self.imgProfile.layer.borderColor = [UIColor whiteColor].CGColor;
     self.imgProfile.image = [UIImage imageNamed:@"emptyProfile.png"];
-    
+    PFUser *currentUser = nil;
     // showing profile for owners of style
     if(self.user != nil) {
-        self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", [[StyleItems getStylesForUser:self.user] count]];
-        NSString* userName = [User getFBUserName:self.user];
-        if([userName length] > 0)
-            self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:self.user]];
-        PFObject* currStyle = [[User getUserForId:self.user.objectId] valueForKey:@"currentStyleId"];
-        if (currStyle != nil) {
-            NSString* styleName = [StyleItems getStyleForObj:currStyle];
-            if ([styleName length] > 0)
-                self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ", styleName];
-        }
-        
-        NSData* imageData = [User getFBProfilePic:self.user];
-        self.imgProfile.image = [UIImage imageWithData:imageData];
-
+        currentUser = self.user;
         self.btnLogout.hidden = YES;
         self.btnSettings.hidden = YES;
     }
     else { // show profile for current user
-        if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-            PFUser *currentUser = [PFUser currentUser];
-            self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", [[StyleItems getStylesForUser:currentUser] count]];
-            self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:currentUser]];
-            self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ", [StyleItems getStyleForObj:[currentUser valueForKey:@"currentStyleId"]]];
-            
-            NSData* imageData = [User getFBProfilePic:currentUser];
-            self.imgProfile.image = [UIImage imageWithData:imageData];
-            
-        }
+        if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]])
+           currentUser = [PFUser currentUser];
     }
+    
+    self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", [[StyleItems getStylesForUser:currentUser] count]];
+    NSString* userName = [User getFBUserName:currentUser];
+    if([userName length] > 0)
+        self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:currentUser]];
+    PFObject* currStyle = [[User getUserForId:currentUser.objectId] valueForKey:@"currentStyleId"];
+    if (currStyle != nil) {
+        NSString* styleName = [StyleItems getStyleForObj:currStyle];
+        if ([styleName length] > 0)
+            self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ", styleName];
+    }
+        
+    NSData* imageData = [User getFBProfilePic:currentUser];
+    self.imgProfile.image = [UIImage imageWithData:imageData];
+    
+
 //    // show profile image
 //    // in case user logged using parse
 //    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
