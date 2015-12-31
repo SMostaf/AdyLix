@@ -30,16 +30,14 @@
     return self;
 }
 
-+(NSArray*) getStylesNearby:(CLLocation*) location
-{
++(void) getStylesNearby:(CLLocation*) location handler:(completion) handler {
     // get users nearby
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
-    //CGFloat km = 0.5f;
-    //[usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinKilometers:(double)km];
     CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
     if (miles == 0) //preference not set
         miles = 1.0f;
+    usersQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
     
     [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
@@ -47,32 +45,44 @@
     // #TODO: for DEBUG purpose
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
     //[usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
-    //[usersQuery orderByAscending:@"orderByAscending"];
+   // [usersQuery orderByAscending:@"orderByAscending"];
     // Limit what could be a lot of points.
-    usersQuery.limit = 100;
+    usersQuery.limit = 50;
     
-    NSArray* arrUsers = [usersQuery findObjects];
-    // no users nearby
-    if(arrUsers.count == 0)
-        return nil;
-    
-    // query nearby users and find their items
-    // NSMutableArray *arrStylesFound = [[NSMutableArray alloc]init];
-    PFQuery *stylesQuery = [PFQuery queryWithClassName:@"StyleMaster"];
-    // #TODO: remove DEBUG
-    // [stylesQuery whereKey:@"userId" containedIn:arrUsers];
-    [stylesQuery whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
-    
-    
-    //    for (PFObject *object in arrUsers) {
-    //        [arrStylesFound addObject:[object objectId]];
-    //    }
-    //    [query whereKey:@"userObjectId" containedIn:arrStylesFound];
-    
-    //[query orderByDescending:@"objectId"];
-    NSArray* arrStylesFound = [stylesQuery findObjects];
+   // NSArray* arrUsers = [usersQuery findObjects];
+    [usersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // no users nearby
+            if(objects.count == 0)
+                handler(NO, nil);
+            
+            // query nearby users and find their items
+            // NSMutableArray *arrStylesFound = [[NSMutableArray alloc]init];
+            PFQuery *stylesQuery = [PFQuery queryWithClassName:@"StyleMaster"];
+            stylesQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+            // #TODO: remove DEBUG
+            [stylesQuery whereKey:@"userId" containedIn:objects];
+            [stylesQuery whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
+            //[query orderByDescending:@"objectId"];
+            [stylesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    handler(YES, objects);
+                } else {
+                    // Log details of the failure
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                    if ([error code] != 120) // cache miss in that case the callback will be called a second time after fetching from the network
+                    handler(NO, nil);
+                }
+            }];
 
-    return arrStylesFound;
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            if ([error code] != 120) // cache miss in that case the callback will be called a second time after fetching from the network
+            handler(NO, nil);
+        }
+    }];
+  
 }
 
 +(NSString*) getStyleForObj:(PFObject*) style {
@@ -87,7 +97,6 @@
 }
 
 +(PFObject*) getStyleForId:(NSString*) styleId {
-    
     PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
     [query whereKey:@"objectId" equalTo: styleId];
     PFObject* styleObj = [query getFirstObject];
@@ -100,6 +109,7 @@
         return 0;
     NSArray* arrItemsFound;
     PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query whereKey:@"styleId" equalTo:[StyleItems getStyleForId:styleId]];
     
     arrItemsFound = [query findObjects];

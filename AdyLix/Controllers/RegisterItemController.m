@@ -61,8 +61,6 @@
     [_scanningLabel setHidden:YES];
     [[self view] addSubview:_scanningLabel];
     
-    
-    
     _stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
     [_stillImageOutput setOutputSettings:outputSettings];

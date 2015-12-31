@@ -15,7 +15,6 @@
 
 @interface UserController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblStyleName;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UILabel *lblName;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgProfile;
@@ -30,7 +29,7 @@
 
 -(void)back:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -42,6 +41,16 @@
     self.imgProfile.layer.borderWidth = 3.0f;
     self.imgProfile.layer.borderColor = [UIColor whiteColor].CGColor;
     self.imgProfile.image = [UIImage imageNamed:@"emptyProfile.png"];
+    // menu add quick selfie
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+                                                                        style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+
+    self.navigationItem.rightBarButtonItem = [Utility getNavForProfile:self];
+   
+    
+    [self.view addSubview:self.navBar];
+    
     PFUser *currentUser = nil;
     // showing profile for owners of style
     if(self.user != nil) {
@@ -52,6 +61,10 @@
     else { // show profile for current user
         if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]])
            currentUser = [PFUser currentUser];
+        else {
+            [self btnLogout];
+            return;
+        }
     }
     
     self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", [[StyleItems getStylesForUser:currentUser] count]];
@@ -67,36 +80,12 @@
         
     NSData* imageData = [User getFBProfilePic:currentUser];
     self.imgProfile.image = [UIImage imageWithData:imageData];
-    
-
-//    // show profile image
-//    // in case user logged using parse
-//    PFFile *profileImage = [[PFUser currentUser] objectForKey:USER_IMAGE];
-//    
-//    [profileImage getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-//        if(!error)
-//            self.imgProfile.image = [UIImage imageWithData:data];
-//    }];
-    
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
-//                                                                             style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-//
-//
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
-//                                                                                      //        style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
-    
-    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
-    self.navBar.items = @[navigationItem];
-    [self.view addSubview:self.navBar];
-    
-    
-    [self.view addSubview:self.navBar];
-    
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+
+    self.navigationController.navigationBar.hidden = false;
 }
 
 
@@ -104,16 +93,21 @@
     
     [PFUser logOut];
     
-    FBLoginViewController *loginController = [[FBLoginViewController alloc] init];
-    [self presentViewController:loginController animated:YES completion:nil];
+    FBLoginViewController *loginController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginController"];
+   
+    [self.navigationController pushViewController:loginController animated:NO];
     
+  //  [self presentViewController:loginController animated: NO completion:nil];
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
     [self showUserInfo];
 }
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
 }
 

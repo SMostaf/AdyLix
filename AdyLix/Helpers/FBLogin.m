@@ -24,7 +24,7 @@
         bool status = NO;
         if (!user) {
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
-            status = YES;
+            status = NO;
         } else if (user.isNew) {
             NSLog(@"User signed up and logged in through Facebook!");
              // #TODO: ask to share with friends here

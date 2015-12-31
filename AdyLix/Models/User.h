@@ -23,6 +23,8 @@
 -(NSString*) getTokenId;
 -(NSString*) getBankId;
 
+
++(void) updateCurrentLocation;
 +(void) saveLocation:(CLLocation*) location;
 +(PFObject*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;

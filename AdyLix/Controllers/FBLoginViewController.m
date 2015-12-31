@@ -2,11 +2,11 @@
 //  FBLoginViewController.m
 //  FBParse
 //
-
+#import <FBSDKCoreKit/FBSDKAccessToken.h>
 #import "FBLoginViewController.h"
 #import "FBLogin.h"
-#import <FBSDKCoreKit/FBSDKAccessToken.h>
 #import "LocateController.h"
+#import "User.h"
 
 @interface FBLoginViewController ()<FBLoginDelegate>
 
@@ -16,27 +16,25 @@
 
 @implementation FBLoginViewController
 
-
 -(void) viewDidAppear:(BOOL)animated {
-    // #TODO should navigate directly from app delegate
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [self goToMainView];
-    }
+      self.navigationController.navigationBar.hidden = true;
 }
-- (void) viewDidLoad
-{
+
+- (void) viewDidLoad {
 	[super viewDidLoad];
-   
+    self.navigationController.navigationBar.hidden = false;
+    
 }
 
 -(void) goToMainView {
-    LocateController *discoveryView = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
-    //[tabView setSelectedIndex:1];
-    [self presentViewController:discoveryView animated:NO completion:nil];
+   
+    LocateController *mainView = (LocateController*)[self.storyboard instantiateViewControllerWithIdentifier: @"discoverController"];
+   [self.navigationController pushViewController:mainView animated:NO];
+    
 }
 
 - (IBAction)FBLogin:(id)sender {
-    // Disable the Login button to prevent multiple touches
+   // Disable the Login button to prevent multiple touches
     [_btnLogin setEnabled:NO];
     
     // Show an activity indicator
@@ -60,7 +58,7 @@
     } else {
         // Show error alert
         [[[UIAlertView alloc] initWithTitle:@"Login Failed"
-                                    message:@"Facebook Login failed. Please try again"
+                                    message:@"Facebook Login failed. Please try again."
                                    delegate:nil
                           cancelButtonTitle:@"Ok"
                           otherButtonTitles:nil] show];

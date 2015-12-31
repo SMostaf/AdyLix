@@ -20,6 +20,7 @@
 #import "ShareHelper.h"
 #import "UserController.h"
 #import "Utility.h"
+#import "FBLoginViewController.h"
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
@@ -52,7 +53,7 @@
 @property StyleDetail* currStyleDetail;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
-
+@property BOOL loaded;
 @end
 
 @implementation LocateController
@@ -62,51 +63,28 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self.activityView startAnimating];
     
-    // show progress indicator
-    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
-    _activityImageView = [[UIImageView alloc]
-                          initWithImage:firstImage];
-    
-    
-    //Add more images which will be used for the animation
-    _activityImageView.animationImages = [NSArray arrayWithObjects:
-                                          [UIImage imageNamed:@"Icon@2x rot2.png"],
-                                          [UIImage imageNamed:@"Icon@2x rot3.png"],
-                                          [UIImage imageNamed:@"Icon@2x copy.png"],
-                                          nil];
-    
-    
-    _activityImageView.animationDuration = 0.8;
-    
-    
-    //Position the activity image view somewhere in
-    //the middle of your current view
-    _activityImageView.frame = CGRectMake(
-                                          self.view.frame.size.width/2
-                                          -firstImage.size.width/2,
-                                          self.view.frame.size.height/2
-                                          -firstImage.size.height/2,
-                                          firstImage.size.width,
-                                          firstImage.size.height);
-    
-  //  [self.view addSubview:_activityImageView];
+    self.navigationController.navigationBar.hidden = false;
 
-    //[_activityImageView startAnimating];
+     if (!self.loaded) {
+       //  [self.navigationController setNavigationBarHidden:NO animated:NO];
+         self.navigationItem.leftBarButtonItems = [Utility getNavOtherMenu:self];
 
+         self.loaded = YES;
+    }
+    [self.activityView stopAnimating];
+    
 }
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
+ 
+    self.navigationController.navigationBar.hidden = false;
+
     [self.activityView startAnimating];
   
-    // adjust menu items
-    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
-    self.navBar.items = @[navigationItem];
-    [self.view addSubview:self.navBar];
-    
     
     self.stylesArr = [[NSArray alloc]init];
     
@@ -379,6 +357,7 @@
               location.coordinate.longitude);
         // keep updating current user location
         [User saveLocation: location];
+        // query for nearby styles
         [self getNearbyStyles: location];
         
         [self.activityView stopAnimating];
@@ -387,10 +366,9 @@
 
 -(void) getNearbyStyles:(CLLocation*) location {
     // query db for nearby items
-    NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
-  
- 
-    if(arrStylesFound.count == 0)
+   [StyleItems getStylesNearby:location handler:^(BOOL status, NSArray * arrStylesFound) {
+
+    if(status == NO || arrStylesFound.count == 0)
     {
         UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
         noDataLabel.text             = @"No styles nearby";
@@ -426,38 +404,39 @@
         self.imgMoreBorder.hidden = NO;
     }
     
-    
-    NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
-    for(NSDictionary *styleInfo in arrStylesFound) {
-        
-        DataInfo *style = [[DataInfo alloc] init];
-        style.type = kStyleType;
-        style.objectId = [styleInfo valueForKey:@"objectId"];
-        style.userObjectId = [styleInfo valueForKey:@"userId"];
-        style.name = styleInfo[@"name"];
-        style.desc = styleInfo[@"description"];
-        style.imageData = styleInfo[@"imageFile"];
+    if (arrStylesFound.count > 0) {
+        NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
+        for(NSDictionary *styleInfo in arrStylesFound) {
+            
+            DataInfo *style = [[DataInfo alloc] init];
+            style.type = kStyleType;
+            style.objectId = [styleInfo valueForKey:@"objectId"];
+            style.userObjectId = [styleInfo valueForKey:@"userId"];
+            style.name = styleInfo[@"name"];
+            style.desc = styleInfo[@"description"];
+            style.imageData = styleInfo[@"imageFile"];
 
-        [styles addObject:style];
-    }
-    
-    _stylesArr = styles;
-    if([_stylesArr count] > 0) {
-      self.btnShare.hidden = NO;
-      self.btnLike.hidden = NO;
-        // show first image
-        // get profile for first style
-        [self showStyleAtIndex:0];
-    }
+            [styles addObject:style];
+        }
+        
+        _stylesArr = styles;
+        if([_stylesArr count] > 0) {
+          self.btnShare.hidden = NO;
+          self.btnLike.hidden = NO;
+            // show first image
+            // get profile for first style
+            [self showStyleAtIndex:0];
+        }
+     }
+   }];
     _currStyleDetail = [[StyleDetail alloc] init];
     _currStyleDetail.currentItemIndex = 0;
     
 }
 
-
 -(void) getItemsForStyle:(NSString*) styleId {
     
-    [_activityImageView startAnimating];
+    //[_activityImageView startAnimating];
     // query db for nearby items
     NSArray* arrItemsFound = [StyleItems getItemsForStyle:styleId];
     if(arrItemsFound.count == 0)
@@ -490,8 +469,8 @@
     self.lblItemsCount.hidden = NO;
     self.lblItemsCount.text = [NSString stringWithFormat:@"%lu%@", [_currStyleDetail.items count], @" items"];
     
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
+   // [_activityImageView stopAnimating];
+   // _activityImageView.hidden = YES;
     
 }
 
@@ -500,8 +479,8 @@
     
     // no items nearby
     // show share action
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
+   // [_activityImageView stopAnimating];
+   // _activityImageView.hidden = YES;
     DataInfo* dataInfo;
     enum ShareType type;
     // send info to be shared

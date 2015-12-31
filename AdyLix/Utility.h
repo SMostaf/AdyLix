@@ -11,8 +11,9 @@
 #import <UIKit/UIKit.h>
 
 @interface Utility : NSObject
++(NSArray<UIBarButtonItem*> *) getNavOtherMenu:(id) obj;
 +(UINavigationItem*) getNavMainMenu:(id) obj;
-+(UINavigationItem*) getNavForProfile:(id) obj;
++(UIBarButtonItem*) getNavForProfile:(id) obj;
 @end
 
 #endif /* Utility_h */

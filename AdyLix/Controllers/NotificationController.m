@@ -28,45 +28,65 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
 
+@property BOOL loaded;
+
 @end
 
 @implementation NotificationController
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
-    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.items = @[navigationItem];
-    [self.view addSubview:navbar];
-    
-    self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
 
+    self.navigationController.navigationBar.hidden = false;
+    if(!self.loaded) {
+        NSArray<UIBarButtonItem*> *navigationItems = [Utility getNavOtherMenu:self];
+    
+        self.navigationItem.leftBarButtonItems = navigationItems;
+    
+        self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+ 
+        self.loaded = YES;
+    }
+    [self loadObjects];
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    // make sure back menu item does not appear
+    self.navigationController.navigationBar.hidden = true;
+}
+
+
 -(void) showLocater:(id)sender {
-    LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
-    [self presentViewController:locateController animated:NO completion:nil];
+
+    [self.navigationController popToRootViewControllerAnimated:NO];
+
 }
 
 
 -(void) showWardrobe:(id)sender {
-    WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
-    [self presentViewController:wardrobeController animated:NO completion:nil];
+  
+     NSArray * controllerArray = [[self navigationController] viewControllers];
+
+     for (UIViewController *controller in controllerArray) {
+         if ([NSStringFromClass([controller class]) isEqualToString:@"WardrobeController"]) {
+            [self.navigationController popToViewController:controller animated:NO];
+             return;
+        }
+      }
+    
+     WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
+     [self.navigationController pushViewController:wardrobeController animated:NO];
 }
 
 -(void) showNotify:(id)sender {
-    NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
-    [self presentViewController:notifyController animated:NO completion:nil];
 }
 
 -(void) showProfile:(id)sender {
     
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
-    
-    //  [self.navigationController pushViewController:userController animated:NO];
-    
-    //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentViewController:userController animated:YES completion:nil];
+    //[self presentViewController:userController animated:YES completion:nil];
+    [self.navigationController pushViewController:userController animated:NO];
 }
 
 
@@ -80,6 +100,13 @@ typedef enum {
 }
 
 
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    
+
+}
 - (id)initWithCoder:(NSCoder *)aCoder
 {
     self = [super initWithCoder:aCoder];
@@ -102,11 +129,12 @@ typedef enum {
 
 
 - (PFQuery *)queryForTable {
-    
     PFQuery *query;
+
     if ([PFUser currentUser])
     {
         query = [PFQuery queryWithClassName:self.parseClassName];
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
         [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
         
         
@@ -120,6 +148,7 @@ typedef enum {
         [query orderByDescending:@"createdAt"];
         
     }
+  
     return query;
 }
 

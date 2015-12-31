@@ -24,7 +24,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *tblview;
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
-@property BOOL isLoaded;
+
+@property BOOL loaded;
 @end
 
 typedef enum {
@@ -40,26 +41,35 @@ typedef enum {
 @implementation WardrobeController
 
 -(void) showLocater:(id)sender {
-    LocateController *locateController = [self.storyboard instantiateViewControllerWithIdentifier:@"discoverController"];
-    [self presentViewController:locateController animated:NO completion:nil];
+
+  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 -(void) showWardrobe:(id)sender {
-    WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
-    [self presentViewController:wardrobeController animated:NO completion:nil];
+
 }
 
 -(void) showNotify:(id)sender {
+    
+    NSArray * controllerArray = [[self navigationController] viewControllers];
+    // if controller already on stack, pop 
+    for (UIViewController *controller in controllerArray) {
+        if ([NSStringFromClass([controller class]) isEqualToString:@"NotificationController"]) {
+            [self.navigationController popToViewController:controller animated:NO];
+            return;
+        }
+    }
+    // not on stack, push
     NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
-    [self presentViewController:notifyController animated:NO completion:nil];
+
+    [self.navigationController pushViewController:notifyController animated:NO];
 }
 
 -(void) showProfile:(id)sender {
-    
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
-    
-    [self presentViewController:userController animated:NO completion:nil];
+    //[self presentViewController:userController animated:NO completion:nil];
+    [self.navigationController pushViewController:userController animated:NO];
 }
 
 
@@ -69,18 +79,29 @@ typedef enum {
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    UINavigationItem* navigationItem = [Utility getNavMainMenu:self];
-    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.items = @[navigationItem];
-    [self.view addSubview:navbar];
+    self.navigationController.navigationBar.hidden = false;
     
-    self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+    if(!self.loaded) {
+        
+        NSArray<UIBarButtonItem*> *navigationItems = [Utility getNavOtherMenu:self];
+        
+        self.navigationItem.leftBarButtonItems = navigationItems;
+        
+        self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+        
+        self.loaded = YES;
+    }
+    
+    [self loadObjects];
 
-    
-
-   [self loadObjects];
-    
 }
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    // make sure back menu item does not appear
+    // self.navigationController.navigationBar.hidden = true;
+}
+
 
 - (id)initWithCoder:(NSCoder *)aCoder
 {

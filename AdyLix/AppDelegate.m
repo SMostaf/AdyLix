@@ -14,6 +14,7 @@
 #import "MainController.h"
 #import "FBLoginViewController.h"
 #import "AppRelated.h"
+#import "LocateController.h"
 
 #define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
 
@@ -45,22 +46,20 @@
 
     // tab bar UI customization
     [self customizeMenuBar];
-//    
-//    UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
-//    
-//    if ([FBSDKAccessToken currentAccessToken]) {
-//        UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
-//       
-//        UITabBarController *tabView = [mainStoryboard instantiateViewControllerWithIdentifier:@"tabController"];
-//        [tabView setSelectedIndex:1];
-//        //[ROOTVIEW presentViewController:tabView animated:YES completion:nil];
-//        [navigationController pushViewController:tabView animated:NO];
-//
-//    }
-//    else {
-//        FBLoginViewController* loginController = [[FBLoginViewController alloc]init];
-//         [ROOTVIEW presentViewController:loginController animated:YES completion:nil];
-//    }
+    
+    UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
+    UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
+    // if user logged in from before
+    if ([FBSDKAccessToken currentAccessToken]) {
+        //UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
+
+        LocateController *mainView = (LocateController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"discoverController"];
+        [navigationController pushViewController:mainView animated:NO];
+    }
+    else {
+        FBLoginViewController* loginController = (FBLoginViewController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"loginController"];
+        [navigationController pushViewController:loginController animated:YES];
+    }
     return YES;
 }
 
@@ -152,8 +151,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarTintColor:liteMaroon];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    
-
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
 
     [[UIToolbar appearance] setTintColor:liteMaroon];
     [[UIToolbar appearance] setBarTintColor:liteMaroon];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5nh-CM-G2V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2zb-kN-eMh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Login-->
         <scene sceneID="JFc-YM-Nu4">
             <objects>
-                <viewController title="Login View" id="5nh-CM-G2V" userLabel="Login" customClass="FBLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginController" id="5nh-CM-G2V" userLabel="Login" customClass="FBLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hfp-Nf-QLc"/>
                         <viewControllerLayoutGuide type="bottom" id="dCc-yK-dM1"/>
@@ -17,14 +17,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzj-lh-Nwi">
-                                <rect key="frame" x="28" y="371" width="302" height="30"/>
+                                <rect key="frame" x="30" y="371" width="302" height="30"/>
                                 <connections>
                                     <action selector="FBLogin:" destination="5nh-CM-G2V" eventType="touchUpInside" id="fkb-Ad-cym"/>
-                                    <segue destination="SwS-mF-R51" kind="show" id="geZ-CH-NDR"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bk-mk.png" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-6Z-NP8">
-                                <rect key="frame" x="-32" y="72" width="448" height="520"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bk-mk.png" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-6Z-NP8">
+                                <rect key="frame" x="-29" y="64" width="448" height="547"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -83,10 +82,6 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4rp-Vc-DRQ">
-                                <rect key="frame" x="0.0" y="20" width="384" height="44"/>
-                                <color key="barTintColor" red="0.70196078431372544" green="0.066666666666666666" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
-                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDN-Fm-QFG">
                                 <rect key="frame" x="38" y="85" width="306" height="30"/>
                                 <connections>
@@ -114,14 +109,10 @@
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="framesBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="xjv-CT-CE8">
                                 <rect key="frame" x="326" y="378" width="32" height="22"/>
                             </imageView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wTG-sM-z5X">
-                                <rect key="frame" x="189" y="95" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="activityView" destination="wTG-sM-z5X" id="Xoi-XJ-RYG"/>
                         <outlet property="btnCurrStyle" destination="EDN-Fm-QFG" id="C27-9j-gJA"/>
                         <outlet property="btnLike" destination="O8c-hq-rmx" id="2h4-ih-hCm"/>
                         <outlet property="btnShare" destination="m9L-7d-2yh" id="gO4-Gh-Yoi"/>
@@ -130,14 +121,14 @@
                         <outlet property="lblLikes" destination="1kD-bT-JIH" id="KmM-vb-hqZ"/>
                         <outlet property="lblStyleName" destination="Pyl-MA-Yly" id="zf9-y9-v4a"/>
                         <outlet property="lblUserName" destination="lzz-ZS-lRD" id="84g-mz-yka"/>
-                        <outlet property="navBar" destination="4rp-Vc-DRQ" id="VFG-41-md4"/>
+                        <outlet property="navBar" destination="Vtm-06-5I9" id="Avz-di-SBe"/>
                         <outlet property="profileImageView" destination="N15-ob-s9O" id="P1D-8Y-wpu"/>
                         <outlet property="styleImageView" destination="zuh-nb-RoF" id="L1X-eW-icK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wSW-4j-Vg7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="677" y="433"/>
+            <point key="canvasLocation" x="634" y="461"/>
         </scene>
         <!--Payment Controller-->
         <scene sceneID="pjD-9I-TGW">
@@ -234,7 +225,7 @@
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="45" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="119" id="MkW-hs-ZUJ">
-                                <rect key="frame" x="0.0" y="98" width="600" height="119"/>
+                                <rect key="frame" x="0.0" y="34" width="600" height="119"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MkW-hs-ZUJ" id="tG7-hK-nrQ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="118.5"/>
@@ -607,6 +598,6 @@
         <image name="submit.jpg" width="260" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iwA-HK-lUw"/>
+        <segue reference="P3r-93-Vrz"/>
     </inferredMetricsTieBreakers>
 </document>

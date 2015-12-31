@@ -127,6 +127,8 @@
     
     PFObject *style = [PFObject objectWithClassName:@"StyleMaster"];
     [style setObject:self.txtName.text forKey:@"name"];
+    [style setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+        
     //[item setObject:self.txtDesc.text forKey:@"description"];
     
 //    if (self.chkDiscover.on)

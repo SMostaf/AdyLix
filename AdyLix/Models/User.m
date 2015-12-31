@@ -20,14 +20,25 @@
 -(id) init {
     self = [super init];
     if(self)
-        self.parseClassName = @"ItemDetail";
+        self.parseClassName = @"User";
     return self;
+}
+
++(void) updateCurrentLocation {
+    // save current user location on login
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error && [PFUser currentUser] != nil) {
+            
+            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+            [[PFUser currentUser] save];
+        }
+    }];
 }
 
 +(void) saveLocation:(CLLocation *)location {
     PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: location];
     [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-    [[PFUser currentUser] saveInBackground];
+    [[PFUser currentUser] save];
 }
 
 +(PFObject*) getUserForId:(NSString*) userId {
