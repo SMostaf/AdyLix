@@ -34,18 +34,24 @@
     // get users nearby
     PFQuery *usersQuery = [PFUser query];
     // Interested in locations near user
-    CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
+    double miles = [[NSUserDefaults standardUserDefaults] doubleForKey:@"range"];
     if (miles == 0) //preference not set
-        miles = 1.0f;
+        miles = 10.0;
+    
     usersQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
+    
+    NSLog(@"Location query current location: %@", location);
     [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
     
     [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
+    // exclude the current user from list of users
+    [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     
     // #TODO: for DEBUG purpose
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    //[usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
-   // [usersQuery orderByAscending:@"orderByAscending"];
+    // #TODO: figure out sorting?
+    // [usersQuery orderByAscending:@"orderByAscending"];
+    
     // Limit what could be a lot of points.
     usersQuery.limit = 50;
     
@@ -53,17 +59,17 @@
     [usersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // no users nearby
-            if(objects.count == 0)
+            if(objects.count == 0) {
                 handler(NO, nil);
-            
+                return;
+            }
             // query nearby users and find their items
             // NSMutableArray *arrStylesFound = [[NSMutableArray alloc]init];
             PFQuery *stylesQuery = [PFQuery queryWithClassName:@"StyleMaster"];
             stylesQuery.cachePolicy = kPFCachePolicyCacheThenNetwork;
-            // #TODO: remove DEBUG
             [stylesQuery whereKey:@"userId" containedIn:objects];
             [stylesQuery whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
-            //[query orderByDescending:@"objectId"];
+ 
             [stylesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     handler(YES, objects);
