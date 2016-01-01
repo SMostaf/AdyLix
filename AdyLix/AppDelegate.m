@@ -19,10 +19,6 @@
 #define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
 
 
-@interface AppDelegate ()
-//@property UIStatusBarItem* statusItem;
-@end
-
 @implementation AppDelegate
 
 
@@ -51,8 +47,6 @@
     UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
     // if user logged in from before
     if ([FBSDKAccessToken currentAccessToken]) {
-        //UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
-
         LocateController *mainView = (LocateController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"discoverController"];
         [navigationController pushViewController:mainView animated:NO];
     }

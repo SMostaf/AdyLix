@@ -48,7 +48,6 @@
 		0A4F0AC21BD4656000C8A8D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A4F0AC01BD4656000C8A8D0 /* LaunchScreen.storyboard */; };
 		0A4F0ACD1BD4656000C8A8D0 /* AdyLixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F0ACC1BD4656000C8A8D0 /* AdyLixTests.m */; };
 		0A4F0AD81BD4656000C8A8D0 /* AdyLixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F0AD71BD4656000C8A8D0 /* AdyLixUITests.m */; };
-		0A4FA0131BD94496003ED366 /* background-mod.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4FA0121BD94496003ED366 /* background-mod.png */; };
 		0A4FA01B1BD96737003ED366 /* DataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA01A1BD96737003ED366 /* DataInfo.m */; };
 		0A4FA0241BD99C7D003ED366 /* ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA01F1BD99C7D003ED366 /* ActivityIndicator.m */; };
 		0A4FA0251BD99C7D003ED366 /* ASStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4FA0211BD99C7D003ED366 /* ASStarRatingView.m */; };
@@ -112,6 +111,8 @@
 		0AAEC3A41C2C6A1F000468E3 /* emptyProfile.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEC3A31C2C6A1F000468E3 /* emptyProfile.png */; };
 		0AAEC3A61C2C7C28000468E3 /* framesBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAEC3A51C2C7C28000468E3 /* framesBorder.png */; };
 		0AAEC3A81C2C7EA6000468E3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEC3A71C2C7EA6000468E3 /* Utility.m */; };
+		0AAED54D1C36034A000FA4AE /* camera-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54C1C36034A000FA4AE /* camera-white.png */; };
+		0AAED54F1C363E5D000FA4AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54E1C363E5D000FA4AE /* settings.png */; };
 		0AC7839C1C152ABD0028CAFF /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC7839B1C152ABD0028CAFF /* red.png */; };
 		0AF64EE41BDBE69300B9B9EB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */; };
 		0D662D2B24E14D86705723D4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0EC98935A77CC01669EE5A /* libPods.a */; };
@@ -209,7 +210,6 @@
 		0A4F0AD31BD4656000C8A8D0 /* AdyLixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdyLixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A4F0AD71BD4656000C8A8D0 /* AdyLixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdyLixUITests.m; sourceTree = "<group>"; };
 		0A4F0AD91BD4656000C8A8D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0A4FA0121BD94496003ED366 /* background-mod.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background-mod.png"; path = "Res/background-mod.png"; sourceTree = "<group>"; };
 		0A4FA01A1BD96737003ED366 /* DataInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataInfo.m; path = Models/DataInfo.m; sourceTree = "<group>"; };
 		0A4FA01E1BD99C7D003ED366 /* ActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityIndicator.h; path = Controllers/UI/ActivityIndicator.h; sourceTree = "<group>"; };
 		0A4FA01F1BD99C7D003ED366 /* ActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityIndicator.m; path = Controllers/UI/ActivityIndicator.m; sourceTree = "<group>"; };
@@ -305,6 +305,8 @@
 		0AAEC3A51C2C7C28000468E3 /* framesBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = framesBorder.png; path = Res/framesBorder.png; sourceTree = "<group>"; };
 		0AAEC3A71C2C7EA6000468E3 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		0AAEC3A91C2C7EFD000468E3 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		0AAED54C1C36034A000FA4AE /* camera-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-white.png"; path = "Res/menu/camera-white.png"; sourceTree = "<group>"; };
+		0AAED54E1C363E5D000FA4AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Res/settings.png; sourceTree = "<group>"; };
 		0AC7839B1C152ABD0028CAFF /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red.png; path = Res/red.png; sourceTree = "<group>"; };
 		0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-40@2x.png"; sourceTree = "<group>"; };
 		3C0EC98935A77CC01669EE5A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,6 +428,8 @@
 		0A4E314D1BD47D72004776A2 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				0AAED54E1C363E5D000FA4AE /* settings.png */,
+				0AAED54C1C36034A000FA4AE /* camera-white.png */,
 				0A631ECA1C34DD28008C1341 /* discover-selected.png */,
 				0A631ECB1C34DD28008C1341 /* discover.png */,
 				0A631EC51C34C59C008C1341 /* reel-selected.png */,
@@ -456,7 +460,6 @@
 				0A47BC881BDAE9BB00D362B9 /* hat.png */,
 				0A47BC661BDAAE8700D362B9 /* progress */,
 				0A4E21CC1BDA07ED00B01D12 /* stars */,
-				0A4FA0121BD94496003ED366 /* background-mod.png */,
 				0A4E314E1BD47D88004776A2 /* background.png */,
 				0A4E31551BD47D88004776A2 /* Icon@2x copy.png */,
 				0A4E31561BD47D88004776A2 /* Icon@2x rot2.png */,
@@ -870,9 +873,9 @@
 				0A4E21D81BDA080100B01D12 /* selected_star@2x.png in Resources */,
 				0A6A1B031C28F18B008E3C6F /* Assets.xcassets in Resources */,
 				0A6A1B1B1C290D02008E3C6F /* share.png in Resources */,
-				0A4FA0131BD94496003ED366 /* background-mod.png in Resources */,
 				0A4E21D51BDA080100B01D12 /* not_selected_star.png in Resources */,
 				0A4F0AC21BD4656000C8A8D0 /* LaunchScreen.storyboard in Resources */,
+				0AAED54F1C363E5D000FA4AE /* settings.png in Resources */,
 				0A47BC731BDAAE9400D362B9 /* 37x-Checkmark.png in Resources */,
 				0A4E31601BD47D88004776A2 /* background.png in Resources */,
 				0A4E316F1BD47D88004776A2 /* profile.png in Resources */,
@@ -886,6 +889,7 @@
 				0AAEC3A41C2C6A1F000468E3 /* emptyProfile.png in Resources */,
 				0A7299DD1C323FB60074972D /* p1x.png in Resources */,
 				0A47BC751BDAAE9400D362B9 /* Default-568h@2x.png in Resources */,
+				0AAED54D1C36034A000FA4AE /* camera-white.png in Resources */,
 				0A70DC611C13F5590000E328 /* overlaygraphic.png in Resources */,
 				0A47BC841BDAB53900D362B9 /* Main.storyboard in Resources */,
 				0A4E31681BD47D88004776A2 /* Icon@2x rot2.png in Resources */,

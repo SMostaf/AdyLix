@@ -16,6 +16,8 @@ enum DataType {
     kItemType = 1,
     kOther = 2    
 };
+
+
 @interface DataInfo : NSObject
 
 @property enum DataType type;

@@ -16,12 +16,6 @@
 #import "Style.h"
 #import "User.h"
 
-@interface RegisterController ()
-
-//@property RegisterItemController* regController;
-
-@end
-
 @implementation RegisterController
 
 

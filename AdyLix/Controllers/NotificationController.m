@@ -43,11 +43,15 @@ typedef enum {
     
         self.navigationItem.leftBarButtonItems = navigationItems;
     
-        self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
- 
         self.loaded = YES;
     }
     [self loadObjects];
+}
+
+-(void) viewDidLoad {
+
+    [super viewDidLoad];
+    self.tblView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -100,13 +104,6 @@ typedef enum {
 }
 
 
-- (void)viewDidLoad {
-    
-    [super viewDidLoad];
-    
-    
-
-}
 - (id)initWithCoder:(NSCoder *)aCoder
 {
     self = [super initWithCoder:aCoder];

@@ -21,7 +21,7 @@
 
 @interface WardrobeController()
 
-@property (strong, nonatomic) IBOutlet UITableView *tblview;
+//@property (strong, nonatomic) IBOutlet UITableView *tblview;
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
 
@@ -75,6 +75,7 @@ typedef enum {
 
 -(void) viewDidLoad {
     [super viewDidLoad];
+    self.tblView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -86,8 +87,6 @@ typedef enum {
         NSArray<UIBarButtonItem*> *navigationItems = [Utility getNavOtherMenu:self];
         
         self.navigationItem.leftBarButtonItems = navigationItems;
-        
-        self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
         
         self.loaded = YES;
     }
@@ -263,16 +262,16 @@ typedef enum {
     {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         numOfSections                 = 1;
-        self.tblview.backgroundView   = nil;
+        self.tblView.backgroundView   = nil;
     }
     else
     {
-        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblview.bounds.size.width, self.tblview.bounds.size.height)];
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblView.bounds.size.width, self.tblView.bounds.size.height)];
         noDataLabel.text             = @"No style added";
         noDataLabel.textColor        = [UIColor blackColor];
         noDataLabel.textAlignment    = NSTextAlignmentCenter;
-        self.tblview.backgroundView = noDataLabel;
-        self.tblview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tblView.backgroundView = noDataLabel;
+        self.tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
     return numOfSections;
