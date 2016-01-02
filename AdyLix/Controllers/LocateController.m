@@ -122,7 +122,7 @@
     
     self.btnShare.hidden = YES;
     self.btnLike.hidden = YES;
-    [self.btnLike setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 2.0, 5.0, 5.0)];
+    [self.btnLike setTitleEdgeInsets:UIEdgeInsetsMake(5.0, 2.0, 5.0, 5.0)];
     [self.btnLike setImage: [UIImage imageNamed:@"heart.jpg"] forState:UIControlStateNormal];
     
     // update view to show current style name

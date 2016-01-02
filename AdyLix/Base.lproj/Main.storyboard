@@ -92,9 +92,6 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="framesBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="xjv-CT-CE8">
-                                <rect key="frame" x="326" y="378" width="32" height="22"/>
-                            </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-lh-1Hl">
                                 <rect key="frame" x="182" y="85" width="20" height="20"/>
                             </activityIndicatorView>
@@ -113,6 +110,9 @@
                                     <action selector="btnUsersProfile:" destination="SwS-mF-R51" eventType="touchUpInside" id="GTs-Pu-VXm"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="framesBorder.png" translatesAutoresizingMaskIntoConstraints="NO" id="xjv-CT-CE8">
+                                <rect key="frame" x="320" y="372" width="32" height="22"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -294,8 +294,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2H-Ub-TPI">
-                                <rect key="frame" x="34" y="505" width="182" height="54"/>
-                                <state key="normal" backgroundImage="submit.jpg"/>
+                                <rect key="frame" x="34" y="505" width="151" height="54"/>
+                                <state key="normal" backgroundImage="submit.png"/>
                                 <connections>
                                     <action selector="btnSave:" destination="efd-YN-fm2" eventType="touchUpInside" id="OZ4-32-P2c"/>
                                 </connections>
@@ -306,13 +306,6 @@
                                     <navigationItem title=" " id="Y2f-Ce-2Rj"/>
                                 </items>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNH-bw-ZTf">
-                                <rect key="frame" x="224" y="517" width="79" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="btnCancel:" destination="efd-YN-fm2" eventType="touchUpInside" id="S4t-mg-tgT"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mhd-Ve-JHa">
                                 <rect key="frame" x="20" y="210" width="339" height="261"/>
                             </imageView>
@@ -344,11 +337,23 @@
                                     <action selector="btnGallery:" destination="efd-YN-fm2" eventType="touchUpInside" id="9lB-4P-rC9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNH-bw-ZTf">
+                                <rect key="frame" x="208" y="505" width="151" height="54"/>
+                                <color key="backgroundColor" red="0.70196078429999997" green="0.066666666669999999" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnCancel:" destination="efd-YN-fm2" eventType="touchUpInside" id="S4t-mg-tgT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="allIcons" selectedImage="allIcons" id="aPI-89-D3e"/>
                     <connections>
+                        <outlet property="btnCancel" destination="wNH-bw-ZTf" id="UyW-al-X5Q"/>
                         <outlet property="currStyleSwitch" destination="3aE-y8-ech" id="hm5-Fb-iEZ"/>
                         <outlet property="feedImage" destination="mhd-Ve-JHa" id="P7O-ze-bBn"/>
                         <outlet property="navigationItem" destination="PTv-96-Qbr" id="BIe-6y-hLb"/>
@@ -468,13 +473,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dR0-d8-tNz">
-                                <rect key="frame" x="20" y="448" width="347" height="58"/>
-                                <state key="normal" backgroundImage="signout.jpg"/>
-                                <connections>
-                                    <action selector="btnLogout:" destination="xhh-gC-gby" eventType="touchUpInside" id="XaY-sJ-2fh"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-Ya-0ya">
                                 <rect key="frame" x="102" y="112" width="165" height="141"/>
                                 <constraints>
@@ -511,17 +509,27 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyK-qP-WHZ">
-                                <rect key="frame" x="82" y="275" width="243" height="41"/>
+                                <rect key="frame" x="95" y="279" width="243" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dR0-d8-tNz">
+                                <rect key="frame" x="28" y="465" width="325" height="45"/>
+                                <color key="backgroundColor" red="0.70196078429999997" green="0.066666666669999999" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnLogout:" destination="xhh-gC-gby" eventType="touchUpInside" id="XaY-sJ-2fh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="fI0-Tm-SqZ" userLabel="Profile"/>
                     <connections>
-                        <outlet property="btnLogout" destination="dR0-d8-tNz" id="uZc-EL-DR5"/>
+                        <outlet property="btnLogout" destination="dR0-d8-tNz" id="f64-Ae-XUH"/>
                         <outlet property="btnSettings" destination="ixY-xk-fsT" id="Ojj-3w-29O"/>
                         <outlet property="imgProfile" destination="yaZ-Ya-0ya" id="Yf7-8m-GM1"/>
                         <outlet property="lblName" destination="EyK-qP-WHZ" id="tmA-kb-U5f"/>
@@ -587,10 +595,9 @@
         <image name="framesBorder.png" width="29" height="30"/>
         <image name="settings.png" width="50" height="50"/>
         <image name="share.jpg" width="25" height="25"/>
-        <image name="signout.jpg" width="358" height="48"/>
-        <image name="submit.jpg" width="260" height="76"/>
+        <image name="submit.png" width="260" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iwA-HK-lUw"/>
+        <segue reference="P3r-93-Vrz"/>
     </inferredMetricsTieBreakers>
 </document>

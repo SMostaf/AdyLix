@@ -17,6 +17,11 @@
 #import "User.h"
 #import "Utility.h"
 
+@interface RegisterController()
+@property (weak, nonatomic) IBOutlet UIButton *btnCancel;
+
+@end
+
 @implementation RegisterController
 
 
@@ -33,6 +38,9 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.btnCancel.layer.cornerRadius = 25;
+    self.btnCancel.clipsToBounds = YES;
     
     //self.txtName.text = @"Enter Item Description";
     self.txtName.textColor = [UIColor lightGrayColor];

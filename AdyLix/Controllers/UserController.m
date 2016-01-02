@@ -103,6 +103,9 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    // round corner
+    self.btnLogout.layer.cornerRadius = 15;
+    self.btnLogout.clipsToBounds = YES;
     
     [self showUserInfo];
 }

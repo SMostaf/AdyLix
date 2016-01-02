@@ -18,7 +18,7 @@
 +(UIBarButtonItem*) getNavForProfile:(id) obj {
  //   UINavigationItem *navigationItem = [[UINavigationItem alloc]init];
     
-    UIImage* imageSnap = [UIImage imageNamed:@"camera-white.png"];
+    UIImage* imageSnap = [UIImage imageNamed:@"camera.png"];
     CGRect snapFrameimg = CGRectMake(0, 0, imageSnap.size.width, imageSnap.size.height);
     UIButton *imgSnapButton = [[UIButton alloc] initWithFrame:snapFrameimg];
     [imgSnapButton setBackgroundImage:imageSnap forState:UIControlStateNormal];
