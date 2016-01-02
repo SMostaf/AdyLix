@@ -343,9 +343,10 @@
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
+
+    UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Error", nil) msg:NSLocalizedString(@"Failed to Get Your Location", nil) action: nil];
+    [self presentViewController:alertView animated:YES completion:nil];
+    
 }
 
 
@@ -395,12 +396,15 @@
         {
             self.alertShown = true;
             
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
+            UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"This area is void of fashion!", nil) msg: NSLocalizedString(@"Share our App to spread the word...", nil)
+                action: ^(UIAlertAction * action) {
+                    UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
+                    [self presentViewController:activityController animated:YES completion:nil];
+                }];
+            [self presentViewController:alertView animated:YES completion:nil];
 
-            UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
-            [self presentViewController:activityController animated:YES completion:nil];
         }
+        [_activityView stopAnimating];
         return;
     }
     

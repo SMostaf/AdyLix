@@ -6,7 +6,7 @@
 #import "FBLoginViewController.h"
 #import "FBLogin.h"
 #import "LocateController.h"
-#import "User.h"
+#import "Utility.h"
 
 @interface FBLoginViewController ()<FBLoginDelegate>
 
@@ -57,11 +57,9 @@
         [self goToMainView];
     } else {
         // Show error alert
-        [[[UIAlertView alloc] initWithTitle:@"Login Failed"
-                                    message:@"Facebook Login failed. Please try again."
-                                   delegate:nil
-                          cancelButtonTitle:@"Ok"
-                          otherButtonTitles:nil] show];
+        UIAlertController* alertView = [Utility getAlertViewForMessage:@"Error" msg:@"Facebook Login failed. Please try again." action: nil];
+        [self presentViewController:alertView animated:YES completion:nil];
+        
     }
 }
 

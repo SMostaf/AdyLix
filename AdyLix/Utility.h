@@ -14,6 +14,7 @@
 +(NSArray<UIBarButtonItem*> *) getNavOtherMenu:(id) obj;
 +(UINavigationItem*) getNavMainMenu:(id) obj;
 +(UIBarButtonItem*) getNavForProfile:(id) obj;
++(UIAlertController*) getAlertViewForMessage:(NSString*) title msg:(NSString*) message action:(void (^ __nullable)(UIAlertAction *action))action;
 @end
 
 #endif /* Utility_h */

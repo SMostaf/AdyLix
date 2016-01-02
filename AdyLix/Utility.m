@@ -165,5 +165,33 @@
 
 }
 
++(UIAlertController*) getAlertViewForMessage:(NSString*) title msg:(NSString*) message action:(void (^ __nullable)(UIAlertAction *action))action {
+    
+    UIAlertController * alertView =  [UIAlertController
+                                      alertControllerWithTitle:title
+                                      message:message
+                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* ok;
+    if (action == nil) {
+                        ok = [UIAlertAction
+                                             actionWithTitle:NSLocalizedString(@"OK", nil)
+                                             style:UIAlertActionStyleDefault
+                                             handler:^(UIAlertAction * action)
+                                             {
+                                                 // dissmiss alert window
+                                                 [alertView dismissViewControllerAnimated:YES completion:nil];
+                             
+                                             }];
+    } else {
+                        ok = [UIAlertAction
+                             actionWithTitle:NSLocalizedString(@"OK", nil)
+                             style:UIAlertActionStyleDefault
+                             handler:action];
+
+    }
+    [alertView addAction: ok];
+    
+    return alertView;
+}
 
 @end
