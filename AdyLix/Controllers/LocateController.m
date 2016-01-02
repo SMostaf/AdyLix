@@ -201,7 +201,7 @@
     info.likes = count;
     self.btnLike.hidden = NO;
     if (count > 0)
-        [self.btnLike setTitle:[NSString stringWithFormat:@"%lu %@%@", count, @"aww", (count > 1) ? @"s":@""] forState:UIControlStateNormal];
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%lu %@%@", count, @"Aww", (count > 1) ? @"s":@""] forState:UIControlStateNormal];
     
     // showing text instead of icon for likes for now
   //  self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
@@ -534,7 +534,7 @@
     // update label
     if (info != nil) {
         unsigned int counter = info.likes + 1;
-        [self.btnLike setTitle:[NSString stringWithFormat:@"%u %@%@", counter, @"aww", (counter <= 1) ? @"":@"s"] forState:UIControlStateNormal];
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%u %@%@", counter, @"Aww", (counter <= 1) ? @"":@"s"] forState:UIControlStateNormal];
         
        // self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" awws"];
     }

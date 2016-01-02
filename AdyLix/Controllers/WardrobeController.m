@@ -192,7 +192,7 @@ typedef enum {
     if (countLikes > 0)
     {
         UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
-        likeLabel.text = [NSString stringWithFormat:@"%lu%@", countLikes, @" Likes"];
+        likeLabel.text = [NSString stringWithFormat:@"%lu %@%@", countLikes, @"Aww", (countLikes > 1) ? @"s" : @""];
     }
   
     return cell;
