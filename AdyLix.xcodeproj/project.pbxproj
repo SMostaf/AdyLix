@@ -113,6 +113,8 @@
 		0AAEC3A81C2C7EA6000468E3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEC3A71C2C7EA6000468E3 /* Utility.m */; };
 		0AAED54D1C36034A000FA4AE /* camera-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54C1C36034A000FA4AE /* camera-white.png */; };
 		0AAED54F1C363E5D000FA4AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54E1C363E5D000FA4AE /* settings.png */; };
+		0AB4319A1C37840500F42C76 /* heart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AB431991C37840500F42C76 /* heart.jpg */; };
+		0AB4319C1C378B5B00F42C76 /* share.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AB4319B1C378B5B00F42C76 /* share.jpg */; };
 		0AC7839C1C152ABD0028CAFF /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC7839B1C152ABD0028CAFF /* red.png */; };
 		0AF64EE41BDBE69300B9B9EB /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */; };
 		0D662D2B24E14D86705723D4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0EC98935A77CC01669EE5A /* libPods.a */; };
@@ -307,6 +309,8 @@
 		0AAEC3A91C2C7EFD000468E3 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		0AAED54C1C36034A000FA4AE /* camera-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-white.png"; path = "Res/menu/camera-white.png"; sourceTree = "<group>"; };
 		0AAED54E1C363E5D000FA4AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Res/settings.png; sourceTree = "<group>"; };
+		0AB431991C37840500F42C76 /* heart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = heart.jpg; path = Res/heart.jpg; sourceTree = "<group>"; };
+		0AB4319B1C378B5B00F42C76 /* share.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = share.jpg; path = Res/share.jpg; sourceTree = "<group>"; };
 		0AC7839B1C152ABD0028CAFF /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red.png; path = Res/red.png; sourceTree = "<group>"; };
 		0AF64EE31BDBE69300B9B9EB /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-40@2x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-40@2x.png"; sourceTree = "<group>"; };
 		3C0EC98935A77CC01669EE5A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,6 +432,8 @@
 		0A4E314D1BD47D72004776A2 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				0AB4319B1C378B5B00F42C76 /* share.jpg */,
+				0AB431991C37840500F42C76 /* heart.jpg */,
 				0AAED54E1C363E5D000FA4AE /* settings.png */,
 				0AAED54C1C36034A000FA4AE /* camera-white.png */,
 				0A631ECA1C34DD28008C1341 /* discover-selected.png */,
@@ -875,6 +881,7 @@
 				0A6A1B1B1C290D02008E3C6F /* share.png in Resources */,
 				0A4E21D51BDA080100B01D12 /* not_selected_star.png in Resources */,
 				0A4F0AC21BD4656000C8A8D0 /* LaunchScreen.storyboard in Resources */,
+				0AB4319A1C37840500F42C76 /* heart.jpg in Resources */,
 				0AAED54F1C363E5D000FA4AE /* settings.png in Resources */,
 				0A47BC731BDAAE9400D362B9 /* 37x-Checkmark.png in Resources */,
 				0A4E31601BD47D88004776A2 /* background.png in Resources */,
@@ -885,6 +892,7 @@
 				0A9C70C31C2490970044EC03 /* FBLogin.png in Resources */,
 				0A631ECD1C34DD28008C1341 /* discover.png in Resources */,
 				0A70DC621C13F5590000E328 /* scanbutton.png in Resources */,
+				0AB4319C1C378B5B00F42C76 /* share.jpg in Resources */,
 				0A47BC791BDAAE9400D362B9 /* Default@2x.png in Resources */,
 				0AAEC3A41C2C6A1F000468E3 /* emptyProfile.png in Resources */,
 				0A7299DD1C323FB60074972D /* p1x.png in Resources */,

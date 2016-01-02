@@ -122,6 +122,8 @@
     
     self.btnShare.hidden = YES;
     self.btnLike.hidden = YES;
+    [self.btnLike setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 2.0, 5.0, 5.0)];
+    [self.btnLike setImage: [UIImage imageNamed:@"heart.jpg"] forState:UIControlStateNormal];
     
     // update view to show current style name
     // on click redirect user to wardrobe
@@ -197,9 +199,12 @@
         count =  [Item getLikesForItem: info.objectId];
     }
     info.likes = count;
-    self.lblLikes.hidden = NO;
+    self.btnLike.hidden = NO;
+    if (count > 0)
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%lu %@%@", count, @"aww", (count > 1) ? @"s":@""] forState:UIControlStateNormal];
+    
     // showing text instead of icon for likes for now
-    self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
+  //  self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
 }
 
 #pragma mark - swipe style gesture left/right
@@ -239,8 +244,9 @@
 {
     NSInteger index = _currentStyleIndex;
     NSInteger limit = [_stylesArr count] -  1;
+    // resetting items counters
     _currStyleDetail.currentItemIndex = 0;
-    
+    self.lblItemsCount.text = @"";
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
     {
         index++;
@@ -300,8 +306,8 @@
     
     if (index >= 0 && index <= limit)
     {
+       [self showItemAtIndex:_currStyleDetail.currentItemIndex];
         _currStyleDetail.currentItemIndex = index;
-        [self showItemAtIndex:_currStyleDetail.currentItemIndex];
     }
     else
     {
@@ -372,8 +378,8 @@
 -(void) getNearbyStyles:(CLLocation*) location {
     // query db for nearby items
    [StyleItems getStylesNearby:location handler:^(BOOL status, NSArray * arrStylesFound) {
-
-    if(status == NO || arrStylesFound.count == 0)
+    NSUInteger count = arrStylesFound.count;
+    if(status == NO || count == 0)
     {
         UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
         noDataLabel.text             = @"No styles nearby";
@@ -408,12 +414,14 @@
         return;
     }
     
-    if(arrStylesFound.count > 1) {
-        [self adjustUIBorder]; // adjust border UI for discovery image frame
-        self.imgMoreBorder.hidden = NO;
-    }
-    
-    if (arrStylesFound.count > 0) {
+    if (count > 0) {
+        self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", @"Found", count, @"style", (count > 0) ? @"s" : @""];
+        // show an image to indicate multiple styles found
+        if(count > 1) {
+            [self adjustUIBorder]; // adjust border UI for discovery image frame
+            self.imgMoreBorder.hidden = NO;
+        }
+        
         NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
         for(NSDictionary *styleInfo in arrStylesFound) {
             
@@ -451,7 +459,8 @@
     [self.activityView startAnimating];
     // query db for nearby items
     NSArray* arrItemsFound = [StyleItems getItemsForStyle:styleId];
-    if(arrItemsFound.count == 0)
+    NSUInteger count = arrItemsFound.count;
+    if(count == 0)
     {
         // #TODO
         // no items found, ask user to share adylix link
@@ -459,7 +468,7 @@
         return;
     }
     PFUser* user = [[StyleItems getStyleForId:styleId] valueForKey:@"userId"];
-    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
         DataInfo *info = [[DataInfo alloc] init];
@@ -479,7 +488,7 @@
     _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
     
     self.lblItemsCount.hidden = NO;
-    self.lblItemsCount.text = [NSString stringWithFormat:@"%lu%@", [_currStyleDetail.items count], @" items"];
+    self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", @"Found", count, @"item", (count > 0) ? @"s" : @""];
     
     [self.activityView stopAnimating];
     
@@ -525,7 +534,9 @@
     // update label
     if (info != nil) {
         unsigned int counter = info.likes + 1;
-        self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" likes"];
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%u %@%@", counter, @"aww", (counter <= 1) ? @"":@"s"] forState:UIControlStateNormal];
+        
+       // self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" awws"];
     }
 }
 

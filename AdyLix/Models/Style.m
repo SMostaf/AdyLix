@@ -115,7 +115,6 @@
         return 0;
     NSArray* arrItemsFound;
     PFQuery* query = [PFQuery queryWithClassName:@"ItemDetail"];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query whereKey:@"styleId" equalTo:[StyleItems getStyleForId:styleId]];
     
     arrItemsFound = [query findObjects];
