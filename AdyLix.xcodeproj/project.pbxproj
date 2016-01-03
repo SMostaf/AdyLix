@@ -452,10 +452,6 @@
 				0AAEC3A51C2C7C28000468E3 /* framesBorder.png */,
 				0AAEC3A31C2C6A1F000468E3 /* emptyProfile.png */,
 				0A6A1B1A1C290D02008E3C6F /* share.png */,
-<<<<<<< HEAD
-				0A6A1B101C28FBF3008E3C6F /* Warrior-icon-small-25x25.png */,
-=======
->>>>>>> ui-improvements
 				0A6A1B0C1C28FA9D008E3C6F /* map2x.png */,
 				0A6A1B0D1C28FA9D008E3C6F /* map3x.png */,
 				0A6A1B0A1C28F949008E3C6F /* map.png */,
@@ -851,11 +847,7 @@
 			files = (
 				0A86A3211BE9EC81001245D7 /* FacebookSDKStrings.bundle in Resources */,
 				0A4E21D71BDA080100B01D12 /* selected_star.png in Resources */,
-<<<<<<< HEAD
-				0A6A1B111C28FBF3008E3C6F /* Warrior-icon-small-25x25.png in Resources */,
-=======
 				0A631EBF1C34C564008C1341 /* menu.png in Resources */,
->>>>>>> ui-improvements
 				0A47BC7E1BDAAE9400D362B9 /* Icon@2x.png in Resources */,
 				0A6A1B0E1C28FA9D008E3C6F /* map2x.png in Resources */,
 				0A4E31671BD47D88004776A2 /* Icon@2x copy.png in Resources */,
@@ -883,10 +875,7 @@
 				0A47BC891BDAE9BB00D362B9 /* hat.png in Resources */,
 				0A631EC11C34C564008C1341 /* reel.png in Resources */,
 				0A47BC781BDAAE9400D362B9 /* Default.png in Resources */,
-<<<<<<< HEAD
-=======
 				0A631EC21C34C564008C1341 /* reel1x.png in Resources */,
->>>>>>> ui-improvements
 				0A4E21D81BDA080100B01D12 /* selected_star@2x.png in Resources */,
 				0A6A1B031C28F18B008E3C6F /* Assets.xcassets in Resources */,
 				0A6A1B1B1C290D02008E3C6F /* share.png in Resources */,
@@ -897,10 +886,7 @@
 				0A47BC731BDAAE9400D362B9 /* 37x-Checkmark.png in Resources */,
 				0A4E31601BD47D88004776A2 /* background.png in Resources */,
 				0A4E316F1BD47D88004776A2 /* profile.png in Resources */,
-<<<<<<< HEAD
 				0A6BED1F1C28A85D0089EB23 /* wardrobe.png in Resources */,
-=======
->>>>>>> ui-improvements
 				0A4E316C1BD47D88004776A2 /* items.jpg in Resources */,
 				0AC7839C1C152ABD0028CAFF /* red.png in Resources */,
 				0A6A1B0F1C28FA9D008E3C6F /* map3x.png in Resources */,
