@@ -53,18 +53,28 @@
         return nil;
     return accessDict[@"facebook"][@"access_token"];
 }
+
+// #TODO move to asynch code
 // fetch profile pic using access token
-+(NSData*) getFBProfilePic:(PFUser *)user {
++(void) getFBProfilePic:(PFUser *)user handler:(profileHandler) handler {
     
     NSString* accessToken = [User getFBAccessToken: user];
-    if([accessToken length] > 0) {
+    if([accessToken length] == 0)
+        handler(nil);
+    else {
         // PFSession *fbSession = [PFFacebookUtils session];
         // NSString *accessToken = [fbSession accessToken];
         NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/me/picture?type=large&return_ssl_resources=1&access_token=%@", accessToken]];
 
-        return [NSData dataWithContentsOfURL:pictureURL];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+        dispatch_async(queue, ^{
+            NSData *data = [NSData dataWithContentsOfURL:pictureURL];
+            UIImage *image = [UIImage imageWithData:data];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(image);
+            });
+        });
     }
-    return nil;
 }
 
 +(NSString*) getFBUserName:(PFUser*) user

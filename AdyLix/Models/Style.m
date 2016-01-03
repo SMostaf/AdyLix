@@ -130,10 +130,22 @@
     return NO;
 }
 
-+(NSArray*) getStylesForUser:(PFUser*) user {
++(void) getStylesForUser:(PFUser*) user handler:(styleCompletion) handler {
     PFQuery* query = [PFQuery queryWithClassName:@"StyleMaster"];
+    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     [query whereKey:@"userId" equalTo:user];
-    return [query findObjects];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            handler(objects.count);
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            if ([error code] != 120) // cache miss in that case the callback will be called a second time after fetching from the network
+                handler(0);
+        }
+    }];
+     
 }
 
 +(void) like:(NSString*) styleId itemId:(NSString*) itemId owner:(PFUser*) owner {

@@ -14,6 +14,7 @@
 
 #define USER_IMAGE @"profileImage"
 
+typedef void(^profileHandler)(UIImage* image);
 
 @interface User:NSObject
 
@@ -28,7 +29,7 @@
 +(void) saveLocation:(CLLocation*) location;
 +(PFObject*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;
-+(NSData*) getFBProfilePic:(PFUser*) user;
++(void) getFBProfilePic:(PFUser*) user handler:(profileHandler) handler;
 +(NSString*) getFBUserName:(PFUser*) user;
 @end
 

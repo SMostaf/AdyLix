@@ -213,13 +213,13 @@
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
     // show profile image
-    NSData* imageData = [User getFBProfilePic:info.userObjectId];
-    if(imageData) {
-        self.profileImageView.image = [UIImage imageWithData:imageData];
-    }
-    else
-        self.profileImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
-    
+    [User getFBProfilePic:info.userObjectId handler:^(UIImage * image) {
+        if(image != nil) {
+            self.profileImageView.image = image;
+        }
+        else
+            self.profileImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
+    }];
 }
 
 -(void) showStyleAtIndex:(NSInteger) index

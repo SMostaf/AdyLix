@@ -473,13 +473,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-Ya-0ya">
-                                <rect key="frame" x="102" y="112" width="165" height="141"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="165" id="Mn2-gg-M8B"/>
-                                    <constraint firstAttribute="height" constant="141" id="yzl-UF-gg0"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQ5-Sf-Bmi">
                                 <rect key="frame" x="15" y="79" width="112" height="30"/>
                                 <state key="normal" title="Change Style"/>
@@ -524,6 +517,13 @@
                                     <action selector="btnLogout:" destination="xhh-gC-gby" eventType="touchUpInside" id="XaY-sJ-2fh"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-Ya-0ya">
+                                <rect key="frame" x="102" y="112" width="165" height="141"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="165" id="Mn2-gg-M8B"/>
+                                    <constraint firstAttribute="height" constant="141" id="yzl-UF-gg0"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

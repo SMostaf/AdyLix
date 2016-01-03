@@ -67,10 +67,14 @@
         }
     }
     
-    self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", [[StyleItems getStylesForUser:currentUser] count]];
+    [StyleItems getStylesForUser:currentUser handler:^(unsigned long count) {
+        self.lblStylesCount.text = [NSString stringWithFormat:@"%@%lu", @"Number of styles: ", count];
+    }];
+    
     NSString* userName = [User getFBUserName:currentUser];
     if([userName length] > 0)
-        self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", [User getFBUserName:currentUser]];
+        self.lblName.text = [NSString stringWithFormat:@"%@%@", @"Welcome ", userName];
+    
     PFObject* currStyle = [[User getUserForId:currentUser.objectId] valueForKey:@"currentStyleId"];
     if (currStyle != nil) {
         NSString* styleName = [StyleItems getStyleForObj:currStyle];
@@ -78,9 +82,12 @@
             self.lblStyleName.text = [NSString stringWithFormat:@"%@%@", @"You are looking fabulous in ", styleName];
     }
         
-    NSData* imageData = [User getFBProfilePic:currentUser];
-    self.imgProfile.image = [UIImage imageWithData:imageData];
-
+   [User getFBProfilePic:currentUser handler:^(UIImage* image) {
+       if (image != nil)
+        self.imgProfile.image = image;
+       else
+        self.imgProfile.image = [UIImage imageNamed:@"emptyProfile.png"];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

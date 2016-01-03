@@ -14,7 +14,7 @@
 #import "Item.h"
 
 typedef void(^completion)(BOOL status, NSArray* result);
-
+typedef void(^styleCompletion)(unsigned long count);
 @interface StyleDetail : NSObject
 @property NSArray* items;
 @property NSInteger currentItemIndex;
@@ -28,7 +28,7 @@ typedef void(^completion)(BOOL status, NSArray* result);
 +(NSArray*) getItemsForStyle:(NSString*) styleId;
 +(NSString*) getStyleForObj:(PFObject*) style;
 +(BOOL) isCurrentStyle:(PFObject*) style;
-+(NSArray*) getStylesForUser:(PFUser*) user;
++(void) getStylesForUser:(PFUser*) user handler:(styleCompletion) handler;
 +(void) like:(NSString*) styleId itemId:(NSString*)itemId owner:(PFUser*) owner;
 -(void) purchase:(NSString*) styleId;
 +(void) getStylesNearby:(CLLocation*) location handler:(completion) handler;
