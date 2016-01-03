@@ -19,6 +19,8 @@
 #import "Style.h"
 #import "ShareHelper.h"
 #import "UserController.h"
+#import "Utility.h"
+#import "FBLoginViewController.h"
 
 #define MERCHANTID @"merchant.com.adylix"
 #define DESC_CUSTOM_TAG 1445
@@ -27,6 +29,7 @@
 @interface LocateController ()
 
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *imgMoreBorder;
 @property (weak, nonatomic) IBOutlet UILabel *lblItemsCount;
@@ -48,8 +51,9 @@
 @property (strong, nonatomic) NSArray *stylesArr;
 @property NSInteger currentStyleIndex;
 @property StyleDetail* currStyleDetail;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 
-@property  (nonatomic, strong) UINavigationItem* navigationItem1;
+@property BOOL loaded;
 @end
 
 @implementation LocateController
@@ -59,38 +63,27 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.navigationController.navigationBar.hidden = false;
+
+     if (!self.loaded) {
+       //  [self.navigationController setNavigationBarHidden:NO animated:NO];
+         self.navigationItem.leftBarButtonItems = [Utility getNavOtherMenu:self];
+
+         self.loaded = YES;
+    }
+
+}
+
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+ 
+    self.navigationController.navigationBar.hidden = false;
+
+    [self.activityView startAnimating];
+  
+    
     self.stylesArr = [[NSArray alloc]init];
-    
-    // show progress indicator
-    UIImage *firstImage = [UIImage imageNamed:@"hat.png"];
-    _activityImageView = [[UIImageView alloc]
-                          initWithImage:firstImage];
-    
-    
-    //Add more images which will be used for the animation
-    _activityImageView.animationImages = [NSArray arrayWithObjects:
-                                          [UIImage imageNamed:@"Icon@2x rot2.png"],
-                                          [UIImage imageNamed:@"Icon@2x rot3.png"],
-                                          [UIImage imageNamed:@"Icon@2x copy.png"],
-                                          nil];
-    
-    
-    _activityImageView.animationDuration = 0.8;
-    
-    
-    //Position the activity image view somewhere in
-    //the middle of your current view
-    _activityImageView.frame = CGRectMake(
-                                          self.view.frame.size.width/2
-                                          -firstImage.size.width/2,
-                                          self.view.frame.size.height/2
-                                          -firstImage.size.height/2,
-                                          firstImage.size.width,
-                                          firstImage.size.height);
-    
-    [self.view addSubview:_activityImageView];
-    
-    [_activityImageView startAnimating];
     
     [_styleImageView setUserInteractionEnabled:YES];
     // swipe manipulate style
@@ -110,7 +103,16 @@
     [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
     
+    // adding rounded corners to profile image
+    // round them corners
+    _profileImageView.layer.cornerRadius = (_profileImageView.frame.size.width/2) - 5;
+    _profileImageView.clipsToBounds = YES;
+    //_profileImageView.layer.borderWidth = 1.0f;
+   // _profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
     
+    _styleImageView.layer.cornerRadius = 20.0f;
+    _styleImageView.clipsToBounds = YES;
+   
     // Adding the swipe gesture on image view
     [_styleImageView addGestureRecognizer:swipeLeft];
     [_styleImageView addGestureRecognizer:swipeRight];
@@ -120,30 +122,22 @@
     
     self.btnShare.hidden = YES;
     self.btnLike.hidden = YES;
+    [self.btnLike setTitleEdgeInsets:UIEdgeInsetsMake(5.0, 2.0, 5.0, 5.0)];
+    [self.btnLike setImage: [UIImage imageNamed:@"heart.jpg"] forState:UIControlStateNormal];
+    
     // update view to show current style name
     // on click redirect user to wardrobe
     [self getCurrentSyleInfo];
     // location manager receive updates
     [self startStandardUpdates];
     
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
+  //  [_activityImageView stopAnimating];
+  //  _activityImageView.hidden = YES;
 }
 
-- (void)viewDidLoad {
-    
-    [super viewDidLoad];  
-}
-
+// function to give the effect of multiple styles
 -(void) adjustUIBorder {
-    
-//    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
-//    
-//    [lbl setText:@"Testo di prova..."];
-//    [lbl setBackgroundColor:[UIColor clearColor]];
-//    [[self view] addSubview:lbl];
-//    [lbl sizeToFit];
-    
+
     CALayer* layer = [self.styleImageView layer];
     
     CALayer *rightBorder = [CALayer layer];
@@ -183,18 +177,17 @@
     [_locationManager stopUpdatingLocation];
 }
 
-- (IBAction)btnUsersProfile:(id)sender {
+- (IBAction) btnUsersProfile:(id)sender {
     // show profile view for style owners
     DataInfo* info = [_stylesArr objectAtIndex:_currentStyleIndex];
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
     userController.user = info.userObjectId;
     
-    [self presentViewController:userController animated: YES completion:nil];
-
+    [self presentViewController:userController animated: NO completion:nil];
 }
 
-
 -(void) getLikes:(NSInteger)index type:(enum DataType) type {
+
     DataInfo* info = nil;
     unsigned long count = 0;
     if (type == kStyleType) {
@@ -206,53 +199,54 @@
         count =  [Item getLikesForItem: info.objectId];
     }
     info.likes = count;
-    self.lblLikes.hidden = NO;
-    // showing text instead of icon for likes for now
-    self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
+    self.btnLike.hidden = NO;
+    if (count > 0)
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%lu %@%@", count, @"Aww", (count > 1) ? @"s":@""] forState:UIControlStateNormal];
     
+    // showing text instead of icon for likes for now
+  //  self.lblLikes.text = [NSString stringWithFormat:@"%lu %@", count, @"likes"];
 }
 
 #pragma mark - swipe style gesture left/right
 // shows information on user who owns current displayed style
--(void)updateProfileForStyle:(NSInteger)index
+-(void) updateProfileForStyle:(NSInteger) index
 {
     DataInfo* info = [_stylesArr objectAtIndex:index];
-    // adding rounded corners to profile image
-    self.profileImageView.layer.cornerRadius = (self.profileImageView.frame.size.width/2) - 5;
-    self.profileImageView.clipsToBounds = YES;
-    self.profileImageView.layer.borderWidth = 1.0f;
-    self.profileImageView.layer.borderColor = [UIColor blackColor].CGColor;
     // show profile image
-    NSData* imageData = [User getFBProfilePic:info.userObjectId];
-    if(imageData) {
-        self.profileImageView.image = [UIImage imageWithData:imageData];
-    }
-    else
-        self.profileImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
-    
+    [User getFBProfilePic:info.userObjectId handler:^(UIImage * image) {
+        if(image != nil) {
+            self.profileImageView.image = image;
+        }
+        else
+            self.profileImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
+    }];
 }
 
--(void)showStyleAtIndex:(NSInteger)index
+-(void) showStyleAtIndex:(NSInteger) index
 {
+    [self.activityView startAnimating];
     DataInfo* info = [_stylesArr objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         _styleImageView.image = [UIImage imageWithData:data];
+
     }];
     self.lblStyleName.text = info.name;
-    self.lblUserName.text = [NSString stringWithFormat:@"%@%@", @"by ", [[User getInfoForUser:info.userObjectId] name]];
+    self.lblUserName.text = [NSString stringWithFormat:@"%@%@", @"by ", [User getFBUserName:[PFUser currentUser]]];
     // update image for owner
     [self updateProfileForStyle: index];
     // update likes count for current showing style
     [self getLikes:index type:kStyleType];
+    [self.activityView stopAnimating];
 }
 
--(void)swipeStyleImage:(UISwipeGestureRecognizer*)recognizer
+-(void) swipeStyleImage:(UISwipeGestureRecognizer*) recognizer
 {
     NSInteger index = _currentStyleIndex;
     NSInteger limit = [_stylesArr count] -  1;
+    // resetting items counters
     _currStyleDetail.currentItemIndex = 0;
-    
+    self.lblItemsCount.text = @"";
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
     {
         index++;
@@ -274,8 +268,9 @@
     
 }
 
--(void)showItemAtIndex:(NSInteger)index
+-(void) showItemAtIndex:(NSInteger) index
 {
+    [self.activityView startAnimating];
     // get array of currentStyle showing
     DataInfo* info = [[_currStyleDetail items] objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
@@ -284,10 +279,11 @@
     }];
     
     [self getLikes:index type:kItemType];
+    [self.activityView stopAnimating];
 }
 
 // swipe up down items
--(void) swipeItemImage:(UISwipeGestureRecognizer*)recognizer
+-(void) swipeItemImage:(UISwipeGestureRecognizer*) recognizer
 {
     NSInteger index = [_currStyleDetail currentItemIndex];
     NSInteger limit = _currStyleDetail.currentItemsLimit;
@@ -310,8 +306,8 @@
     
     if (index >= 0 && index <= limit)
     {
+       [self showItemAtIndex:_currStyleDetail.currentItemIndex];
         _currStyleDetail.currentItemIndex = index;
-        [self showItemAtIndex:_currStyleDetail.currentItemIndex];
     }
     else
     {
@@ -329,7 +325,7 @@
     }
 }
 #pragma mark - location manager update
-- (void)startStandardUpdates
+- (void) startStandardUpdates
 {
     // Create the location manager if this object does not
     // already have one.
@@ -350,16 +346,17 @@
     [_locationManager startUpdatingLocation];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
+
+    UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Error", nil) msg:NSLocalizedString(@"Failed to Get Your Location", nil) action: nil];
+    [self presentViewController:alertView animated:YES completion:nil];
+    
 }
 
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     // If it's a relatively recent event, turn off updates to save power.
     CLLocation* location = [locations lastObject];
     NSDate* eventDate = location.timestamp;
@@ -372,16 +369,17 @@
               location.coordinate.longitude);
         // keep updating current user location
         [User saveLocation: location];
+        // query for nearby styles
         [self getNearbyStyles: location];
+        
     }
 }
 
 -(void) getNearbyStyles:(CLLocation*) location {
     // query db for nearby items
-    NSArray* arrStylesFound = [StyleItems getStylesNearby:location];
-  
- 
-    if(arrStylesFound.count == 0)
+   [StyleItems getStylesNearby:location handler:^(BOOL status, NSArray * arrStylesFound) {
+    NSUInteger count = arrStylesFound.count;
+    if(status == NO || count == 0)
     {
         UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
         noDataLabel.text             = @"No styles nearby";
@@ -403,55 +401,66 @@
         if(!self.alertShown)
         {
             self.alertShown = true;
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Items found", nil) message:NSLocalizedString(@"Share our App to spread the word", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
+            
+            UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"This area is void of fashion!", nil) msg: NSLocalizedString(@"Share our App to spread the word...", nil)
+                action: ^(UIAlertAction * action) {
+                    UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
+                    [self presentViewController:activityController animated:YES completion:nil];
+                }];
+            [self presentViewController:alertView animated:YES completion:nil];
 
-            UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
-            [self presentViewController:activityController animated:YES completion:nil];
         }
+        [_activityView stopAnimating];
         return;
     }
     
-    if(arrStylesFound.count > 1) {
-        [self adjustUIBorder]; // adjust border UI for discovery image frame
-        self.imgMoreBorder.hidden = NO;
-    }
-    
-    
-    NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
-    for(NSDictionary *styleInfo in arrStylesFound) {
+    if (count > 0) {
+        self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", @"Found", count, @"style", (count > 0) ? @"s" : @""];
+        // show an image to indicate multiple styles found
+        if(count > 1) {
+            [self adjustUIBorder]; // adjust border UI for discovery image frame
+            self.imgMoreBorder.hidden = NO;
+        }
         
-        DataInfo *style = [[DataInfo alloc] init];
-        style.type = kStyleType;
-        style.objectId = [styleInfo valueForKey:@"objectId"];
-        style.userObjectId = [styleInfo valueForKey:@"userId"];
-        style.name = styleInfo[@"name"];
-        style.desc = styleInfo[@"description"];
-        style.imageData = styleInfo[@"imageFile"];
+        NSMutableArray *styles = [[NSMutableArray alloc] initWithCapacity:arrStylesFound.count];
+        for(NSDictionary *styleInfo in arrStylesFound) {
+            
+            DataInfo *style = [[DataInfo alloc] init];
+            style.type = kStyleType;
+            style.objectId = [styleInfo valueForKey:@"objectId"];
+            style.userObjectId = [styleInfo valueForKey:@"userId"];
+            style.name = styleInfo[@"name"];
+            style.desc = styleInfo[@"description"];
+            style.imageData = styleInfo[@"imageFile"];
 
-        [styles addObject:style];
-    }
-    
-    _stylesArr = styles;
-    if([_stylesArr count] > 0) {
-      self.btnShare.hidden = NO;
-      self.btnLike.hidden = NO;
-        // show first image
-        // get profile for first style
-        [self showStyleAtIndex:0];
-    }
+            [styles addObject:style];
+        }
+        
+        _stylesArr = styles;
+        if([_stylesArr count] > 0) {
+          self.btnShare.hidden = NO;
+          self.btnLike.hidden = NO;
+            // show first image
+            // get profile for first style
+            [self showStyleAtIndex:0];
+        }
+     }
+       
+    [self.activityView stopAnimating];
+
+   }];
     _currStyleDetail = [[StyleDetail alloc] init];
     _currStyleDetail.currentItemIndex = 0;
     
 }
 
-
 -(void) getItemsForStyle:(NSString*) styleId {
     
-    [_activityImageView startAnimating];
+    [self.activityView startAnimating];
     // query db for nearby items
     NSArray* arrItemsFound = [StyleItems getItemsForStyle:styleId];
-    if(arrItemsFound.count == 0)
+    NSUInteger count = arrItemsFound.count;
+    if(count == 0)
     {
         // #TODO
         // no items found, ask user to share adylix link
@@ -459,7 +468,7 @@
         return;
     }
     PFUser* user = [[StyleItems getStyleForId:styleId] valueForKey:@"userId"];
-    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:arrItemsFound.count];
+    NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:count];
     for(NSDictionary *itemsInfo in arrItemsFound) {
         
         DataInfo *info = [[DataInfo alloc] init];
@@ -479,10 +488,9 @@
     _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
     
     self.lblItemsCount.hidden = NO;
-    self.lblItemsCount.text = [NSString stringWithFormat:@"%lu%@", [_currStyleDetail.items count], @" items"];
+    self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", @"Found", count, @"item", (count > 0) ? @"s" : @""];
     
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
+    [self.activityView stopAnimating];
     
 }
 
@@ -491,8 +499,8 @@
     
     // no items nearby
     // show share action
-    [_activityImageView stopAnimating];
-    _activityImageView.hidden = YES;
+   // [_activityImageView stopAnimating];
+   // _activityImageView.hidden = YES;
     DataInfo* dataInfo;
     enum ShareType type;
     // send info to be shared
@@ -526,7 +534,9 @@
     // update label
     if (info != nil) {
         unsigned int counter = info.likes + 1;
-        self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" likes"];
+        [self.btnLike setTitle:[NSString stringWithFormat:@"%u %@%@", counter, @"Aww", (counter <= 1) ? @"":@"s"] forState:UIControlStateNormal];
+        
+       // self.lblLikes.text = [NSString stringWithFormat:@"%u%@", counter, @" awws"];
     }
 }
 
@@ -542,7 +552,7 @@
     
 }
 
-- (IBAction)btnPurchase:(id)sender {
+-(IBAction) btnPurchase:(id) sender {
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.itemsTableView];
     NSIndexPath *indexPath = [self.itemsTableView indexPathForRowAtPoint:buttonPosition];

@@ -1,5 +1,5 @@
 //
-//  ItemsController.m
+//  RegisterController.m
 //  Ady
 //  Controller to register new items
 //  Created by Sahar Mostafa on 10/15/15.
@@ -10,19 +10,19 @@
 #import <AVFoundation/AVMediaFormat.h>
 #import <AVFoundation/AVCaptureInput.h>
 #import "MBProgressHUD.h"
-#import "ItemsController.h"
+#import "RegisterController.h"
 #import "RegisterItemController.h"
 #import "Parse/Parse.h"
 #import "Style.h"
 #import "User.h"
+#import "Utility.h"
 
-@interface ItemsController ()
-
-//@property RegisterItemController* regController;
+@interface RegisterController()
+@property (weak, nonatomic) IBOutlet UIButton *btnCancel;
 
 @end
 
-@implementation ItemsController
+@implementation RegisterController
 
 
 -(void)back:(id)sender
@@ -38,6 +38,9 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.btnCancel.layer.cornerRadius = 25;
+    self.btnCancel.clipsToBounds = YES;
     
     //self.txtName.text = @"Enter Item Description";
     self.txtName.textColor = [UIColor lightGrayColor];
@@ -118,8 +121,9 @@
     if (self.txtName.text.length == 0
         || self.itemImage == nil)
     {
-         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-        
+        UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Missing Information", nil)  msg:NSLocalizedString(@"Make sure you fill out all of the information!", nil) action: nil];
+        [self presentViewController:alertView animated:YES completion:nil];
+
         return;
     }
 
@@ -127,6 +131,8 @@
     
     PFObject *style = [PFObject objectWithClassName:@"StyleMaster"];
     [style setObject:self.txtName.text forKey:@"name"];
+    [style setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+        
     //[item setObject:self.txtDesc.text forKey:@"description"];
     
 //    if (self.chkDiscover.on)
@@ -163,9 +169,9 @@
                 [currentUser saveInBackground];
             }
             // Show success message
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully saved your item" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        
+            UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Upload Complete", nil)  msg:NSLocalizedString(@"Successfully saved your style", nil) action: nil];
+            [self presentViewController:alertView animated:YES completion:nil];
+
             
             
             // Notify table view to reload the recipes from Parse cloud
@@ -175,9 +181,9 @@
             [self dismissViewControllerAnimated:YES completion:nil];
             
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            
+            NSLog(@"Error uploading syle: %@", [error localizedDescription]);
+            UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Upload Error", nil)  msg:NSLocalizedString(@"Failed to save your style", nil) action: nil];
+            [self presentViewController:alertView animated:YES completion:nil];
         }
      }];
     }

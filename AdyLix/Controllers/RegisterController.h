@@ -6,12 +6,12 @@
 //  Copyright © 2015 Sahar Mostafa. All rights reserved.
 //
 
-#ifndef ItemsController_h
-#define ItemsController_h
+#ifndef RegisterController_h
+#define RegisterController_h
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVCaptureOutput.h>
 
-@interface ItemsController : UIViewController<UITextViewDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface RegisterController : UIViewController<UITextViewDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (weak, nonatomic) IBOutlet UISwitch *currStyleSwitch;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationView;
@@ -26,4 +26,4 @@
 @end
 
 
-#endif /* ItemsController_h */
+#endif /* RegisterController_h */

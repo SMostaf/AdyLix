@@ -12,8 +12,6 @@
 #import <UIKit/UIKit.h>
 
 @interface BaseViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
-
 
 @end
 #endif /* BaseViewController_h */

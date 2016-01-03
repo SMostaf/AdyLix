@@ -58,27 +58,57 @@
     [super tearDown];
 }
 
-- (void) testNearbyRange {
-    
-  //  self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
-    // get a user in current location
-    PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: self.locationManager.location];
-    [self.userSelling setValue:geoPoint forKey:@"currentLocation"];
-    [self.userSelling save];
-   
-    [self.userBuying setValue:geoPoint forKey:@"currentLocation"];
-    [self.userBuying save];
- 
-    PFQuery *usersQuery = [PFUser query];
-    CGFloat km = 1.0f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:self.locationManager.location.coordinate.latitude longitude:self.locationManager.location.coordinate.longitude] withinKilometers:(double)km];
-    [usersQuery whereKey: @"objectId" notEqualTo: [self.userSelling valueForKey:@"objectId"]];
-    
-    
-    NSArray* arrUsers = [usersQuery findObjects];
-    
-    XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+// should return empty
+// setting current location to somewhere in London
+- (void) testFailNearbyRange {
+//    PFQuery* userQuery = [PFUser query];
+//    // tester user
+//    [userQuery whereKey:@"objectId" equalTo:@"fLBuO0FmQa"];
+//    PFUser* tester = [userQuery getFirstObject];
+    CLLocation* londonLocation = [[CLLocation alloc] initWithLatitude:[@"54.977614" doubleValue] longitude:[@"-1.933594" doubleValue]];
+    PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: londonLocation];
+//    [tester setObject:geoPoint forKey:@"currentLocation"];
+//  //  [tester saveInBackground];
+
+    PFUser* user = [PFUser user];
+    user.username = @"testerLoc";
+    user.password = @"1234";
+    user.email = @"tester@gmail.com";
+    [user setObject:geoPoint forKey:@"currentLocation"];
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+        // get current location
+        PFGeoPoint* currGeoPoint = [PFGeoPoint geoPointWithLocation: self.locationManager.location];
+        PFQuery *currUser = [PFUser query];
+        CGFloat mile = 0.5f;
+        [currUser whereKey:@"currentLocation" nearGeoPoint:currGeoPoint withinMiles:(double)mile];
+        
+        XCTAssertEqual([[currUser findObjects] count], 0, @"No nearby item");
+        }
+    }];
 }
+
+//- (void) testNearbyRange {
+//    
+//  //  self.locationManager.location.coordinate.latitude, self.locationManager.location.coordinate.longitude];
+//    // get a user in current location
+//    PFGeoPoint* geoPoint = [PFGeoPoint geoPointWithLocation: self.locationManager.location];
+//    [self.userSelling setValue:geoPoint forKey:@"currentLocation"];
+//    [self.userSelling save];
+//   
+//    [self.userBuying setValue:geoPoint forKey:@"currentLocation"];
+//    [self.userBuying save];
+// 
+//    PFQuery *usersQuery = [PFUser query];
+//    CGFloat km = 1.0f;
+//    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:self.locationManager.location.coordinate.latitude longitude:self.locationManager.location.coordinate.longitude] withinKilometers:(double)km];
+//    [usersQuery whereKey: @"objectId" notEqualTo: [self.userSelling valueForKey:@"objectId"]];
+//    
+//    
+//    NSArray* arrUsers = [usersQuery findObjects];
+//    
+//    XCTAssertGreaterThanOrEqual([arrUsers count], 0, @"Found nearby item");
+//}
 
 -(void) testStyleSave {
     

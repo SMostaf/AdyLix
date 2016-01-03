@@ -24,51 +24,6 @@
     return self;
 }
 
-+(NSArray*) getItemsNearby:(CLLocation*) location
-{
-    // get users nearby
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLocation: location];
-    // Create a query for places
-    //PFQuery *usersQuery = [PFQuery queryWithClassName:@"User"];
-    PFQuery *usersQuery = [PFUser query];
-    // Interested in locations near user
-    CGFloat miles = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"]; //1.0f;
-    if (miles == 0) //preference not set
-        miles = 1.0f;
-    [usersQuery whereKey:@"currentLocation" nearGeoPoint:[PFGeoPoint geoPointWithLatitude:location.coordinate.latitude longitude:location.coordinate.longitude] withinMiles:(double)miles];
-    
-    [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
-    // #TODO: remove DEBUG order by closest items
-    // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];
-    [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
-    //[usersQuery orderByAscending:@"orderByAscending"];
-    
-    // Limit what could be a lot of points.
-    usersQuery.limit = 100;
-    
-    NSArray* arrUsers = [usersQuery findObjects];
-    // no users nearby
-    if(arrUsers.count == 0)
-        return nil;
-    
-    // query nearby users and find their items
-    PFQuery *query = [PFQuery queryWithClassName:@"ItemDetail"];
-    NSMutableArray *arrUsersItems = [[NSMutableArray alloc]init];
-    for (PFObject *object in arrUsers) {
-        [arrUsersItems addObject:[object objectId]];
-    }
-    [query whereKey:@"userObjectId" containedIn:arrUsersItems];
-    [query whereKey:@"isDiscoverable" equalTo:[NSNumber numberWithBool:YES]];
-    [query whereKey:@"status" equalTo:[NSNumber numberWithInt:ITMRegistered]];
-    
-    //[query orderByDescending:@"objectId"];
-    NSArray* arrItemsFound = [query findObjects];
-    if(arrItemsFound.count == 0)
-    {
-        return nil;
-    }
-    return arrItemsFound;
-}
 
 +(PFObject*) getItemForId:(NSString*) itemId {
     

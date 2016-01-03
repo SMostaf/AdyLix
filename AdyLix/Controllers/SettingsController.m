@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navbar;
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
+//@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @end
 
@@ -36,14 +36,16 @@
 
 - (void)viewDidLoad {
 
-    [super viewDidLoad];
+   [super viewDidLoad];
+   
+  // self.navigationController.navigationBar.hidden = false;
     
    self.discRange.value = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"];
    self.discSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"discoverable"];
 
     
-   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
-                                                                             style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+  // self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"")
+                                                                           //  style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     
 }
 - (void)didReceiveMemoryWarning {

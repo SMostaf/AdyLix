@@ -1,5 +1,5 @@
 //
-//  itemTableViewController.m
+//  WardrobeController.m
 //  AdyLix
 //  Controller to list all items owned by user
 //  Created by Sahar Mostafa on 10/22/15.
@@ -9,20 +9,23 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <ParseUI/PFImageView.h>
-#import "ItemTableViewController.h"
-#import "Style.h"
+#import "WardrobeController.h"
 #import "UserController.h"
-#import "ItemsController.h"
+#import "RegisterController.h"
+#import "NotificationController.h"
+#import "LocateController.h"
+#import "Style.h"
 #import "Utility.h"
 
 //#define DESC_CUSTOM_TAG 1444
 
-@interface ItemTableViewController()
+@interface WardrobeController()
 
-@property (strong, nonatomic) IBOutlet UITableView *tblview;
+//@property (strong, nonatomic) IBOutlet UITableView *tblview;
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
-@property BOOL isLoaded;
+
+@property BOOL loaded;
 @end
 
 typedef enum {
@@ -35,44 +38,69 @@ typedef enum {
 } ItemTagID;
 
 
-@implementation ItemTableViewController
+@implementation WardrobeController
+
+-(void) showLocater:(id)sender {
+
+  [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+-(void) showWardrobe:(id)sender {
+
+}
+
+-(void) showNotify:(id)sender {
+    
+    NSArray * controllerArray = [[self navigationController] viewControllers];
+    // if controller already on stack, pop 
+    for (UIViewController *controller in controllerArray) {
+        if ([NSStringFromClass([controller class]) isEqualToString:@"NotificationController"]) {
+            [self.navigationController popToViewController:controller animated:NO];
+            return;
+        }
+    }
+    // not on stack, push
+    NotificationController *notifyController = [self.storyboard instantiateViewControllerWithIdentifier:@"notifyController"];
+
+    [self.navigationController pushViewController:notifyController animated:NO];
+}
 
 -(void) showProfile:(id)sender {
-    
     UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
-    
-    //  [self.navigationController pushViewController:userController animated:NO];
-    
-    //[userController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentModalViewController:userController animated:YES];
+    //[self presentViewController:userController animated:NO completion:nil];
+    [self.navigationController pushViewController:userController animated:NO];
 }
 
--(void) showSelfie:(id)sender{
-    ItemsController* snapController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
-    [self presentViewController:snapController animated:YES completion:NULL];
-}
 
 -(void) viewDidLoad {
-
+    [super viewDidLoad];
+    self.tblView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    UINavigationItem* navigationItem = [Utility getNavItem:self];
-   UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.backgroundColor = [UIColor redColor];
+    self.navigationController.navigationBar.hidden = false;
     
-    navbar.items = @[navigationItem];
+    if(!self.loaded) {
+        
+        NSArray<UIBarButtonItem*> *navigationItems = [Utility getNavOtherMenu:self];
+        
+        self.navigationItem.leftBarButtonItems = navigationItems;
+        
+        self.loaded = YES;
+    }
     
-    [self.view addSubview:navbar];
-    
-    self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
+    [self loadObjects];
 
-    
-
-   [self loadObjects];
-    
 }
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    // make sure back menu item does not appear
+    // self.navigationController.navigationBar.hidden = true;
+}
+
 
 - (id)initWithCoder:(NSCoder *)aCoder
 {
@@ -164,7 +192,7 @@ typedef enum {
     if (countLikes > 0)
     {
         UILabel *likeLabel = (UILabel*) [cell viewWithTag:LikeCountTag];
-        likeLabel.text = [NSString stringWithFormat:@"%lu%@", countLikes, @" Likes"];
+        likeLabel.text = [NSString stringWithFormat:@"%lu %@%@", countLikes, @"Aww", (countLikes > 1) ? @"s" : @""];
     }
   
     return cell;
@@ -213,7 +241,7 @@ typedef enum {
                                       NSString *objectId = ((UILabel*)([cell viewWithTag:IDTag])).text;
                                       
                                       
-                                      ItemsController *itemController = [self.storyboard instantiateViewControllerWithIdentifier:@"itemController"];
+                                      RegisterController *itemController = [self.storyboard instantiateViewControllerWithIdentifier:@"registerController"];
                                       itemController.editStyleId = objectId;
                                       
                                       [self presentViewController:itemController animated: YES completion:nil];
@@ -234,16 +262,16 @@ typedef enum {
     {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         numOfSections                 = 1;
-        self.tblview.backgroundView   = nil;
+        self.tblView.backgroundView   = nil;
     }
     else
     {
-        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblview.bounds.size.width, self.tblview.bounds.size.height)];
+        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tblView.bounds.size.width, self.tblView.bounds.size.height)];
         noDataLabel.text             = @"No style added";
         noDataLabel.textColor        = [UIColor blackColor];
         noDataLabel.textAlignment    = NSTextAlignmentCenter;
-        self.tblview.backgroundView = noDataLabel;
-        self.tblview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tblView.backgroundView = noDataLabel;
+        self.tblView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
     return numOfSections;

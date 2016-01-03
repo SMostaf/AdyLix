@@ -8,8 +8,11 @@
 //
 #import <ParseUI/PFImageView.h>
 #import "NotificationController.h"
+#import "UserController.h"
+#import "RegisterController.h"
+#import "WardrobeController.h"
+#import "LocateController.h"
 #import "Parse/Parse.h"
-#import "MainController.h"
 #import "User.h"
 #import "Style.h"
 #import "Utility.h"
@@ -25,6 +28,8 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UITableView *tblView;
 
+@property BOOL loaded;
+
 @end
 
 @implementation NotificationController
@@ -32,18 +37,60 @@ typedef enum {
 - (void) viewDidAppear:(BOOL)animated
 {
 
-    UINavigationItem* navigationItem = [Utility getNavItem:self];
-    UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, -50, 380, 40)];
-    navbar.backgroundColor = [UIColor redColor];
+    self.navigationController.navigationBar.hidden = false;
+    if(!self.loaded) {
+        NSArray<UIBarButtonItem*> *navigationItems = [Utility getNavOtherMenu:self];
     
+        self.navigationItem.leftBarButtonItems = navigationItems;
+    
+        self.loaded = YES;
+    }
+    [self loadObjects];
+}
 
-    navbar.items = @[navigationItem];
-    
-    [self.view addSubview:navbar];
-    
-    self.tblView.contentInset = UIEdgeInsetsMake(70, 0, 0, 0);
-    
+-(void) viewDidLoad {
 
+    [super viewDidLoad];
+    self.tblView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    // make sure back menu item does not appear
+    self.navigationController.navigationBar.hidden = true;
+}
+
+
+-(void) showLocater:(id)sender {
+
+    [self.navigationController popToRootViewControllerAnimated:NO];
+
+}
+
+
+-(void) showWardrobe:(id)sender {
+  
+     NSArray * controllerArray = [[self navigationController] viewControllers];
+
+     for (UIViewController *controller in controllerArray) {
+         if ([NSStringFromClass([controller class]) isEqualToString:@"WardrobeController"]) {
+            [self.navigationController popToViewController:controller animated:NO];
+             return;
+        }
+      }
+    
+     WardrobeController *wardrobeController = [self.storyboard instantiateViewControllerWithIdentifier:@"wardrobeController"];
+     [self.navigationController pushViewController:wardrobeController animated:NO];
+}
+
+-(void) showNotify:(id)sender {
+}
+
+-(void) showProfile:(id)sender {
+    
+    UserController *userController = [self.storyboard instantiateViewControllerWithIdentifier:@"profileController"];
+    //[self presentViewController:userController animated:YES completion:nil];
+    [self.navigationController pushViewController:userController animated:NO];
 }
 
 
@@ -79,11 +126,12 @@ typedef enum {
 
 
 - (PFQuery *)queryForTable {
-    
     PFQuery *query;
+
     if ([PFUser currentUser])
     {
         query = [PFQuery queryWithClassName:self.parseClassName];
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
         [query whereKey:@"userTo" equalTo:[PFUser currentUser]];
         
         
@@ -97,6 +145,7 @@ typedef enum {
         [query orderByDescending:@"createdAt"];
         
     }
+  
     return query;
 }
 
