@@ -319,9 +319,10 @@
     
     DataInfo* currStyle = [StyleItems getCurrentStyleInfo];
     if (currStyle) {
+        NSString* currStyleName = [NSString stringWithFormat:@"%@ %@", @"Your style:", currStyle.name];
         //CGSize stringsize = [currStyle.name sizeWithFont:[UIFont systemFontOfSize:9]];
       //  [self.btnCurrStyle setFrame:CGRectMake(10,0,stringsize.width, stringsize.height)];
-        [self.btnCurrStyle setTitle: currStyle.name forState: UIControlStateNormal];
+        [self.btnCurrStyle setTitle: currStyleName forState: UIControlStateNormal];
     }
 }
 #pragma mark - location manager update

@@ -886,7 +886,6 @@
 				0A47BC731BDAAE9400D362B9 /* 37x-Checkmark.png in Resources */,
 				0A4E31601BD47D88004776A2 /* background.png in Resources */,
 				0A4E316F1BD47D88004776A2 /* profile.png in Resources */,
-				0A6BED1F1C28A85D0089EB23 /* wardrobe.png in Resources */,
 				0A4E316C1BD47D88004776A2 /* items.jpg in Resources */,
 				0AC7839C1C152ABD0028CAFF /* red.png in Resources */,
 				0A6A1B0F1C28FA9D008E3C6F /* map3x.png in Resources */,

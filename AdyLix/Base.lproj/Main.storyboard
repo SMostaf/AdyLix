@@ -17,13 +17,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzj-lh-Nwi">
-                                <rect key="frame" x="30" y="382" width="302" height="30"/>
+                                <rect key="frame" x="48" y="411" width="275" height="36"/>
                                 <connections>
                                     <action selector="FBLogin:" destination="5nh-CM-G2V" eventType="touchUpInside" id="fkb-Ad-cym"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bk-mk.png" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-6Z-NP8">
-                                <rect key="frame" x="-32" y="64" width="448" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="400" height="603"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
