@@ -63,6 +63,7 @@
 		0A631EC91C34C59C008C1341 /* wardrobe-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A631EC61C34C59C008C1341 /* wardrobe-selected.png */; };
 		0A631ECC1C34DD28008C1341 /* discover-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A631ECA1C34DD28008C1341 /* discover-selected.png */; };
 		0A631ECD1C34DD28008C1341 /* discover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A631ECB1C34DD28008C1341 /* discover.png */; };
+		0A64B0161C3EE6250078616E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A64B0151C3EE6250078616E /* LocationManager.m */; };
 		0A68AA731C23A68D00766AF9 /* FBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A68AA721C23A68D00766AF9 /* FBLoginViewController.m */; };
 		0A68BB2B1C23C9C100766AF9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A68BB291C23C9C100766AF9 /* CoreFoundation.framework */; };
 		0A68BB2C1C23C9C100766AF9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A68BB2A1C23C9C100766AF9 /* CoreLocation.framework */; };
@@ -231,6 +232,8 @@
 		0A631EC61C34C59C008C1341 /* wardrobe-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wardrobe-selected.png"; path = "Res/menu/wardrobe-selected.png"; sourceTree = "<group>"; };
 		0A631ECA1C34DD28008C1341 /* discover-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "discover-selected.png"; path = "Res/menu/discover-selected.png"; sourceTree = "<group>"; };
 		0A631ECB1C34DD28008C1341 /* discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discover.png; path = Res/menu/discover.png; sourceTree = "<group>"; };
+		0A64B0141C3EE6250078616E /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = Controllers/LocationManager.h; sourceTree = "<group>"; };
+		0A64B0151C3EE6250078616E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = Controllers/LocationManager.m; sourceTree = "<group>"; };
 		0A68AA711C23A68D00766AF9 /* FBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginViewController.h; path = Controllers/FBLoginViewController.h; sourceTree = "<group>"; };
 		0A68AA721C23A68D00766AF9 /* FBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBLoginViewController.m; path = Controllers/FBLoginViewController.m; sourceTree = "<group>"; };
 		0A68AA9C1C23BEEF00766AF9 /* AppRelated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppRelated.h; sourceTree = "<group>"; };
@@ -582,6 +585,8 @@
 		0A8443601C1D2516009AB523 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
+				0A64B0141C3EE6250078616E /* LocationManager.h */,
+				0A64B0151C3EE6250078616E /* LocationManager.m */,
 				0A4E313A1BD47D48004776A2 /* LocateController.h */,
 				0A4E313B1BD47D48004776A2 /* LocateController.m */,
 			);
@@ -694,6 +699,7 @@
 				0471DBE45E8F207FA4DB0314 /* Embed Pods Frameworks */,
 				8046D69AFFC4EA4492636D79 /* Copy Pods Resources */,
 				0A9AA7ED1BF14A9500DEE2BF /* Embed App Extensions */,
+				0A64CB101C3DD93700356B9D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -951,6 +957,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		0A64CB101C3DD93700356B9D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 136bec780790f0d6437800f2c2d6e56d93c88b0f 7c3bbc9c89665d92a2107c3629eb851226921a7d46c381f46787b89d4e4883f7";
+		};
 		8046D69AFFC4EA4492636D79 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1015,6 +1034,7 @@
 				0A4FA0241BD99C7D003ED366 /* ActivityIndicator.m in Sources */,
 				0A9C70D01C24C09C0044EC03 /* ShareHelper.m in Sources */,
 				0A9C70DA1C24C0D00044EC03 /* connector.m in Sources */,
+				0A64B0161C3EE6250078616E /* LocationManager.m in Sources */,
 				0A4FA01B1BD96737003ED366 /* DataInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

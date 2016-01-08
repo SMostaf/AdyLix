@@ -39,8 +39,11 @@
    [super viewDidLoad];
    
   // self.navigationController.navigationBar.hidden = false;
-    
-   self.discRange.value = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"];
+    float range = [[NSUserDefaults standardUserDefaults] floatForKey:@"range"];
+    if (range > 0)
+       self.discRange.value = range;
+    else
+        self.discRange.value = 2.0f;
    self.discSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"discoverable"];
 
     

@@ -12,6 +12,9 @@
 #import "style.h"
 #import <CoreLocation/CoreLocation.h>
 
+#define ASSERT_EQUAL(expr, val) do { int ret = expr; if (ret != val) printf("Line %d failed: 0x%x\n", __LINE__, ret); } while (0)
+#define ASSERT_SUCCESS(expr) ASSERT_EQUAL(expr, success)
+
 @interface AdyLixTests : XCTestCase
 @property PFUser* userSelling;
 @property PFUser* userBuying;

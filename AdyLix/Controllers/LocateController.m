@@ -22,9 +22,9 @@
 #import "Utility.h"
 #import "FBLoginViewController.h"
 
-#define MERCHANTID @"merchant.com.adylix"
-#define DESC_CUSTOM_TAG 1445
 
+#define MERCHANTID @"merchant.com.adylix"
+#define NOLBL_TAG 100
 
 @interface LocateController ()
 
@@ -44,7 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnCurrStyle;
 @property (weak, nonatomic) IBOutlet UIImageView *styleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
-@property  (nonatomic, strong) CLLocationManager* locationManager;
+@property  (nonatomic, strong) LocationManager* locationManager;
 //@property (nonatomic, copy) NSArray* itemsArr;
 @property UIImageView *activityImageView;
 @property BOOL alertShown;
@@ -66,14 +66,23 @@
     self.navigationController.navigationBar.hidden = false;
 
      if (!self.loaded) {
-       //  [self.navigationController setNavigationBarHidden:NO animated:NO];
-         self.navigationItem.leftBarButtonItems = [Utility getNavOtherMenu:self];
-
+        self.navigationItem.leftBarButtonItems = [Utility getNavOtherMenu:self];
          self.loaded = YES;
     }
 
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    _styleImageView.image = nil;
+    _imgMoreBorder.hidden = YES;
+    _lblItemsCount.hidden = YES;
+    
+    [_locationManager startUpdatingLocation];
+}
+-(void) viewWillDisappear:(BOOL)animated {
+    [_locationManager stopUpdatingLocation];
+
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -129,10 +138,9 @@
     // on click redirect user to wardrobe
     [self getCurrentSyleInfo];
     // location manager receive updates
-    [self startStandardUpdates];
+     _locationManager = [[LocationManager alloc] init];
+    _locationManager.delegate = self;
     
-  //  [_activityImageView stopAnimating];
-  //  _activityImageView.hidden = YES;
 }
 
 // function to give the effect of multiple styles
@@ -225,6 +233,13 @@
 -(void) showStyleAtIndex:(NSInteger) index
 {
     [self.activityView startAnimating];
+    // check if before last item is reached
+    // do not show the more border image
+    if (index == [_stylesArr count] -  1)
+        self.imgMoreBorder.hidden = YES;
+    else
+        self.imgMoreBorder.hidden = NO;
+    
     DataInfo* info = [_stylesArr objectAtIndex:index];
     PFFile *thumbnail = info.imageData;
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
@@ -248,21 +263,16 @@
     _currStyleDetail.currentItemIndex = 0;
     self.lblItemsCount.text = @"";
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
-    {
         index++;
-    }
+
     else if (recognizer.direction == UISwipeGestureRecognizerDirectionRight)
-    {
         index--;
-    }
     
-    if (index >= 0 && index <= limit)
-    {
+    if (index >= 0 && index <= limit) {
         _currentStyleIndex = index;
         [self showStyleAtIndex:_currentStyleIndex];
     }
-    else
-    {
+    else {
         NSLog(@"Reached the end, swipe in opposite direction");
     }
     
@@ -299,8 +309,7 @@
         }
         index++;
     }
-    else if (recognizer.direction == UISwipeGestureRecognizerDirectionDown)
-    {
+    else if (recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
         index--;
     }
     
@@ -319,61 +328,29 @@
     
     DataInfo* currStyle = [StyleItems getCurrentStyleInfo];
     if (currStyle) {
-        NSString* currStyleName = [NSString stringWithFormat:@"%@ %@", @"Your style:", currStyle.name];
+        NSString* currStyleName = [NSString stringWithFormat:@"%@ %@", @"Your style",
+                                   ([currStyle.name length] > 0) ? currStyle.name : @"is not set!"];
         //CGSize stringsize = [currStyle.name sizeWithFont:[UIFont systemFontOfSize:9]];
       //  [self.btnCurrStyle setFrame:CGRectMake(10,0,stringsize.width, stringsize.height)];
         [self.btnCurrStyle setTitle: currStyleName forState: UIControlStateNormal];
     }
 }
-#pragma mark - location manager update
-- (void) startStandardUpdates
-{
-    // Create the location manager if this object does not
-    // already have one.
-    if (nil == _locationManager)
-        _locationManager = [[CLLocationManager alloc] init];
-    
-    _locationManager.delegate = self;
-    
-    _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
-    
-    // Set a movement threshold for new events.
-    _locationManager.distanceFilter = 250; // meters
-    
-    _locationManager.allowsBackgroundLocationUpdates = YES;
-    
-    [_locationManager requestAlwaysAuthorization ];
-    
-    [_locationManager startUpdatingLocation];
-}
 
-- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+#pragma mark - location manager update
+- (void) onReceiveLocationError:(NSError *)error
 {
-    NSLog(@"didFailWithError: %@", error);
+    NSLog(@"LocationManager didFailWithError: %@", error);
 
     UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Error", nil) msg:NSLocalizedString(@"Failed to Get Your Location", nil) action: nil];
     [self presentViewController:alertView animated:YES completion:nil];
     
 }
 
-
-- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    // If it's a relatively recent event, turn off updates to save power.
-    CLLocation* location = [locations lastObject];
-    NSDate* eventDate = location.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+- (void) onReceiveLocationUpdate:(CLLocation *)location {
     
-    if (abs(howRecent) < 15.0) {
-        // If the event is recent, do something with it.
-        NSLog(@"latitude %+.6f, longitude %+.6f\n",
-              location.coordinate.latitude,
-              location.coordinate.longitude);
-        // keep updating current user location
-        [User saveLocation: location];
-        // query for nearby styles
-        [self getNearbyStyles: location];
-        
-    }
+    NSLog(@"LocationManager didReceiveUpdate: %@", location);
+    // list near by styles
+    [self getNearbyStyles: location];
 }
 
 -(void) getNearbyStyles:(CLLocation*) location {
@@ -382,11 +359,14 @@
     NSUInteger count = arrStylesFound.count;
     if(status == NO || count == 0)
     {
-        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
-        noDataLabel.text             = @"No styles nearby";
-        noDataLabel.textColor        = [UIColor blackColor];
-        noDataLabel.textAlignment    = NSTextAlignmentCenter;
-        [self.view addSubview:noDataLabel];
+        _styleImageView.image = [UIImage imageNamed:@"emptyProfile.png"];
+        
+//        UILabel *noDataLabel         = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.styleImageView.bounds.size.width + 80, self.styleImageView.bounds.size.height * 2)];
+//        noDataLabel.tag              = NOLBL_TAG;
+//        noDataLabel.text             = @"No styles nearby";
+//        noDataLabel.textColor        = [UIColor blackColor];
+//        noDataLabel.textAlignment    = NSTextAlignmentCenter;
+//        [self.view addSubview:noDataLabel];
         
         // add default item to be added
         NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:1];
@@ -489,7 +469,7 @@
     _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
     
     self.lblItemsCount.hidden = NO;
-    self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", @"Found", count, @"item", (count > 0) ? @"s" : @""];
+    self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", NSLocalizedString(@"Found", nil), count, @"item", (count > 0) ? @"s" : @""];
     
     [self.activityView stopAnimating];
     

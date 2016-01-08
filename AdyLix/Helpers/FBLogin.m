@@ -34,7 +34,11 @@
             NSLog(@"User logged in through Facebook!");
              status = YES;
         }
-        
+        // default to discoverable
+        if(status) {
+            [user setObject:[NSNumber numberWithBool:TRUE] forKey:@"discoverable"];
+            [user saveInBackground];
+        }
         if ([delegate respondsToSelector:@selector(didLogin:)]) {
             [delegate didLogin:status];
         }

@@ -78,7 +78,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDN-Fm-QFG">
-                                <rect key="frame" x="38" y="85" width="306" height="30"/>
+                                <rect key="frame" x="38" y="85" width="314" height="30"/>
                                 <connections>
                                     <segue destination="3Nw-8Z-tR3" kind="show" id="iwA-HK-lUw"/>
                                 </connections>
@@ -598,6 +598,6 @@
         <image name="submit.png" width="260" height="76"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="P3r-93-Vrz"/>
+        <segue reference="iwA-HK-lUw"/>
     </inferredMetricsTieBreakers>
 </document>
