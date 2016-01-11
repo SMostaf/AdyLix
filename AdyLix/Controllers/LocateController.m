@@ -309,7 +309,7 @@
         }
         index++;
     }
-    else if (recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
+    else if (recognizer.direction == UISwipeGestureRecognizerDirectionDown && index != 0) {
         index--;
     }
     
@@ -342,7 +342,8 @@
     NSLog(@"LocationManager didFailWithError: %@", error);
 
     UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Error", nil) msg:NSLocalizedString(@"Failed to Get Your Location", nil) action: nil];
-    [self presentViewController:alertView animated:YES completion:nil];
+    //alertView.popoverPresentationController.sourceView = self.view;
+    //[self presentViewController:alertView animated:YES completion:nil];
     
 }
 
@@ -386,8 +387,10 @@
             UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"This area is void of fashion!", nil) msg: NSLocalizedString(@"Share our App to spread the word...", nil)
                 action: ^(UIAlertAction * action) {
                     UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
+                    activityController.popoverPresentationController.sourceView = self.view;
                     [self presentViewController:activityController animated:YES completion:nil];
                 }];
+            alertView.popoverPresentationController.sourceView = self.view;
             [self presentViewController:alertView animated:YES completion:nil];
 
         }

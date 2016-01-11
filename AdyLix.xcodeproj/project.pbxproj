@@ -114,6 +114,7 @@
 		0AAEC3A81C2C7EA6000468E3 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAEC3A71C2C7EA6000468E3 /* Utility.m */; };
 		0AAED54D1C36034A000FA4AE /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54C1C36034A000FA4AE /* camera.png */; };
 		0AAED54F1C363E5D000FA4AE /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AAED54E1C363E5D000FA4AE /* settings.png */; };
+		0AB12DF81C408054004A0E55 /* StoryboardiPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AB12DF61C408054004A0E55 /* StoryboardiPad.storyboard */; };
 		0AB4319A1C37840500F42C76 /* heart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AB431991C37840500F42C76 /* heart.jpg */; };
 		0AB4319C1C378B5B00F42C76 /* share.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AB4319B1C378B5B00F42C76 /* share.jpg */; };
 		0AC7839C1C152ABD0028CAFF /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC7839B1C152ABD0028CAFF /* red.png */; };
@@ -312,6 +313,7 @@
 		0AAEC3A91C2C7EFD000468E3 /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		0AAED54C1C36034A000FA4AE /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = Res/menu/camera.png; sourceTree = "<group>"; };
 		0AAED54E1C363E5D000FA4AE /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Res/settings.png; sourceTree = "<group>"; };
+		0AB12DF71C408054004A0E55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/StoryboardiPad.storyboard; sourceTree = "<group>"; };
 		0AB431991C37840500F42C76 /* heart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = heart.jpg; path = Res/heart.jpg; sourceTree = "<group>"; };
 		0AB4319B1C378B5B00F42C76 /* share.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = share.jpg; path = Res/share.jpg; sourceTree = "<group>"; };
 		0AC7839B1C152ABD0028CAFF /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red.png; path = Res/red.png; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 				0A47BC8C1BDAFCCE00D362B9 /* AdyLix.entitlements */,
 				0A4F0AC01BD4656000C8A8D0 /* LaunchScreen.storyboard */,
 				0A47BC821BDAB53900D362B9 /* Main.storyboard */,
+				0AB12DF61C408054004A0E55 /* StoryboardiPad.storyboard */,
 				0A4F0AB21BD4656000C8A8D0 /* AppDelegate.h */,
 				0A4F0AB31BD4656000C8A8D0 /* AppDelegate.m */,
 				0A4E314D1BD47D72004776A2 /* Res */,
@@ -857,6 +860,7 @@
 				0A47BC7E1BDAAE9400D362B9 /* Icon@2x.png in Resources */,
 				0A6A1B0E1C28FA9D008E3C6F /* map2x.png in Resources */,
 				0A4E31671BD47D88004776A2 /* Icon@2x copy.png in Resources */,
+				0AB12DF81C408054004A0E55 /* StoryboardiPad.storyboard in Resources */,
 				0A631EBD1C34C564008C1341 /* camera.png in Resources */,
 				0AAEC3A61C2C7C28000468E3 /* framesBorder.png in Resources */,
 				0A631ECC1C34DD28008C1341 /* discover-selected.png in Resources */,
@@ -1106,6 +1110,14 @@
 				0A9AA7E41BF14A9500DEE2BF /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		0AB12DF61C408054004A0E55 /* StoryboardiPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AB12DF71C408054004A0E55 /* Base */,
+			);
+			name = StoryboardiPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -58,6 +58,7 @@
     } else {
         // Show error alert
         UIAlertController* alertView = [Utility getAlertViewForMessage:@"Error" msg:@"Facebook Login failed. Please try again." action: nil];
+        alertView.popoverPresentationController.sourceView = self.view;
         [self presentViewController:alertView animated:YES completion:nil];
         
     }

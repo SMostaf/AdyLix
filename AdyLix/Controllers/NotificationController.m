@@ -160,11 +160,14 @@ typedef enum {
     }
 
     PFUser* userObj = [object objectForKey:@"userFrom"];
+    NSLog(@"userfrom: %@", userObj.objectId);
     PFObject* styleObj = [object objectForKey:@"styleId"];
     // find a better way to query table
     if(userObj && styleObj) {
         PFObject* styleInfo = [StyleItems getStyleForId:styleObj.objectId];
+        // #TODO: include key username, instead of doing another query
         PFObject* userInfo =  [User getUserForId:userObj.objectId];
+    
         NSString* userName = [userInfo valueForKey:@"username"];
         NSString* styleName = [styleInfo valueForKey:@"name"];
         // User name liked your name style

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "FBLogin.h"
+#import "User.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
@@ -36,7 +37,8 @@
         }
         // default to discoverable
         if(status) {
-            [user setObject:[NSNumber numberWithBool:TRUE] forKey:@"discoverable"];
+            [user setObject:[NSNumber numberWithBool:YES] forKey:@"discoverable"];
+            [user setObject:[User getFBUserName: user] forKey:@"username"];
             [user saveInBackground];
         }
         if ([delegate respondsToSelector:@selector(didLogin:)]) {
