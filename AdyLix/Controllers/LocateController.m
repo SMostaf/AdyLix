@@ -260,7 +260,7 @@
     NSInteger index = _currentStyleIndex;
     NSInteger limit = [_stylesArr count] -  1;
     // resetting items counters
-    _currStyleDetail.currentItemIndex = 0;
+    _currStyleDetail.currentItemIndex = -1;
     self.lblItemsCount.text = @"";
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
         index++;
@@ -304,7 +304,9 @@
         if (index == -1) {
             // query style and grab its items
             DataInfo* currStyle = _stylesArr[_currentStyleIndex];
-            [self getItemsForStyle:[currStyle objectId]];
+            // check if items belong to the style
+            if(![self getItemsForStyle:[currStyle objectId]])
+                return;
             limit = _currStyleDetail.currentItemsLimit;
         }
         index++;
@@ -439,7 +441,7 @@
     
 }
 
--(void) getItemsForStyle:(NSString*) styleId {
+-(bool) getItemsForStyle:(NSString*) styleId {
     
     [self.activityView startAnimating];
     // query db for nearby items
@@ -450,7 +452,7 @@
         // #TODO
         // no items found, ask user to share adylix link
         // send request for more info
-        return;
+        return false;
     }
     PFUser* user = [[StyleItems getStyleForId:styleId] valueForKey:@"userId"];
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:count];
@@ -476,6 +478,8 @@
     self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", NSLocalizedString(@"Found", nil), count, @"item", (count > 0) ? @"s" : @""];
     
     [self.activityView stopAnimating];
+    
+    return true;
     
 }
 

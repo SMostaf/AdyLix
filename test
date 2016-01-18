@@ -15,3 +15,37 @@ curl -X POST \
         }
       }' \
   https://api.parse.com/1/push
+
+
+curl -X PUT \
+  -H "X-Parse-Application-Id:AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" \
+  -H "X-Parse-REST-API-Key:36tCnMKHTomoh588fsxhqZjf9bvDHelKwEsYr1rj" \
+  -H "Content-Type: application/json" \
+  -d '{"userId":{"__type":"Pointer","className":"_User","objectId":"g1KehSeWKy"}}' \
+  https://api.parse.com/1/classes/StyleMaster/zY3vC5tHRq
+
+curl -X PUT \
+  -H "X-Parse-Application-Id:AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" \
+  -H "X-Parse-REST-API-Key:36tCnMKHTomoh588fsxhqZjf9bvDHelKwEsYr1rj" \
+  -H "Content-Type: application/json" \
+  -d "where": {
+          "styleId": "jJD5tN6Pc9",
+          "imageFile": ""
+        },\
+  https://api.parse.com/1/classes/StyleMaster/jJD5tN6Pc9
+
+ 
+g1KehSeWKy
+
+        -d '{"opponents":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Player","objectId":"Vx4nudeWn"}]}}' \
+  https:
+
+curl -X PUT \
+  -H "X-Parse-Application-Id:AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" \
+  -H "X-Parse-REST-API-Key:36tCnMKHTomoh588fsxhqZjf9bvDHelKwEsYr1rj" \
+  -H "Content-Type: application/json" \
+  -d '{"userId":{"__type":"Pointer","className":"User","objectId":"g1KehSeWKy"}}' \ 
+  https://api.parse.com/1/classes/ItemDetail/jJD5tN6Pc9
+
+
+$objectData = '{"userid":{"__type":"Pointer","className":"_User","objectId":"hQsxiherY2"}, "tasktitle":"my first title", "taskcontent":"my first content"}';

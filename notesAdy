@@ -1,0 +1,76 @@
+// --------------------------------------------- table view handlers ----------------------------------------------- //
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *itemTableIdentifier = @"ItemCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:itemTableIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:itemTableIdentifier];
+    }
+    
+    [[cell.contentView viewWithTag:DESC_CUSTOM_TAG]removeFromSuperview] ;
+    // Configure the cell
+    UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
+    nameLabel.text = @"";
+    
+    UILabel *priceLabel = (UILabel*) [cell viewWithTag:101];
+    priceLabel.text = @"";
+    
+    PFImageView *thumbnailImageView = (PFImageView*)[cell viewWithTag:103];
+    
+    CGRect contentRect = CGRectMake(priceLabel.frame.origin.x, priceLabel.frame.origin.y + 45, 240, 40);
+    UILabel *descLabel = [[UILabel alloc] initWithFrame:contentRect];
+    [descLabel removeFromSuperview];
+    descLabel.tag = DESC_CUSTOM_TAG;
+    descLabel.text = @"";
+    descLabel.numberOfLines = 2;
+    descLabel.textColor = [UIColor darkGrayColor];
+    descLabel.font = [UIFont systemFontOfSize:12];
+    [cell.contentView addSubview:descLabel];
+    
+    for(UIView *view in cell.contentView.subviews) {
+        if(view.tag == 1) {
+            UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+            [tap setNumberOfTapsRequired:1];
+            [view addGestureRecognizer:tap];
+        }
+    }
+    
+    
+    DataInfo *itemFound = self.stylesArr[indexPath.row];
+    if(itemFound.name == @"unknown-default")
+    {
+        // show hat by default when no items discovered
+        nameLabel.text = @"The Hat";
+        descLabel.text  = @"Items discovered nearby will appear here, spread the word!";
+        priceLabel.text = @"$$";
+        
+        UIImage *img = [UIImage imageNamed:@"Icon-40@2x.png"];
+        NSData *data = UIImagePNGRepresentation(img);
+        thumbnailImageView.image = [UIImage imageWithData:data];
+        
+    }
+    else {
+        nameLabel.text = itemFound.name;
+        descLabel.text = itemFound.desc;
+        
+        PFFile *thumbnail = itemFound.imageData;
+        
+        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if(!error)
+                thumbnailImageView.image = [UIImage imageWithData:data];
+        }];
+    }
+    
+    return cell;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.stylesArr count];
+}
+
