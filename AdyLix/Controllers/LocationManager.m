@@ -58,7 +58,7 @@
 {
     NSLog(@"didFailWithError: %@", error);
     
-    [self.delegate onReceiveLocationError:error];
+   [self.delegate onReceiveLocationError:error];
 }
 
 

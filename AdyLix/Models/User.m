@@ -41,7 +41,7 @@
     [[PFUser currentUser] save];
 }
 
-+(PFObject*) getUserForId:(NSString*) userId {
++(PFUser*) getUserForId:(NSString*) userId {
     PFQuery *query = [PFUser query];
     [query whereKey:@"objectId" equalTo:userId];
     return(PFUser *)[query getFirstObject];

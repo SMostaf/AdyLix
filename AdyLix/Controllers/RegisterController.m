@@ -62,7 +62,8 @@
             
             PFFile* thumbnail = [styleObj valueForKey:@"imageFile"];
             [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                self.feedImage.image = [UIImage imageWithData:data];
+                self.feedImage.image = self.itemImage = [UIImage imageWithData:data];
+                
             }];
             
             self.chkDiscover.on = [StyleItems isCurrentStyle:styleObj];
@@ -122,6 +123,7 @@
         || self.itemImage == nil)
     {
         UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Missing Information", nil)  msg:NSLocalizedString(@"Make sure you fill out all of the information!", nil) action: nil];
+        alertView.popoverPresentationController.sourceView = self.view;
         [self presentViewController:alertView animated:YES completion:nil];
 
         return;
@@ -131,14 +133,14 @@
     
     PFObject *style = [PFObject objectWithClassName:@"StyleMaster"];
     [style setObject:self.txtName.text forKey:@"name"];
-    [style setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+   // [style setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
         
     //[item setObject:self.txtDesc.text forKey:@"description"];
     
-//    if (self.chkDiscover.on)
-//        [item setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
-//    else
-//        [item setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
+    if (self.chkDiscover.on)
+        [style setObject:[NSNumber numberWithBool:YES] forKey:@"isDiscoverable"];
+    else
+        [style setObject:[NSNumber numberWithBool:NO] forKey:@"isDiscoverable"];
 
     [style setObject:[NSDate date] forKey:@"timeStamp"];
     [style setObject:[PFUser currentUser] forKey:@"userId"];
@@ -170,6 +172,7 @@
             }
             // Show success message
             UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Upload Complete", nil)  msg:NSLocalizedString(@"Successfully saved your style", nil) action: nil];
+            alertView.popoverPresentationController.sourceView = self.view;
             [self presentViewController:alertView animated:YES completion:nil];
 
             
@@ -183,6 +186,7 @@
         } else {
             NSLog(@"Error uploading syle: %@", [error localizedDescription]);
             UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Upload Error", nil)  msg:NSLocalizedString(@"Failed to save your style", nil) action: nil];
+            alertView.popoverPresentationController.sourceView = self.view;
             [self presentViewController:alertView animated:YES completion:nil];
         }
      }];

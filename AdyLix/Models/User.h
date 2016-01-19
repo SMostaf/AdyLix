@@ -27,7 +27,7 @@ typedef void(^profileHandler)(UIImage* image);
 
 +(void) updateCurrentLocation;
 +(void) saveLocation:(CLLocation*) location;
-+(PFObject*) getUserForId:(NSString*) userId;
++(PFUser*) getUserForId:(NSString*) userId;
 +(UserInfo*) getInfoForUser:(PFUser*) user;
 +(void) getFBProfilePic:(PFUser*) user handler:(profileHandler) handler;
 +(NSString*) getFBUserName:(PFUser*) user;

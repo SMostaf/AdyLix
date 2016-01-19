@@ -260,7 +260,7 @@
     NSInteger index = _currentStyleIndex;
     NSInteger limit = [_stylesArr count] -  1;
     // resetting items counters
-    _currStyleDetail.currentItemIndex = 0;
+    _currStyleDetail.currentItemIndex = -1;
     self.lblItemsCount.text = @"";
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
         index++;
@@ -301,10 +301,12 @@
     if (recognizer.direction == UISwipeGestureRecognizerDirectionUp)
     {
         // first item to grab
-        if (index == 0) {
+        if (index == -1) {
             // query style and grab its items
             DataInfo* currStyle = _stylesArr[_currentStyleIndex];
-            [self getItemsForStyle:[currStyle objectId]];
+            // check if items belong to the style
+            if(![self getItemsForStyle:[currStyle objectId]])
+                return;
             limit = _currStyleDetail.currentItemsLimit;
         }
         index++;
@@ -315,8 +317,9 @@
     
     if (index >= 0 && index <= limit)
     {
-       [self showItemAtIndex:_currStyleDetail.currentItemIndex];
         _currStyleDetail.currentItemIndex = index;
+        [self showItemAtIndex:_currStyleDetail.currentItemIndex];
+        
     }
     else
     {
@@ -342,7 +345,8 @@
     NSLog(@"LocationManager didFailWithError: %@", error);
 
     UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"Error", nil) msg:NSLocalizedString(@"Failed to Get Your Location", nil) action: nil];
-    [self presentViewController:alertView animated:YES completion:nil];
+    //alertView.popoverPresentationController.sourceView = self.view;
+    //[self presentViewController:alertView animated:YES completion:nil];
     
 }
 
@@ -386,8 +390,10 @@
             UIAlertController* alertView = [Utility getAlertViewForMessage:NSLocalizedString(@"This area is void of fashion!", nil) msg: NSLocalizedString(@"Share our App to spread the word...", nil)
                 action: ^(UIAlertAction * action) {
                     UIActivityViewController* activityController = [ShareHelper shareInfo:kEmpty info:nil];
+                    activityController.popoverPresentationController.sourceView = self.view;
                     [self presentViewController:activityController animated:YES completion:nil];
                 }];
+            alertView.popoverPresentationController.sourceView = self.view;
             [self presentViewController:alertView animated:YES completion:nil];
 
         }
@@ -431,11 +437,11 @@
 
    }];
     _currStyleDetail = [[StyleDetail alloc] init];
-    _currStyleDetail.currentItemIndex = 0;
+    _currStyleDetail.currentItemIndex = -1;
     
 }
 
--(void) getItemsForStyle:(NSString*) styleId {
+-(bool) getItemsForStyle:(NSString*) styleId {
     
     [self.activityView startAnimating];
     // query db for nearby items
@@ -446,7 +452,7 @@
         // #TODO
         // no items found, ask user to share adylix link
         // send request for more info
-        return;
+        return false;
     }
     PFUser* user = [[StyleItems getStyleForId:styleId] valueForKey:@"userId"];
     NSMutableArray *items = [[NSMutableArray alloc] initWithCapacity:count];
@@ -465,13 +471,15 @@
     }
     
     _currStyleDetail.items = items;
-    _currStyleDetail.currentItemIndex = 0;
+    _currStyleDetail.currentItemIndex = -1;
     _currStyleDetail.currentItemsLimit = [_currStyleDetail.items count] - 1;
     
     self.lblItemsCount.hidden = NO;
     self.lblItemsCount.text = [NSString stringWithFormat:@"%@ %lu %@%@", NSLocalizedString(@"Found", nil), count, @"item", (count > 0) ? @"s" : @""];
     
     [self.activityView stopAnimating];
+    
+    return true;
     
 }
 
@@ -485,7 +493,7 @@
     DataInfo* dataInfo;
     enum ShareType type;
     // send info to be shared
-    if(_currStyleDetail.currentItemIndex == 0) {
+    if(_currStyleDetail.currentItemIndex == -1) {
         type = kShareStyle;
         dataInfo = [_stylesArr objectAtIndex:_currentStyleIndex];
     }
@@ -496,6 +504,7 @@
     }
     
     UIActivityViewController* activityController = [ShareHelper shareInfo:type info:dataInfo];
+    activityController.popoverPresentationController.sourceView = self.view;
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
