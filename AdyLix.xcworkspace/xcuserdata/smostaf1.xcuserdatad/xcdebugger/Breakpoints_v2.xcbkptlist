@@ -4245,7 +4245,7 @@
                   moduleName = "AdyLix"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/LocateController.m"
-                  timestampString = "474788060.147861"
+                  timestampString = "475348225.452483"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "391"
@@ -4260,7 +4260,7 @@
                   moduleName = "AdyLix"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/LocateController.m"
-                  timestampString = "474788060.148006"
+                  timestampString = "475348225.452626"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "391"
@@ -4668,6 +4668,86 @@
             endingLineNumber = "263"
             landmarkName = "-swipeStyleImage:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AdyLix/Controllers/LocateController.m"
+            timestampString = "475347889.42182"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "513"
+            endingLineNumber = "513"
+            landmarkName = "-btnLike:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AdyLix/Controllers/LocateController.m"
+            timestampString = "475347922.643454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "525"
+            endingLineNumber = "525"
+            landmarkName = "-btnLike:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AdyLix/Controllers/LocateController.m"
+            timestampString = "475348035.477742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "-updateProfileForStyle:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[LocateController updateProfileForStyle:]"
+                  moduleName = "AdyLix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/LocateController.m"
+                  timestampString = "475348045.099486"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "224"
+                  endingLineNumber = "224"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[LocateController updateProfileForStyle:]_block_invoke"
+                  moduleName = "AdyLix"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/smostaf1/Projects/AdyLix/AdyLix/Controllers/LocateController.m"
+                  timestampString = "475348045.099634"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "224"
+                  endingLineNumber = "224"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
