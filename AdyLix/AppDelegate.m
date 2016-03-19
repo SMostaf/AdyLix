@@ -10,6 +10,7 @@
 #import <UIKit/UIApplication.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import <Parse/ParseClientConfiguration.h>
 #import "Parse/Parse.h"
 #import "MainController.h"
 #import "FBLoginViewController.h"
@@ -25,6 +26,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // parse init
     [Parse setApplicationId:@"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" clientKey:@"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5"];
+    
+    /*[Parse initializeWithConfiguration:
+     */
+     
+     ParseClientConfiguration* config = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+        configuration.applicationId = @"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT";
+        configuration.clientKey = @"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5";
+        configuration.server = @"http://parseserverad-6n82f-env.elasticbeanstalk.com//parse";
+    }];//];
+    
+    [Parse initializeWithConfiguration: (ParseClientConfiguration*) config];
+    
     // stripe payment init
     //[Stripe setDefaultPublishableKey:StripePublishableKey];
     
