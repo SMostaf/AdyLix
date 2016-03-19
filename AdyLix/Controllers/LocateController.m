@@ -511,7 +511,7 @@
 #pragma mark - push notify flow
 - (IBAction) btnLike:(id)sender {
     DataInfo* info = nil;
-    if (_currStyleDetail.currentItemIndex != 0) {
+    if (_currStyleDetail.currentItemIndex != -1) {
         // swiped down, user liked an item
         info = _currStyleDetail.items[_currStyleDetail.currentItemIndex];
         [StyleItems like:[_stylesArr[_currentStyleIndex] objectId] itemId:info.objectId owner: info.userObjectId];
