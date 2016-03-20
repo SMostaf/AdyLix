@@ -84,7 +84,6 @@
 		0A7AD2F91C9DBF9500D9B548 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F11C9DBF9500D9B548 /* libFBSDKCoreKit.a */; };
 		0A7AD2FA1C9DBF9500D9B548 /* libFBSDKLoginKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F21C9DBF9500D9B548 /* libFBSDKLoginKit.a */; };
 		0A7AD2FB1C9DBF9500D9B548 /* libFBSDKShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F31C9DBF9500D9B548 /* libFBSDKShareKit.a */; };
-		0A7AD2FC1C9DBF9500D9B548 /* libParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F41C9DBF9500D9B548 /* libParse.a */; };
 		0A7AD2FD1C9DBF9500D9B548 /* libParseFacebookUtilsV4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F51C9DBF9500D9B548 /* libParseFacebookUtilsV4.a */; };
 		0A7AD2FE1C9DBF9500D9B548 /* libParseUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD2F61C9DBF9500D9B548 /* libParseUI.a */; };
 		0A7AD3011C9DBFA200D9B548 /* libBolts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7AD3001C9DBFA200D9B548 /* libBolts.a */; };
@@ -92,6 +91,7 @@
 		0A8541A11C2505ED00B41F29 /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8541A01C2505ED00B41F29 /* NotificationController.m */; };
 		0A86A30E1BE9DBC8001245D7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A86A30D1BE9DBC8001245D7 /* User.m */; };
 		0A86A3211BE9EC81001245D7 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A86A3201BE9EC81001245D7 /* FacebookSDKStrings.bundle */; };
+		0A8D1C171C9E36A500AA26DE /* libParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D1C161C9E36A500AA26DE /* libParse.a */; };
 		0A9AA7E21BF14A9500DEE2BF /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AA7E11BF14A9500DEE2BF /* ShareViewController.m */; };
 		0A9AA7E51BF14A9500DEE2BF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A9AA7E31BF14A9500DEE2BF /* MainInterface.storyboard */; };
 		0A9C70C31C2490970044EC03 /* FBLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A9C70C21C2490970044EC03 /* FBLogin.png */; };
@@ -258,6 +258,7 @@
 		0A86A30C1BE9DBC8001245D7 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Models/User.h; sourceTree = "<group>"; };
 		0A86A30D1BE9DBC8001245D7 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Models/User.m; sourceTree = "<group>"; };
 		0A86A3201BE9EC81001245D7 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKStrings.bundle; path = AdyLix/Frameworks/FacebookSDKStrings.bundle; sourceTree = "<group>"; };
+		0A8D1C161C9E36A500AA26DE /* libParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParse.a; path = "Pods/../build/Debug-iphoneos/libParse.a"; sourceTree = "<group>"; };
 		0A9AA7DE1BF14A9500DEE2BF /* AdyLix-Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AdyLix-Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A9AA7E01BF14A9500DEE2BF /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		0A9AA7E11BF14A9500DEE2BF /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
@@ -280,7 +281,6 @@
 		0A9C70DD1C24D99A0044EC03 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = Models/UserInfo.m; sourceTree = "<group>"; };
 		0A9CC1071C38476600EC0292 /* submit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = submit.png; path = Res/submit.png; sourceTree = "<group>"; };
 		0AA856211C79165D00E68B08 /* ImageIdentify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageIdentify.m; path = Helpers/ImageIdentify.m; sourceTree = "<group>"; };
-		0AA856241C7916A200E68B08 /* ImageIdentify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageIdentify.h; path = Helpers/ImageIdentify.h; sourceTree = "<group>"; };
 		0AAEC3A31C2C6A1F000468E3 /* emptyProfile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = emptyProfile.png; path = Res/emptyProfile.png; sourceTree = "<group>"; };
 		0AAEC3A51C2C7C28000468E3 /* framesBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = framesBorder.png; path = Res/framesBorder.png; sourceTree = "<group>"; };
 		0AAEC3A71C2C7EA6000468E3 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
@@ -302,11 +302,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A8D1C171C9E36A500AA26DE /* libParse.a in Frameworks */,
 				0A7AD3011C9DBFA200D9B548 /* libBolts.a in Frameworks */,
 				0A7AD2F91C9DBF9500D9B548 /* libFBSDKCoreKit.a in Frameworks */,
 				0A7AD2FA1C9DBF9500D9B548 /* libFBSDKLoginKit.a in Frameworks */,
 				0A7AD2FB1C9DBF9500D9B548 /* libFBSDKShareKit.a in Frameworks */,
-				0A7AD2FC1C9DBF9500D9B548 /* libParse.a in Frameworks */,
 				0A7AD2FD1C9DBF9500D9B548 /* libParseFacebookUtilsV4.a in Frameworks */,
 				0A7AD2FE1C9DBF9500D9B548 /* libParseUI.a in Frameworks */,
 				0A7AD2EF1C9DBF7F00D9B548 /* libsqlite3.a in Frameworks */,
@@ -612,7 +612,6 @@
 				0A9C70D71C24C0D00044EC03 /* connector.m */,
 				0A9C70D81C24C0D00044EC03 /* FBLogin.h */,
 				0A9C70D91C24C0D00044EC03 /* FBLogin.m */,
-				0AA856241C7916A200E68B08 /* ImageIdentify.h */,
 				0AA856211C79165D00E68B08 /* ImageIdentify.m */,
 			);
 			name = Helpers;
@@ -630,6 +629,7 @@
 		4B79BF41EACB746E26717CD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A8D1C161C9E36A500AA26DE /* libParse.a */,
 				0A7AD3001C9DBFA200D9B548 /* libBolts.a */,
 				0A7AD2F01C9DBF9500D9B548 /* libBolts.a */,
 				0A7AD2F11C9DBF9500D9B548 /* libFBSDKCoreKit.a */,

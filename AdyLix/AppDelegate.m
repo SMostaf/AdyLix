@@ -24,15 +24,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // parse init
-    [Parse setApplicationId:@"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT" clientKey:@"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5"];
-    
-    [Parse initializeWithConfiguration:ParseClientConfiguration* config = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+    // parse init to aws
+   ParseClientConfiguration* config =  [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         configuration.applicationId = @"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT";
         configuration.clientKey = @"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5";
-        configuration.server = @"http://parseserverad-6n82f-env.elasticbeanstalk.com//parse";
-    }]];
+        configuration.server = @"http://parseserverad-6n82f-env.elasticbeanstalk.com/parse";
+       
+    }];
     
+    [Parse initializeWithConfiguration:config];
     
     // stripe payment init
     //[Stripe setDefaultPublishableKey:StripePublishableKey];
@@ -43,8 +43,7 @@
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
-    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
-    
+
     [self handlePush:launchOptions];
     [self setupParseWithOptions:launchOptions];
     
@@ -54,6 +53,9 @@
     
     UINavigationController* navigationController = (UINavigationController *)self.window.rootViewController;
     UIStoryboard *mainStoryboard = self.window.rootViewController.storyboard;
+    
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
     // if user logged in from before
     if ([FBSDKAccessToken currentAccessToken]) {
         LocateController *mainView = (LocateController*)[mainStoryboard instantiateViewControllerWithIdentifier: @"discoverController"];

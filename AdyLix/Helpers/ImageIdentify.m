@@ -8,7 +8,7 @@
 
 // layer uses Google Cloud vision APIs to identify elements of style
 // and saves into categories in DB
-#import "ImageIdentify.h"
+//#import "ImageIdentify.h"
 
 #define API_DISCOVERY_FILE 'https://vision.googleapis.com/$discovery/rest?version=v1'
 #define CLOUD_URI 'https://vision.googleapis.com' //https://www.googleapis.com/auth/cloud-platform'
@@ -32,7 +32,7 @@
  $ curl -v -k -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=browser_key --data-binary @request_filename
 
 */
-
+/*
 @implementation ImageIdentify
 
 // authentication happens first
@@ -80,7 +80,7 @@
     response = service_request.execute()
     label = response['responses'][0]['labelAnnotations'][0]['description']
     print('Found label: %s for %s' % (label, photo_file))
-*/    return result;
+*/    /*return result;
 }
 
 /*
@@ -97,4 +97,4 @@
 }*/
 
 
-@end
+//@end
