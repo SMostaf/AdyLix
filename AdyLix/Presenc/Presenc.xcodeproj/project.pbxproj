@@ -1,0 +1,750 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0696D14C60B78C36AF4A61D2 /* Pods_Presenc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB2D7EC29171226E653EB48 /* Pods_Presenc.framework */; };
+		0A59B54C1DD95EBA00EA1AA8 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A59B54B1DD95EBA00EA1AA8 /* LoginController.swift */; };
+		0A59B54F1DD95EF300EA1AA8 /* DiscoveryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A59B54D1DD95EF300EA1AA8 /* DiscoveryController.swift */; };
+		0A59B5501DD95EF300EA1AA8 /* WardrobeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A59B54E1DD95EF300EA1AA8 /* WardrobeController.swift */; };
+		0A8684A61DDAAE1300958BEB /* AdobeStock_56484190_WM.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 0A8684A51DDAAE1300958BEB /* AdobeStock_56484190_WM.jpeg */; };
+		0AD817431DD925C70063645C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AD817421DD925C70063645C /* GoogleService-Info.plist */; };
+		0AFDED171DCFFAA70096B2BF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFDED161DCFFAA70096B2BF /* AppDelegate.swift */; };
+		0AFDED1E1DCFFAA70096B2BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AFDED1C1DCFFAA70096B2BF /* Main.storyboard */; };
+		0AFDED201DCFFAA70096B2BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFDED1F1DCFFAA70096B2BF /* Assets.xcassets */; };
+		0AFDED231DCFFAA70096B2BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AFDED211DCFFAA70096B2BF /* LaunchScreen.storyboard */; };
+		0AFDED2E1DCFFAA70096B2BF /* PresencTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFDED2D1DCFFAA70096B2BF /* PresencTests.swift */; };
+		0AFDED391DCFFAA70096B2BF /* PresencUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFDED381DCFFAA70096B2BF /* PresencUITests.swift */; };
+		1DE7D479126FC22BD2267D4E /* libPods-PresencUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3CEE1FA4ECFF95A9BBCDE0 /* libPods-PresencUITests.a */; };
+		B494FE26ED0BB5FAEB361DB7 /* libPods-PresencTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC5BD49FB5FFC677445A8A7 /* libPods-PresencTests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0AFDED2A1DCFFAA70096B2BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AFDED0B1DCFFAA70096B2BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0AFDED121DCFFAA70096B2BF;
+			remoteInfo = Presenc;
+		};
+		0AFDED351DCFFAA70096B2BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AFDED0B1DCFFAA70096B2BF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0AFDED121DCFFAA70096B2BF;
+			remoteInfo = Presenc;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		059544AA4FDF92979876CD89 /* Pods-Presenc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Presenc.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Presenc/Pods-Presenc.debug.xcconfig"; sourceTree = "<group>"; };
+		0A59B54B1DD95EBA00EA1AA8 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Controllers/LoginController.swift; sourceTree = "<group>"; };
+		0A59B54D1DD95EF300EA1AA8 /* DiscoveryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiscoveryController.swift; path = Controllers/DiscoveryController.swift; sourceTree = "<group>"; };
+		0A59B54E1DD95EF300EA1AA8 /* WardrobeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WardrobeController.swift; path = Controllers/WardrobeController.swift; sourceTree = "<group>"; };
+		0A8684A51DDAAE1300958BEB /* AdobeStock_56484190_WM.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = AdobeStock_56484190_WM.jpeg; path = img/AdobeStock_56484190_WM.jpeg; sourceTree = "<group>"; };
+		0AD817421DD925C70063645C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0ADD5EB3D2E5E0AA61B961C7 /* Pods-PresencTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresencTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PresencTests/Pods-PresencTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0AFDED131DCFFAA70096B2BF /* Presenc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Presenc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AFDED161DCFFAA70096B2BF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0AFDED1D1DCFFAA70096B2BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0AFDED1F1DCFFAA70096B2BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0AFDED221DCFFAA70096B2BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0AFDED241DCFFAA70096B2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AFDED291DCFFAA70096B2BF /* PresencTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PresencTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AFDED2D1DCFFAA70096B2BF /* PresencTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresencTests.swift; sourceTree = "<group>"; };
+		0AFDED2F1DCFFAA70096B2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AFDED341DCFFAA70096B2BF /* PresencUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PresencUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AFDED381DCFFAA70096B2BF /* PresencUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresencUITests.swift; sourceTree = "<group>"; };
+		0AFDED3A1DCFFAA70096B2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0FB2D7EC29171226E653EB48 /* Pods_Presenc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Presenc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42D404B06F45D1D39FBEC27A /* Pods-PresencTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresencTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PresencTests/Pods-PresencTests.release.xcconfig"; sourceTree = "<group>"; };
+		5EABE86B7C2BBC078A9D8AA6 /* Pods-Presenc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Presenc.release.xcconfig"; path = "Pods/Target Support Files/Pods-Presenc/Pods-Presenc.release.xcconfig"; sourceTree = "<group>"; };
+		6D3CEE1FA4ECFF95A9BBCDE0 /* libPods-PresencUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PresencUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FC5BD49FB5FFC677445A8A7 /* libPods-PresencTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PresencTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9C3BF5C2C7C69933BBC742A /* Pods-PresencUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresencUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PresencUITests/Pods-PresencUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FFD2759C819A69BEC3D21C9F /* Pods-PresencUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PresencUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PresencUITests/Pods-PresencUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0AFDED101DCFFAA70096B2BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0696D14C60B78C36AF4A61D2 /* Pods_Presenc.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED261DCFFAA70096B2BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B494FE26ED0BB5FAEB361DB7 /* libPods-PresencTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED311DCFFAA70096B2BF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DE7D479126FC22BD2267D4E /* libPods-PresencUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A8684A41DDAAE0800958BEB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0A8684A51DDAAE1300958BEB /* AdobeStock_56484190_WM.jpeg */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		0ADB13E71DDAB10800B4371D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0A59B54D1DD95EF300EA1AA8 /* DiscoveryController.swift */,
+				0A59B54E1DD95EF300EA1AA8 /* WardrobeController.swift */,
+				0A59B54B1DD95EBA00EA1AA8 /* LoginController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		0AFDED0A1DCFFAA70096B2BF = {
+			isa = PBXGroup;
+			children = (
+				0AD817421DD925C70063645C /* GoogleService-Info.plist */,
+				0AFDED151DCFFAA70096B2BF /* Presenc */,
+				0AFDED2C1DCFFAA70096B2BF /* PresencTests */,
+				0AFDED371DCFFAA70096B2BF /* PresencUITests */,
+				0AFDED141DCFFAA70096B2BF /* Products */,
+				73E365E506C746DA1D10C7AB /* Pods */,
+				35578A9963A89424821BDD4E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0AFDED141DCFFAA70096B2BF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0AFDED131DCFFAA70096B2BF /* Presenc.app */,
+				0AFDED291DCFFAA70096B2BF /* PresencTests.xctest */,
+				0AFDED341DCFFAA70096B2BF /* PresencUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0AFDED151DCFFAA70096B2BF /* Presenc */ = {
+			isa = PBXGroup;
+			children = (
+				0ADB13E71DDAB10800B4371D /* Controllers */,
+				0A8684A41DDAAE0800958BEB /* UI */,
+				0AFDED161DCFFAA70096B2BF /* AppDelegate.swift */,
+				0AFDED1C1DCFFAA70096B2BF /* Main.storyboard */,
+				0AFDED211DCFFAA70096B2BF /* LaunchScreen.storyboard */,
+				0AFDED1F1DCFFAA70096B2BF /* Assets.xcassets */,
+				0AFDED241DCFFAA70096B2BF /* Info.plist */,
+			);
+			path = Presenc;
+			sourceTree = "<group>";
+		};
+		0AFDED2C1DCFFAA70096B2BF /* PresencTests */ = {
+			isa = PBXGroup;
+			children = (
+				0AFDED2D1DCFFAA70096B2BF /* PresencTests.swift */,
+				0AFDED2F1DCFFAA70096B2BF /* Info.plist */,
+			);
+			path = PresencTests;
+			sourceTree = "<group>";
+		};
+		0AFDED371DCFFAA70096B2BF /* PresencUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0AFDED381DCFFAA70096B2BF /* PresencUITests.swift */,
+				0AFDED3A1DCFFAA70096B2BF /* Info.plist */,
+			);
+			path = PresencUITests;
+			sourceTree = "<group>";
+		};
+		35578A9963A89424821BDD4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0FB2D7EC29171226E653EB48 /* Pods_Presenc.framework */,
+				9FC5BD49FB5FFC677445A8A7 /* libPods-PresencTests.a */,
+				6D3CEE1FA4ECFF95A9BBCDE0 /* libPods-PresencUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73E365E506C746DA1D10C7AB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				059544AA4FDF92979876CD89 /* Pods-Presenc.debug.xcconfig */,
+				5EABE86B7C2BBC078A9D8AA6 /* Pods-Presenc.release.xcconfig */,
+				0ADD5EB3D2E5E0AA61B961C7 /* Pods-PresencTests.debug.xcconfig */,
+				42D404B06F45D1D39FBEC27A /* Pods-PresencTests.release.xcconfig */,
+				FFD2759C819A69BEC3D21C9F /* Pods-PresencUITests.debug.xcconfig */,
+				A9C3BF5C2C7C69933BBC742A /* Pods-PresencUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0AFDED121DCFFAA70096B2BF /* Presenc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AFDED3D1DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "Presenc" */;
+			buildPhases = (
+				2C57BF46E8F1CFC960B4323E /* [CP] Check Pods Manifest.lock */,
+				0AFDED0F1DCFFAA70096B2BF /* Sources */,
+				0AFDED101DCFFAA70096B2BF /* Frameworks */,
+				0AFDED111DCFFAA70096B2BF /* Resources */,
+				2B2429AB2F9686AB7AA83D2C /* [CP] Embed Pods Frameworks */,
+				1EEAAE441AC0CA474C7A5822 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Presenc;
+			productName = Presenc;
+			productReference = 0AFDED131DCFFAA70096B2BF /* Presenc.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0AFDED281DCFFAA70096B2BF /* PresencTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AFDED401DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "PresencTests" */;
+			buildPhases = (
+				2DA85788FDAD0F1D0350462F /* [CP] Check Pods Manifest.lock */,
+				0AFDED251DCFFAA70096B2BF /* Sources */,
+				0AFDED261DCFFAA70096B2BF /* Frameworks */,
+				0AFDED271DCFFAA70096B2BF /* Resources */,
+				0461AAA9D233F2C6896340E3 /* [CP] Embed Pods Frameworks */,
+				68D8806E7D2F85591772E28F /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AFDED2B1DCFFAA70096B2BF /* PBXTargetDependency */,
+			);
+			name = PresencTests;
+			productName = PresencTests;
+			productReference = 0AFDED291DCFFAA70096B2BF /* PresencTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0AFDED331DCFFAA70096B2BF /* PresencUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AFDED431DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "PresencUITests" */;
+			buildPhases = (
+				3F0052387C6392AEF0BF19B1 /* [CP] Check Pods Manifest.lock */,
+				0AFDED301DCFFAA70096B2BF /* Sources */,
+				0AFDED311DCFFAA70096B2BF /* Frameworks */,
+				0AFDED321DCFFAA70096B2BF /* Resources */,
+				4EE650BB57DF1E497B917E0C /* [CP] Embed Pods Frameworks */,
+				25C8241650BFCCFED670D01C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AFDED361DCFFAA70096B2BF /* PBXTargetDependency */,
+			);
+			name = PresencUITests;
+			productName = PresencUITests;
+			productReference = 0AFDED341DCFFAA70096B2BF /* PresencUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0AFDED0B1DCFFAA70096B2BF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				TargetAttributes = {
+					0AFDED121DCFFAA70096B2BF = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = 7V462K6Y74;
+						LastSwiftMigration = 0820;
+					};
+					0AFDED281DCFFAA70096B2BF = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
+						TestTargetID = 0AFDED121DCFFAA70096B2BF;
+					};
+					0AFDED331DCFFAA70096B2BF = {
+						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
+						TestTargetID = 0AFDED121DCFFAA70096B2BF;
+					};
+				};
+			};
+			buildConfigurationList = 0AFDED0E1DCFFAA70096B2BF /* Build configuration list for PBXProject "Presenc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0AFDED0A1DCFFAA70096B2BF;
+			productRefGroup = 0AFDED141DCFFAA70096B2BF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0AFDED121DCFFAA70096B2BF /* Presenc */,
+				0AFDED281DCFFAA70096B2BF /* PresencTests */,
+				0AFDED331DCFFAA70096B2BF /* PresencUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0AFDED111DCFFAA70096B2BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AD817431DD925C70063645C /* GoogleService-Info.plist in Resources */,
+				0AFDED231DCFFAA70096B2BF /* LaunchScreen.storyboard in Resources */,
+				0AFDED201DCFFAA70096B2BF /* Assets.xcassets in Resources */,
+				0A8684A61DDAAE1300958BEB /* AdobeStock_56484190_WM.jpeg in Resources */,
+				0AFDED1E1DCFFAA70096B2BF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED271DCFFAA70096B2BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED321DCFFAA70096B2BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0461AAA9D233F2C6896340E3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PresencTests/Pods-PresencTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1EEAAE441AC0CA474C7A5822 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Presenc/Pods-Presenc-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		25C8241650BFCCFED670D01C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PresencUITests/Pods-PresencUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2B2429AB2F9686AB7AA83D2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Presenc/Pods-Presenc-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2C57BF46E8F1CFC960B4323E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2DA85788FDAD0F1D0350462F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3F0052387C6392AEF0BF19B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4EE650BB57DF1E497B917E0C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PresencUITests/Pods-PresencUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68D8806E7D2F85591772E28F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PresencTests/Pods-PresencTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0AFDED0F1DCFFAA70096B2BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A59B54F1DD95EF300EA1AA8 /* DiscoveryController.swift in Sources */,
+				0A59B5501DD95EF300EA1AA8 /* WardrobeController.swift in Sources */,
+				0A59B54C1DD95EBA00EA1AA8 /* LoginController.swift in Sources */,
+				0AFDED171DCFFAA70096B2BF /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED251DCFFAA70096B2BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AFDED2E1DCFFAA70096B2BF /* PresencTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0AFDED301DCFFAA70096B2BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0AFDED391DCFFAA70096B2BF /* PresencUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0AFDED2B1DCFFAA70096B2BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0AFDED121DCFFAA70096B2BF /* Presenc */;
+			targetProxy = 0AFDED2A1DCFFAA70096B2BF /* PBXContainerItemProxy */;
+		};
+		0AFDED361DCFFAA70096B2BF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0AFDED121DCFFAA70096B2BF /* Presenc */;
+			targetProxy = 0AFDED351DCFFAA70096B2BF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0AFDED1C1DCFFAA70096B2BF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AFDED1D1DCFFAA70096B2BF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0AFDED211DCFFAA70096B2BF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0AFDED221DCFFAA70096B2BF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0AFDED3B1DCFFAA70096B2BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0AFDED3C1DCFFAA70096B2BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0AFDED3E1DCFFAA70096B2BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 059544AA4FDF92979876CD89 /* Pods-Presenc.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Presenc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ady.lix;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		0AFDED3F1DCFFAA70096B2BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EABE86B7C2BBC078A9D8AA6 /* Pods-Presenc.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Presenc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ady.lix;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		0AFDED411DCFFAA70096B2BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ADD5EB3D2E5E0AA61B961C7 /* Pods-PresencTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PresencTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Intel.PresencTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Presenc.app/Presenc";
+			};
+			name = Debug;
+		};
+		0AFDED421DCFFAA70096B2BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42D404B06F45D1D39FBEC27A /* Pods-PresencTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PresencTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Intel.PresencTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Presenc.app/Presenc";
+			};
+			name = Release;
+		};
+		0AFDED441DCFFAA70096B2BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFD2759C819A69BEC3D21C9F /* Pods-PresencUITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = PresencUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Intel.PresencUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Presenc;
+			};
+			name = Debug;
+		};
+		0AFDED451DCFFAA70096B2BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9C3BF5C2C7C69933BBC742A /* Pods-PresencUITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = PresencUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Intel.PresencUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Presenc;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0AFDED0E1DCFFAA70096B2BF /* Build configuration list for PBXProject "Presenc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AFDED3B1DCFFAA70096B2BF /* Debug */,
+				0AFDED3C1DCFFAA70096B2BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0AFDED3D1DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "Presenc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AFDED3E1DCFFAA70096B2BF /* Debug */,
+				0AFDED3F1DCFFAA70096B2BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0AFDED401DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "PresencTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AFDED411DCFFAA70096B2BF /* Debug */,
+				0AFDED421DCFFAA70096B2BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0AFDED431DCFFAA70096B2BF /* Build configuration list for PBXNativeTarget "PresencUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AFDED441DCFFAA70096B2BF /* Debug */,
+				0AFDED451DCFFAA70096B2BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0AFDED0B1DCFFAA70096B2BF /* Project object */;
+}

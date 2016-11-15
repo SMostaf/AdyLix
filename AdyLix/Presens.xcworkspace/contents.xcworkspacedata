@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:Presenc"
+      name = "Presenc">
+      <FileRef
+         location = "group:GoogleService-Info.plist">
+      </FileRef>
+      <FileRef
+         location = "group:Podfile">
+      </FileRef>
+      <FileRef
+         location = "group:Podfile.lock">
+      </FileRef>
+      <Group
+         location = "group:Pods"
+         name = "Pods">
+         <Group
+            location = "group:Firebase"
+            name = "Firebase">
+            <Group
+               location = "group:Core"
+               name = "Core">
+               <Group
+                  location = "group:Sources"
+                  name = "Sources">
+                  <FileRef
+                     location = "group:Firebase.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:module.modulemap">
+                  </FileRef>
+               </Group>
+            </Group>
+            <FileRef
+               location = "group:README.md">
+            </FileRef>
+         </Group>
+         <Group
+            location = "group:FirebaseAnalytics"
+            name = "FirebaseAnalytics">
+            <Group
+               location = "group:Frameworks"
+               name = "Frameworks">
+               <Group
+                  location = "group:frameworks"
+                  name = "frameworks">
+                  <Group
+                     location = "group:FirebaseAnalytics.framework"
+                     name = "FirebaseAnalytics.framework">
+                     <FileRef
+                        location = "group:FirebaseAnalytics">
+                     </FileRef>
+                     <Group
+                        location = "group:Headers"
+                        name = "Headers">
+                        <FileRef
+                           location = "group:FIRAnalytics+AppDelegate.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRAnalytics.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRAnalyticsConfiguration.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRApp.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRConfiguration.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FirebaseAnalytics.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIREventNames.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIROptions.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRParameterNames.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRUserPropertyNames.h">
+                        </FileRef>
+                     </Group>
+                     <Group
+                        location = "group:Modules"
+                        name = "Modules">
+                        <FileRef
+                           location = "group:module.modulemap">
+                        </FileRef>
+                     </Group>
+                  </Group>
+               </Group>
+            </Group>
+         </Group>
+         <Group
+            location = "group:FirebaseCore"
+            name = "FirebaseCore">
+            <Group
+               location = "group:Frameworks"
+               name = "Frameworks">
+               <Group
+                  location = "group:frameworks"
+                  name = "frameworks">
+                  <Group
+                     location = "group:FirebaseCore.framework"
+                     name = "FirebaseCore.framework">
+                     <FileRef
+                        location = "group:FirebaseCore">
+                     </FileRef>
+                     <Group
+                        location = "group:Headers"
+                        name = "Headers">
+                        <FileRef
+                           location = "group:FIRAnalyticsConfiguration.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRApp.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRConfiguration.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FirebaseCore.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIROptions.h">
+                        </FileRef>
+                     </Group>
+                     <Group
+                        location = "group:Modules"
+                        name = "Modules">
+                        <FileRef
+                           location = "group:module.modulemap">
+                        </FileRef>
+                     </Group>
+                  </Group>
+               </Group>
+            </Group>
+         </Group>
+         <Group
+            location = "group:FirebaseInstanceID"
+            name = "FirebaseInstanceID">
+            <Group
+               location = "group:Frameworks"
+               name = "Frameworks">
+               <Group
+                  location = "group:frameworks"
+                  name = "frameworks">
+                  <Group
+                     location = "group:FirebaseInstanceID.framework"
+                     name = "FirebaseInstanceID.framework">
+                     <FileRef
+                        location = "group:FirebaseInstanceID">
+                     </FileRef>
+                     <Group
+                        location = "group:Headers"
+                        name = "Headers">
+                        <FileRef
+                           location = "group:FirebaseInstanceID.h">
+                        </FileRef>
+                        <FileRef
+                           location = "group:FIRInstanceID.h">
+                        </FileRef>
+                     </Group>
+                     <Group
+                        location = "group:Modules"
+                        name = "Modules">
+                        <FileRef
+                           location = "group:module.modulemap">
+                        </FileRef>
+                     </Group>
+                  </Group>
+               </Group>
+            </Group>
+            <Group
+               location = "group:Sources"
+               name = "Sources">
+               <FileRef
+                  location = "group:FIRInstanceID.h">
+               </FileRef>
+            </Group>
+         </Group>
+         <Group
+            location = "group:GoogleInterchangeUtilities"
+            name = "GoogleInterchangeUtilities">
+            <Group
+               location = "group:Frameworks"
+               name = "Frameworks">
+               <Group
+                  location = "group:frameworks"
+                  name = "frameworks">
+                  <Group
+                     location = "group:GoogleInterchangeUtilities.framework"
+                     name = "GoogleInterchangeUtilities.framework">
+                     <FileRef
+                        location = "group:GoogleInterchangeUtilities">
+                     </FileRef>
+                  </Group>
+               </Group>
+            </Group>
+         </Group>
+         <Group
+            location = "group:GoogleSymbolUtilities"
+            name = "GoogleSymbolUtilities">
+            <Group
+               location = "group:Frameworks"
+               name = "Frameworks">
+               <Group
+                  location = "group:frameworks"
+                  name = "frameworks">
+                  <Group
+                     location = "group:GoogleSymbolUtilities.framework"
+                     name = "GoogleSymbolUtilities.framework">
+                     <FileRef
+                        location = "group:GoogleSymbolUtilities">
+                     </FileRef>
+                  </Group>
+               </Group>
+            </Group>
+         </Group>
+         <Group
+            location = "group:GoogleToolboxForMac"
+            name = "GoogleToolboxForMac">
+            <Group
+               location = "group:Foundation"
+               name = "Foundation">
+               <FileRef
+                  location = "group:GTMNSData+zlib.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GTMNSData+zlib.m">
+               </FileRef>
+            </Group>
+            <FileRef
+               location = "group:GTMDefines.h">
+            </FileRef>
+            <FileRef
+               location = "group:LICENSE">
+            </FileRef>
+            <FileRef
+               location = "group:README.md">
+            </FileRef>
+         </Group>
+         <Group
+            location = "group:Headers"
+            name = "Headers">
+            <Group
+               location = "group:Private"
+               name = "Private">
+               <Group
+                  location = "group:Firebase"
+                  name = "Firebase">
+                  <FileRef
+                     location = "group:Firebase.h">
+                  </FileRef>
+               </Group>
+               <Group
+                  location = "group:FirebaseInstanceID"
+                  name = "FirebaseInstanceID">
+                  <FileRef
+                     location = "group:FIRInstanceID.h">
+                  </FileRef>
+               </Group>
+            </Group>
+            <Group
+               location = "group:Public"
+               name = "Public">
+               <Group
+                  location = "group:Firebase"
+                  name = "Firebase">
+                  <FileRef
+                     location = "group:Firebase.h">
+                  </FileRef>
+               </Group>
+               <Group
+                  location = "group:FirebaseInstanceID"
+                  name = "FirebaseInstanceID">
+                  <FileRef
+                     location = "group:FIRInstanceID.h">
+                  </FileRef>
+               </Group>
+            </Group>
+         </Group>
+         <Group
+            location = "group:Local Podspecs"
+            name = "Local Podspecs">
+         </Group>
+         <FileRef
+            location = "group:Manifest.lock">
+         </FileRef>
+         <FileRef
+            location = "group:Pods.xcodeproj">
+         </FileRef>
+         <Group
+            location = "group:Target Support Files"
+            name = "Target Support Files">
+            <Group
+               location = "group:GoogleToolboxForMac"
+               name = "GoogleToolboxForMac">
+               <FileRef
+                  location = "group:GoogleToolboxForMac-dummy.m">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleToolboxForMac-prefix.pch">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleToolboxForMac-umbrella.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleToolboxForMac.modulemap">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleToolboxForMac.xcconfig">
+               </FileRef>
+               <FileRef
+                  location = "group:Info.plist">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Pods-Presenc"
+               name = "Pods-Presenc">
+               <FileRef
+                  location = "group:Info.plist">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-acknowledgements.markdown">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-acknowledgements.plist">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-dummy.m">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-frameworks.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-resources.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc-umbrella.h">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc.debug.xcconfig">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc.modulemap">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-Presenc.release.xcconfig">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Pods-PresencTests"
+               name = "Pods-PresencTests">
+               <FileRef
+                  location = "group:Pods-PresencTests-acknowledgements.markdown">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests-acknowledgements.plist">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests-dummy.m">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests-frameworks.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests-resources.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests.debug.xcconfig">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencTests.release.xcconfig">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Pods-PresencUITests"
+               name = "Pods-PresencUITests">
+               <FileRef
+                  location = "group:Pods-PresencUITests-acknowledgements.markdown">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests-acknowledgements.plist">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests-dummy.m">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests-frameworks.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests-resources.sh">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests.debug.xcconfig">
+               </FileRef>
+               <FileRef
+                  location = "group:Pods-PresencUITests.release.xcconfig">
+               </FileRef>
+            </Group>
+         </Group>
+      </Group>
+      <Group
+         location = "group:Presenc"
+         name = "Presenc">
+         <Group
+            location = "container:"
+            name = "Controllers">
+            <FileRef
+               location = "group:Presenc/Presenc/Controllers/DiscoveryController.swift">
+            </FileRef>
+            <FileRef
+               location = "group:Presenc/Presenc/Controllers/WardrobeController.swift">
+            </FileRef>
+            <FileRef
+               location = "group:Presenc/Presenc/Controllers/LoginController.swift">
+            </FileRef>
+         </Group>
+         <Group
+            location = "container:"
+            name = "UI">
+         </Group>
+         <FileRef
+            location = "group:AppDelegate.swift">
+         </FileRef>
+         <Group
+            location = "group:Assets.xcassets"
+            name = "Assets.xcassets">
+            <FileRef
+               location = "group:../img/AdobeStock_56484190_WM.jpeg">
+            </FileRef>
+            <Group
+               location = "group:AppIcon.appiconset"
+               name = "AppIcon.appiconset">
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:first.imageset"
+               name = "first.imageset">
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+               <FileRef
+                  location = "group:first.pdf">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:second.imageset"
+               name = "second.imageset">
+               <FileRef
+                  location = "group:Contents.json">
+               </FileRef>
+               <FileRef
+                  location = "group:second.pdf">
+               </FileRef>
+            </Group>
+         </Group>
+         <Group
+            location = "group:Base.lproj"
+            name = "Base.lproj">
+            <FileRef
+               location = "group:Main.storyboard">
+            </FileRef>
+            <FileRef
+               location = "group:LaunchScreen.storyboard">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Presenc.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Presenc.xcworkspace">
+      </FileRef>
+      <Group
+         location = "group:PresencTests"
+         name = "PresencTests">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:PresencTests.swift">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:PresencUITests"
+         name = "PresencUITests">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:PresencUITests.swift">
+         </FileRef>
+      </Group>
+   </Group>
+</Workspace>

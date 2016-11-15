@@ -17,6 +17,8 @@
 #import "AppRelated.h"
 #import "LocateController.h"
 
+@import Firebase;
+
 #define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
 
 
@@ -28,11 +30,21 @@
    ParseClientConfiguration* config =  [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         configuration.applicationId = @"AotKeCXXy3BIbipBkHWI0hkEeBsrW3sGm738gPVT";
         configuration.clientKey = @"exg9bjjKBFTiryyuSu67UPjln5WWI4HvWGtTckc5";
-        configuration.server = @"http://parseserverad-6n82f-env.elasticbeanstalk.com/parse";
-       
+        configuration.server = @"http://parseserver-vixzb-env.us-east-1.elasticbeanstalk.com/parse";
     }];
     
     [Parse initializeWithConfiguration:config];
+    [[PFInstallation currentInstallation] removeObjectForKey:@"user"];
+    [[PFInstallation currentInstallation] saveInBackground];
+    
+    // Clear all caches
+    [PFQuery clearAllCachedResults];
+    
+    
+    [PFUser logOut];
+    
+    //[PFQuery clearAllCachedResults];
+
     
     // stripe payment init
     //[Stripe setDefaultPublishableKey:StripePublishableKey];

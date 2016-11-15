@@ -33,6 +33,10 @@
 +(void) getStylesNearby:(CLLocation*) location handler:(completion) handler {
     // get users nearby
     PFQuery *usersQuery = [PFUser query];
+    // query syles
+    // include key user
+    // include key user.currentLocation
+    //
     // Interested in locations near user
     double miles = [[NSUserDefaults standardUserDefaults] doubleForKey:@"range"];
     if (miles == 0) //preference not set
@@ -45,7 +49,7 @@
     
     [usersQuery whereKey:@"discoverable" equalTo:[NSNumber numberWithBool:YES]];
     // exclude the current user from list of users
-    [usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
+    //[usersQuery whereKey: @"objectId" notEqualTo: [[PFUser currentUser] valueForKey:@"objectId"]];
     
     // #TODO: for DEBUG purpose
     // [usersQuery whereKey:@"currentLocation" nearGeoPoint:userGeoPoint];

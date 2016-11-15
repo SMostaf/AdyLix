@@ -59,7 +59,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    if ([PFUser currentUser]) {
+        // save current user location
+        // keep updating current user location for others to discover my items
+        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+            if (!error) {
+                
+                [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+                [[PFUser currentUser] saveInBackground];
+                //[self.tabBarController setSelectedIndex:2];
+            }
+        }];
+    }
+
 }
 
 #pragma mark - ()
